@@ -1,8 +1,12 @@
 # Atilla
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/atilla`. To experiment with that code, run `bin/console` for an interactive prompt.
+![Atilla The Hun](atilla_image.png)
 
-TODO: Delete this and the text above, and describe your gem
+Inspired by Atilla the Hun, this gem will crawl all pages on a given domain. It provides ultra-useful metrics about every page and warms site caches at the same time.
+
+The generated metrics file can be uploaded to https://www.envybase.com and viewed. Here is a link to a demo crawl.
+
+It also provides a visual embeddable sitemap that can be placed on any site.
 
 ## Installation
 
