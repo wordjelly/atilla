@@ -24,7 +24,8 @@ class Atilla::Crawler
 	###############################################
 	def default_opts
 		{
-			"max_concurrency" => 10,
+			"params" => {},
+			"max_concurrency" => 2,
 			"url_pattern" => "*",
 			"urls_file" => nil,
 			"test_warm_cache" => true
@@ -45,26 +46,27 @@ class Atilla::Crawler
 		self.completed_urls = {}
 	end
 
-	def parse_page(response)
+	def parse_page(response,url)
 		new_urls_added = 0
 		doc = Nokogiri::HTML(response.body)
 		canon = doc.xpath('//link[@rel="canonical"]/@href')
 
 		# if a canonical exists and we have already completed it, then dont parse this, this makes sure that when the canonical itself comes in with a self ref -> it will parse.
 		if canon and has_completed_url?(canon)
-			
+
 		else
-			links = doc.css('a').map{|link|
+			doc.css('a').each do |link|
+				next if link["rel"] =~ /nofollow/
 				if link["href"] =~ /^#{Regexp.escape(self.host)}/
-					if add_url(link["href"])
+					if add_url(link["href"],{"referrer" => url})
 						new_urls_added += 1
 					end
 				elsif link["href"] =~ /^\//
-					if add_url(self.host + link["href"])
+					if add_url(self.host + link["href"],{"referrer" => url})
 						new_urls_added += 1
 					end
 				end
-			}
+			end
 		end
 		new_urls_added
 	end
@@ -77,12 +79,12 @@ class Atilla::Crawler
 		!(self.completed_urls[url].nil? and self.urls[url].nil?)
 	end
 
-	def add_url(url)
+	def add_url(url,opts={})
 		# remove extra slashes
 		k = url.gsub(/\/{2,}/,"/").gsub(/\/+$/,'').gsub(/http?\:\/w/,'https://').gsub(/https\:\/w/,'https://')
 		# remove trailing slash
 		if !has_url?(k)
-			self.urls[k] = {}
+			self.urls[k] = opts
 			return true
 		end
 		return false
@@ -97,11 +99,12 @@ class Atilla::Crawler
 			new_urls_added = 0
 			urls_removed = 0
 			# init hydra
+
 			crawled_in_this_run = []
 			hydra = Typhoeus::Hydra.new(max_concurrency: self.opts["max_concurrency"])
 			requests = self.urls.map{|url,value|
 				crawled_in_this_run << url
-				request = Typhoeus::Request.new(url, followlocation: true)
+				request = Typhoeus::Request.new(url, followlocation: true, params: self.opts["params"])
 				hydra.queue(request)
 				request
 			}
@@ -116,7 +119,7 @@ class Atilla::Crawler
 					# since we already hit the cache, we can transfer.
 				elsif response.code.to_s == "200" or response.code.to_s == "201" or response.code.to_s == "204"
 					# if its the second run, 
-					new_urls_added += parse_page(request.response)
+					new_urls_added += parse_page(request.response,request.url)
 				end
 				#puts "deleting url #{request.url}"
 			}
