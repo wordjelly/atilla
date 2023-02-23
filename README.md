@@ -1,4 +1,4 @@
-# Atilla
+# Atilla - Ruby Based Web-Crawler, Cache Warmer and SEO metric Generator
 
 ![Atilla The Hun](atilla_image.png)
 
