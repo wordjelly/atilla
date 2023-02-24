@@ -5,6 +5,7 @@ PATH
       activesupport
       byebug
       nokogiri
+      rack
       typhoeus
 
 GEM
@@ -30,6 +31,7 @@ GEM
     parallel (1.20.1)
     parser (3.2.1.0)
       ast (~> 2.4.1)
+    rack (3.0.4.1)
     rainbow (3.1.1)
     rake (13.0.6)
     regexp_parser (2.7.0)

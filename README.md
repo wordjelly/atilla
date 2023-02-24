@@ -20,7 +20,36 @@ If bundler is not being used to manage dependencies, install the gem by executin
 
 ## Usage
 
-TODO: Write usage instructions here
+### How to initialize:
+
+```
+require "atilla"
+
+The crawler accepts three arguments.
+1. host -> the host that we are supposed to crawl [REQUIRED]
+2. seed_urls -> these can be additional urls within the website from where you wish to start the crawl. Assume that your website is not highly internally linked and some pages may not be accessible to a crawler starting at the home page. You can specify as many seed urls as you want. 
+3. opts -> a general options hash. It accepts various parameters including:
+
+a. params -> url_params that are appended to every url that is crawled. Here "nocache" => true is passed as this is commonly respected by most caching solutions to bypass the cache.
+b. max_concurrency -> how many urls to hit in parallel while crawling
+
+crawler = Atilla::Crawler.new("http://localhost:3000",["http://localhost:3000/entry_point_1","http://localhost:3000/entry_point_2"],{"params" => {"nocache" => true}})
+
+
+
+```
+
+### Url Following System:
+
+1. No-follow urls are not followed.
+2. Atilla looks for meta-tags on pages like the following and will also index those pages : 
+
+```
+This is useful if your page has multiple urls pointing to it and you want to cache all versions.
+<meta alternate-cache-url="/whatever" />
+<meta alternate-cache-url="/something else" />
+```
+
 
 ## Development
 

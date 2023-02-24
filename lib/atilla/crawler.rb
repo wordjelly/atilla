@@ -2,6 +2,7 @@ require "byebug"
 require "nokogiri"
 require "typhoeus"
 require "active_support/all"
+require "rack"
 
 class Atilla::Crawler
 
@@ -46,15 +47,18 @@ class Atilla::Crawler
 		self.completed_urls = {}
 	end
 
+	# this should be called parse page url.
 	def parse_page(response,url)
 		new_urls_added = 0
 		doc = Nokogiri::HTML(response.body)
 		canon = doc.xpath('//link[@rel="canonical"]/@href')
-
+		# ADD CANONICAL URL.
+		self.urls[url]["CANONICAL_URL"] = canon if canon
 		# if a canonical exists and we have already completed it, then dont parse this, this makes sure that when the canonical itself comes in with a self ref -> it will parse.
 		if canon and has_completed_url?(canon)
 
 		else
+			## PROCESS OUTLINKS.
 			doc.css('a').each do |link|
 				next if link["rel"] =~ /nofollow/
 				if link["href"] =~ /^#{Regexp.escape(self.host)}/
@@ -79,13 +83,44 @@ class Atilla::Crawler
 		!(self.completed_urls[url].nil? and self.urls[url].nil?)
 	end
 
+	########## DISASSEMBLE AND REASSEMBLE THE QUERY STRING
+	# If the url already has some parameters -> we first decipher that into a hash. 
+	# then merge in any parameters passed into the crawler
+	# rebuild the query string
+	# append to the url.
+	# if we follow a redirect, will it pass forward the query params. 
+	# and in this case what will it do -> 
+	#########
+	def append_params(url)
+		existing_params = {}
+		if query_string = url.match(/\?.+$/)
+			existing_params = Rack::Utils.parse_nested_query(query_string[0])
+		end
+		unless self.opts["params"].blank?
+			existing_params.merge!(self.opts["params"])
+		end
+		#puts existing_params.to_param.to_s
+		url = url.gsub(/\?.+$/,'') + existing_params.to_param
+		url.gsub!(/\%3F/,'?')
+		url
+	end
+
 	def add_url(url,opts={})
 		# remove extra slashes
-		k = url.gsub(/\/{2,}/,"/").gsub(/\/+$/,'').gsub(/http?\:\/w/,'https://').gsub(/https\:\/w/,'https://')
+		k = url.gsub(/\/{2,}/,"/").gsub(/http?\:\/w/,'https://').gsub(/https\:\/w/,'https://')
+		k = append_params(k)
 		# remove trailing slash
 		if !has_url?(k)
-			self.urls[k] = opts
+			self.urls[k] = {"REFERRING_URLS" => []}
+			unless opts["referrer"].blank?
+				self.urls[k]["REFERRING_URLS"] << opts["referrer"]
+			end
 			return true
+		else
+			# add the referred if the url already exists and the referrer does not.
+			unless self.urls[k]["REFERRING_URLS"].include? opts["referrer"]
+				self.urls[k]["REFERRING_URLS"] << opts["referrer"]
+			end
 		end
 		return false
 	end
@@ -104,7 +139,7 @@ class Atilla::Crawler
 			hydra = Typhoeus::Hydra.new(max_concurrency: self.opts["max_concurrency"])
 			requests = self.urls.map{|url,value|
 				crawled_in_this_run << url
-				request = Typhoeus::Request.new(url, followlocation: true, params: self.opts["params"])
+				request = Typhoeus::Request.new(url)
 				hydra.queue(request)
 				request
 			}
@@ -114,12 +149,24 @@ class Atilla::Crawler
 				if response.code.to_s == "500"
 					# evict the url
 				elsif response.code.to_s == "404"
+
+				elsif response.code.to_s == "301"
+					# add this url.
+					# so we hit the primary url -> it cached the 301 response.
+					# 
 					# transfer to the other map. 
 				elsif response.code.to_s == "304"
 					# since we already hit the cache, we can transfer.
 				elsif response.code.to_s == "200" or response.code.to_s == "201" or response.code.to_s == "204"
 					# if its the second run, 
-					new_urls_added += parse_page(request.response,request.url)
+					#puts "check response"
+					#byebug
+					# ADD HEADERS.	
+					# make the url 
+					#byebug
+
+					self.urls[response.effective_url].merge!(response.headers)
+					new_urls_added += parse_page(request.response,response.effective_url)
 				end
 				#puts "deleting url #{request.url}"
 			}
@@ -137,5 +184,9 @@ class Atilla::Crawler
 			byebug
 		end
 	end
+
+	# add support for cachable no-follow urls
+	# then it has to be cached.
+
 
 end	
