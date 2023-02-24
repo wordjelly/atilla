@@ -11,10 +11,20 @@ class TestAtilla < Minitest::Test
   end
 =end
 
+
   def test_crawls_dummy_url
-    crawler = Atilla::Crawler.new("http://192.168.1.2",[],{"params" => {"nocache" => true}})
-    puts crawler.append_url("http://192.168.1.2?dog=cat")
-    #crawler.run
+    Atilla::Es.delete_index("crawl_responses")
+    
+    Atilla::Es.create_index("crawl_responses")
+    crawler = Atilla::Crawler.new("http://192.168.1.3",[],{"params" => {"nocache" => true}, "output_path" => (__FILE__.split(/\//)[0..-3].join("/") + "/output")})
+
+    crawler.run
+
+    urls = JSON.parse(IO.read((__FILE__.split(/\//)[0..-3].join("/") + "/output/crawl.json")))
+      
+    Atilla::Es.bulk_index(urls,"crawl_responses")
+
   end
+
 
 end
