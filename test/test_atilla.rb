@@ -16,7 +16,7 @@ class TestAtilla < Minitest::Test
     Atilla::Es.delete_index("crawl_responses")
     
     Atilla::Es.create_index("crawl_responses")
-    crawler = Atilla::Crawler.new("http://192.168.1.3",[],{"params" => {"nocache" => true}, "output_path" => (__FILE__.split(/\//)[0..-3].join("/") + "/output")})
+    crawler = Atilla::Crawler.new("http://192.168.1.2",[],{"params" => {"nocache" => true}, "output_path" => (__FILE__.split(/\//)[0..-3].join("/") + "/output")})
 
     crawler.run
 

@@ -6,6 +6,19 @@ require "rack"
 require "limiter"
 require "addressable"
 
+# so we can run it against a code. 
+# like -> do we have a 500
+# so we keep a finite length for urls.
+# and change the slugs for the price urls too.
+# take each one
+# if display name is there change the slug
+# if the short slug 
+# if we change hte slug -> we have to look into price, package, symptom
+# in all places it may have been changed.
+# the ones which consist of a 
+# remove all the long symptoms
+# rebuild the slugs first. 
+# then we can recrawl and check.
 class Atilla::Crawler
 
 	# the host : https://www.google.com | http://localhost:3000
@@ -209,6 +222,10 @@ class Atilla::Crawler
 
 	end
 
+	def write_failed_urls(h)
+		IO.write((self.opts["output_path"] + "/failures.json"),JSON.pretty_generate(h))
+	end
+
 	def write_completed_urls
 		IO.write((self.opts["output_path"] + "/crawl.json"),JSON.pretty_generate(self.completed_urls))
 	end
@@ -246,6 +263,8 @@ class Atilla::Crawler
 			end
 		end
 
+		failed_to_correlate_urls = {}
+
 		while !self.urls.blank?
 			new_urls_added = 0
 			urls_removed = 0
@@ -267,9 +286,17 @@ class Atilla::Crawler
 				request
 			}
 			hydra.run
-			responses = requests.map{|request|
+			responses = requests.each_with_index{|request,key|
 				response = request.response
-				update_page_info(request,response,new_urls_added)
+				begin
+					update_page_info(request,response,new_urls_added)
+				rescue => e
+					puts "error #{e}"
+					puts response.effective_url
+					puts "--- fail output ends -- "
+					url = crawled_in_this_run[key].encode("UTF-8", invalid: :replace, undef: :replace)
+					failed_to_correlate_urls[url] = response.effective_url.encode("UTF-8", invalid: :replace, undef: :replace)
+				end
 			}
 
 			crawled_in_this_run.each do |k|
@@ -281,10 +308,22 @@ class Atilla::Crawler
 
 
 		end
-		
+
 		write_completed_urls
-		# 
-		write_kibana_friendly_json
+		# lets rewire the slugs. 
+		# to give the root path as canonical.
+		# lets do this as step one.
+		# knock off all the categories
+		# i don't want it to crawl that. 
+		# puts a noindex on them.
+		# either we change all the canonical urls 
+		# to the root path. 
+		# and redirect everything else to that.
+		# and also shorten the urls.
+		# so any place where the slug length is longer than x.
+		# http://192.168.1.2/diagnostics/reports/
+		#write_kibana_friendly_json
+		write_failed_urls(failed_to_correlate_urls)
 
 	end
 
