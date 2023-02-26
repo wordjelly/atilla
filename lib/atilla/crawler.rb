@@ -5,6 +5,7 @@ require "active_support/all"
 require "rack"
 require "limiter"
 require "addressable"
+require "normalize_url"
 
 # so we can run it against a code. 
 # like -> do we have a 500
@@ -59,7 +60,8 @@ class Atilla::Crawler
 	## @param[String] base_url : the base_url of the website to be crawled. eg: http://www.google.com OR http://localhost:3000
 	## @param[String] urls_file_absolute_path : If you want to limit the types of urls crawled using a file set the full and absolute path of the file here. 
 	def initialize(host,seed_urls=[],opts={})
-		self.host = host
+		self.host = NormalizeUrl.process(host)
+
 		if seed_urls.blank?
 			self.seed_urls = [host]
 		else
@@ -81,17 +83,22 @@ class Atilla::Crawler
 		self.urls[url]["CANONICAL_URL"] = canon if (canon and (!canon.text.strip.blank?))
 		# if a canonical exists and we have already completed it, then dont parse this, this makes sure that when the canonical itself comes in with a self ref -> it will parse.
 		if canon and !canon.text.strip.blank? and has_completed_url?(canon.text)
-
+			puts "this is canonical"
 		else
 			## PROCESS OUTLINKS.
 			doc.css('a').each do |link|
-				next if link["rel"] =~ /nofollow/
+				if link["rel"] =~ /nofollow/
+					puts "its a nofollow"
+				end
 				if link["href"] =~ /^#{Regexp.escape(self.host)}/
 					if add_url(link["href"],{"referrer" => url})
 						new_urls_added += 1
 					end
-				elsif link["href"] =~ /^\//
-					if add_url(self.host + link["href"],{"referrer" => url})
+				elsif link["href"] =~ /^(http\:|www\.)/
+					puts "its another domain"
+				else
+					href = link["href"]
+					if add_url(self.host + href,{"referrer" => url})
 						new_urls_added += 1
 					end
 				end
@@ -128,11 +135,7 @@ class Atilla::Crawler
 		## Remove existing query params.
 		url = url.gsub(/\?.+$/,'')
 
-		## APPEND TRAILING SLASH IF MISSING.
-		unless url =~ /\/$/
-			url = url + "/"
-		end
-
+		
 		## APPEND REBUILT QUERY PARAMS.
 		param_string = existing_params.to_param
 		param_string.gsub!(/^\%3F/,'')
@@ -145,9 +148,8 @@ class Atilla::Crawler
 	end
 
 	def add_url(url,opts={})
-		# remove extra slashes
-		k = url.gsub(/\/{3,}/,"//")
-		k = append_params(k)
+		url = NormalizeUrl.process(url)
+		k = append_params(url)
 		# remove trailing slash
 		if !has_url?(k)
 			# if the 
@@ -161,7 +163,7 @@ class Atilla::Crawler
 			unless opts["referrer"].blank?
 				self.urls[k]["REFERRING_URLS"] << opts["referrer"]
 			end
-			#puts "added url #{k}"
+			puts "added url #{k}"
 			return true
 		else
 			# add the referred if the url already exists and the referrer does not.
@@ -217,19 +219,25 @@ class Atilla::Crawler
 		})
 
 		if parse_page_codes.include? response.code.to_s
+			puts "parsing page -- "
 			new_urls_added += parse_page(response,response.effective_url)
 		end
 
 	end
 
+	def output_file_path_prefix
+		self.host.gsub(/\//,'-') + "-#{Time.now.strftime("%Y-%m-%dT%H:%M:%S.%L%:z")}"
+	end
+
 	def write_failed_urls(h)
-		IO.write((self.opts["output_path"] + "/failures.json"),JSON.pretty_generate(h))
+		IO.write((self.opts["output_path"] + "/#{output_file_path_prefix}-failures.json"),JSON.pretty_generate(h))
 	end
 
 	def write_completed_urls
-		IO.write((self.opts["output_path"] + "/crawl.json"),JSON.pretty_generate(self.completed_urls))
+		IO.write((self.opts["output_path"] + "/#{output_file_path_prefix}-crawl.json"),JSON.pretty_generate(self.completed_urls))
 	end
 
+=begin
 	# writes a kibana friendly json file. 
 	# uses the index name from the opts. 
 	# defaults to "crawl_responses"
@@ -239,6 +247,7 @@ class Atilla::Crawler
 		}.flatten
 		IO.write((self.opts["output_path"] + "/kibana_friendly_crawl.json"),kfriendly.map{|r| JSON.generate(r)}.join("\n"))
 	end
+=end
 
 	def run
 		if self.opts["output_path"].blank?
@@ -278,7 +287,7 @@ class Atilla::Crawler
 			# and discovered
 			requests = self.urls.map{|url,value|
 				crawled_in_this_run << url
-				request = Typhoeus::Request.new(url)
+				request = Typhoeus::Request.new(url, headers: {"User-Agent" => "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.77 Safari/537.36"})
 				request.on_complete do |response|
 			      rate_queue.shift
 			    end
@@ -288,6 +297,8 @@ class Atilla::Crawler
 			hydra.run
 			responses = requests.each_with_index{|request,key|
 				response = request.response
+				#puts response.body.to_s
+				puts response.code.to_s
 				begin
 					update_page_info(request,response,new_urls_added)
 				rescue => e
