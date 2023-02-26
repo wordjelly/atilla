@@ -1,6 +1,6 @@
 # Atilla - Ruby Web-Crawler, Cache Warmer and SEO metric Generator
 
-![Atilla The Hun](atilla_image.png)
+![Atilla The Hun](atilla_image.png=250x250)
 
 Inspired by Atilla the Hun, this gem will crawl all pages on a given domain. It provides ultra-useful metrics about every page and warms site caches at the same time.
 
