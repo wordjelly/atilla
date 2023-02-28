@@ -47,6 +47,7 @@ class Atilla::Crawler
 		{
 			"params" => {},
 			"max_concurrency" => 200,
+			"headers" => {"User-Agent" => "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.77 Safari/537.36"},
 			"requests_per_second" => 30,
 			"url_pattern" => "*",
 			"urls_file" => nil,
@@ -90,6 +91,7 @@ class Atilla::Crawler
 				if link["rel"] =~ /nofollow/
 					puts "its a nofollow"
 				end
+				next if link["href"] == "#"
 				if link["href"] =~ /^#{Regexp.escape(self.host)}/
 					if add_url(link["href"],{"referrer" => url})
 						new_urls_added += 1
@@ -98,6 +100,7 @@ class Atilla::Crawler
 					puts "its another domain"
 				else
 					href = link["href"]
+					puts "href is #{href}, host is#{self.host}, #{link.text}"
 					if add_url(self.host + href,{"referrer" => url})
 						new_urls_added += 1
 					end
@@ -141,7 +144,9 @@ class Atilla::Crawler
 		param_string.gsub!(/^\%3F/,'')
 		param_string.gsub!(/^\?/,'')
 
-		url = url + "?" + param_string
+		unless param_string.blank?
+			url = url + "?" + param_string
+		end
 
 		## FOR SOME REASON THIS URL ENCODES, SO DECODE THE ? PARAM.
 		url
@@ -188,9 +193,6 @@ class Atilla::Crawler
 	def parse_page_codes
 		["204","201","200"]
 	end
-
-	# now given this file, we can simply index it into es. 
-	# how do we get the 
 
 	def update_page_info(request,response,new_urls_added)
 		self.urls[response.effective_url].merge!(response.headers)
@@ -287,7 +289,7 @@ class Atilla::Crawler
 			# and discovered
 			requests = self.urls.map{|url,value|
 				crawled_in_this_run << url
-				request = Typhoeus::Request.new(url, headers: {"User-Agent" => "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.77 Safari/537.36"})
+				request = Typhoeus::Request.new(url, headers: self.opts["headers"])
 				request.on_complete do |response|
 			      rate_queue.shift
 			    end
@@ -299,8 +301,9 @@ class Atilla::Crawler
 				response = request.response
 				#puts response.body.to_s
 				puts response.code.to_s
-				begin
-					update_page_info(request,response,new_urls_added)
+				#begin
+				update_page_info(request,response,new_urls_added)
+=begin
 				rescue => e
 					puts "error #{e}"
 					puts response.effective_url
@@ -308,6 +311,7 @@ class Atilla::Crawler
 					url = crawled_in_this_run[key].encode("UTF-8", invalid: :replace, undef: :replace)
 					failed_to_correlate_urls[url] = response.effective_url.encode("UTF-8", invalid: :replace, undef: :replace)
 				end
+=end
 			}
 
 			crawled_in_this_run.each do |k|
