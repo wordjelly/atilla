@@ -6,6 +6,7 @@ require "rack"
 require "limiter"
 require "addressable"
 require "normalize_url"
+require "fileutils"
 
 # so we can run it against a code. 
 # like -> do we have a 500
@@ -33,6 +34,8 @@ class Atilla::Crawler
 	attr_accessor :completed_urls
 	# trigger to halt the crawl, based on how many urls were cralwed
 	attr_accessor :halt
+
+	attr_accessor :crawl_started_at
 
 		
 	###############################################3
@@ -72,37 +75,63 @@ class Atilla::Crawler
 		self.urls = {}
 		self.completed_urls = {}
 		self.halt = false
+		self.crawl_started_at = Time.now
 
+		create_crawl_output_dir
+	end
+
+	def output_file_path_prefix
+		self.host.gsub(/\//,'-') + "-#{self.crawl_started_at.strftime("%Y-%m-%dT%H:%M:%S.%L%:z")}"
+	end
+
+	def get_crawl_output_dir_path
+		self.opts["output_path"] + "/#{output_file_path_prefix}"
+	end
+
+	def create_crawl_output_dir
+		if self.opts["output_path"].blank?
+			raise "please specify an output path for the directory that will hold the crawl results"
+		end
+		FileUtils.mkdir_p(self.opts["output_path"] + "/#{output_file_path_prefix}")
 	end
 	
-	# this should be called parse page url.
 	def parse_page(response,url)
 		new_urls_added = 0
-		doc = Nokogiri::HTML(response.body)
-		canon = doc.xpath('//link[@rel="canonical"]/@href')
-		# ADD CANONICAL URL.
-		self.urls[url]["CANONICAL_URL"] = canon if (canon and (!canon.text.strip.blank?))
-		# if a canonical exists and we have already completed it, then dont parse this, this makes sure that when the canonical itself comes in with a self ref -> it will parse.
-		if canon and !canon.text.strip.blank? and has_completed_url?(canon.text)
-			puts "this is canonical"
+		if response.code.to_s == "301" or response.code.to_s == "302" or response.code == "308"
+			add_url(response.headers["LOCATION"])
+			#puts "got response code redirect"
+			#byebug
+			new_urls_added += 1
 		else
-			## PROCESS OUTLINKS.
-			doc.css('a').each do |link|
-				if link["rel"] =~ /nofollow/
-					puts "its a nofollow"
-				end
-				next if link["href"] == "#"
-				if link["href"] =~ /^#{Regexp.escape(self.host)}/
-					if add_url(link["href"],{"referrer" => url})
-						new_urls_added += 1
-					end
-				elsif link["href"] =~ /^(http\:|www\.)/
-					puts "its another domain"
-				else
-					href = link["href"]
-					puts "href is #{href}, host is#{self.host}, #{link.text}"
-					if add_url(self.host + href,{"referrer" => url})
-						new_urls_added += 1
+			doc = Nokogiri::HTML(response.body)
+			canon = doc.xpath('//link[@rel="canonical"]/@href')
+			# ADD CANONICAL URL.
+			self.urls[url]["CANONICAL_URL"] = canon if (canon and (!canon.text.strip.blank?))
+			# if a canonical exists and we have already completed it, then dont parse this, this makes sure that when the canonical itself comes in with a self ref -> it will parse.
+			if canon and !canon.text.strip.blank? and has_completed_url?(canon.text)
+				#puts "this is canonical"
+			else
+				## PROCESS OUTLINKS.
+				doc.css('a').each do |link|
+					
+
+					next if link["rel"] =~ /nofollow/
+					next if link["href"] == "#"
+					next if link["href"].blank?
+					next if link["href"].strip.blank?
+
+					if link["href"] =~ /^#{Regexp.escape(self.host)}/
+						if add_url(link["href"],{"referrer" => url})
+							new_urls_added += 1
+						end
+					elsif link["href"] =~ /^(https?\:|www\.)/
+						#puts "its another domain"
+					else
+						href = link["href"]
+						#puts "href is #{href}, host is#{self.host}, #{link.text}"
+						if add_url(self.host + href,{"referrer" => url})
+							new_urls_added += 1
+						end
 					end
 				end
 			end
@@ -168,7 +197,7 @@ class Atilla::Crawler
 			unless opts["referrer"].blank?
 				self.urls[k]["REFERRING_URLS"] << opts["referrer"]
 			end
-			puts "added url #{k}"
+			#puts "added url #{k}"
 			return true
 		else
 			# add the referred if the url already exists and the referrer does not.
@@ -191,7 +220,7 @@ class Atilla::Crawler
 	end
 
 	def parse_page_codes
-		["204","201","200"]
+		["204","201","200","301","302"]
 	end
 
 	def update_page_info(request,response,new_urls_added)
@@ -213,30 +242,47 @@ class Atilla::Crawler
 
 		self.urls[response.effective_url]["TRANSFER_TIME"] = response.total_time - response.starttransfer_time
 
-		
-
 		## NERGE RESPONSE CODE.
 		self.urls[response.effective_url].merge!({
 			"RESPONSE_CODE" => response.code
 		})
 
+		self.urls[response.effective_url]["HOST"] = self.host
+
 		if parse_page_codes.include? response.code.to_s
-			puts "parsing page -- "
+			#puts "parsing page -- "
 			new_urls_added += parse_page(response,response.effective_url)
 		end
 
 	end
 
-	def output_file_path_prefix
-		self.host.gsub(/\//,'-') + "-#{Time.now.strftime("%Y-%m-%dT%H:%M:%S.%L%:z")}"
-	end
+	
 
 	def write_failed_urls(h)
-		IO.write((self.opts["output_path"] + "/#{output_file_path_prefix}-failures.json"),JSON.pretty_generate(h))
+		pth = get_crawl_output_dir_path + "/could_not_crawl.json"
+		IO.write(pth,JSON.pretty_generate(h))
 	end
 
 	def write_completed_urls
-		IO.write((self.opts["output_path"] + "/#{output_file_path_prefix}-crawl.json"),JSON.pretty_generate(self.completed_urls))
+		pth = get_crawl_output_dir_path + "/all_crawled.json"
+		IO.write(pth,JSON.pretty_generate(self.completed_urls))
+		write_code_wise_urls(self.completed_urls)
+	end
+
+	## FOR EACH ERROR CODE IT WILL OUTPUT A FILE with each url delimited by a new line.
+	def write_code_wise_urls(urls_hash)
+		
+		response_codes = {}
+
+		urls_hash.keys.each do |url|
+			response_codes[urls_hash[url]["RESPONSE_CODE"].to_i] ||= []
+			response_codes[urls_hash[url]["RESPONSE_CODE"].to_i] << url
+		end
+
+		response_codes.each do |code,urls|
+			pth = get_crawl_output_dir_path + "/#{code.to_s}.json"
+			IO.write(pth,urls.join("\n"))
+		end
 	end
 
 =begin
@@ -252,27 +298,22 @@ class Atilla::Crawler
 =end
 
 	def run
-		if self.opts["output_path"].blank?
-			puts "you have not specified an output path for the url stats file, do you want to continue? The results of the crawl should be persisted if you want to visualize them! [Yn]"
-			a = gets.chomp
-			if !(a =~ /y/i)
-				puts "aborting run as there is no output path specified."
-				return
-			end
-		end
+		
 			
 		rate_queue = ::Limiter::RateQueue.new(self.opts["requests_per_second"], interval: 1)
 
-		self.seed_urls.uniq.each do |k|
-			add_url(k)
-		end
-
 		## ADD URLS FROM THE URL FILE.
+		byebug
 		if self.opts["urls_file"]
 			IO.read(self.opts["urls_file"]).split(/\n/).each do |k|
 				add_url(k)
 			end
+		else
+			self.seed_urls.uniq.each do |k|
+				add_url(k)
+			end
 		end
+		
 
 		failed_to_correlate_urls = {}
 
@@ -300,7 +341,7 @@ class Atilla::Crawler
 			responses = requests.each_with_index{|request,key|
 				response = request.response
 				#puts response.body.to_s
-				puts response.code.to_s
+				#puts response.code.to_s
 				#begin
 				update_page_info(request,response,new_urls_added)
 =begin
@@ -325,23 +366,10 @@ class Atilla::Crawler
 		end
 
 		write_completed_urls
-		# lets rewire the slugs. 
-		# to give the root path as canonical.
-		# lets do this as step one.
-		# knock off all the categories
-		# i don't want it to crawl that. 
-		# puts a noindex on them.
-		# either we change all the canonical urls 
-		# to the root path. 
-		# and redirect everything else to that.
-		# and also shorten the urls.
-		# so any place where the slug length is longer than x.
-		# http://192.168.1.2/diagnostics/reports/
-		#write_kibana_friendly_json
+		
 		write_failed_urls(failed_to_correlate_urls)
 
 	end
 
 	
-
 end	

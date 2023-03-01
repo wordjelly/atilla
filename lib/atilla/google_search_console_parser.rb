@@ -12,6 +12,8 @@ class Atilla::GoogleSearchConsoleParser
 	# the reason for which google flagged these urls.
 	attr_accessor :error_reason
 
+	# we should make this a module
+	# so that we can 
 	def initialize(csv_file_path,host=nil,error_reason=nil)
 		self.csv_file_path = csv_file_path
 		self.host = host
