@@ -92,6 +92,9 @@ class Atilla::Es
 				  "URL_PARTS"=> {
 				    "type"=> "keyword"
 				  },
+				  "URL" => {
+				  	"type" => "keyword"
+				  },
 				  "TIME_TO_FIRST_BYTE"=> {
 				    "type"=> "float"
 				  },
@@ -103,6 +106,9 @@ class Atilla::Es
 				  },
 				  "RESPONSE_CODE"=> {
 				    "type"=> "float"
+				  },
+				  "CANONICAL_URL" => {
+				  	"type" => "keyword"
 				  },
 				  "TOTAL_REFERRING_URLS"=> {
 				    "type"=> "float"

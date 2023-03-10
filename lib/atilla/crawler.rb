@@ -37,6 +37,8 @@ class Atilla::Crawler
 
 	attr_accessor :crawl_started_at
 
+	attr_accessor :urls_from_file
+
 		
 	###############################################3
 	## These options help to define the crawl process
@@ -50,28 +52,67 @@ class Atilla::Crawler
 		{
 			"params" => {},
 			"max_concurrency" => 200,
-			"headers" => {"User-Agent" => "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.77 Safari/537.36"},
+			"headers" => {
+				"User-Agent" => "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.77 Safari/537.36",
+				"Content-Type" => "text/html", "User-Agent" => "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.77 Safari/537.36",
+				"Accept" => "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9"
+			},
 			"requests_per_second" => 30,
 			"url_pattern" => "*",
 			"urls_file" => nil,
+			"urls_file_limit" => nil,
 			# path at which to write the output
 			"output_path" => nil,
 			"urls_limit" => nil,
-			"kibana_index_name" => "crawl_responses"
+			"kibana_index_name" => "crawl_responses",
+			# when we are on a given page, we may discover n urls. if set to true -> it will crawl those pages as well. Turned to default "false" in case "urls_file" is provided.
+			"crawl_discovered_urls" => true,
+			# whether to normalize incoming urls. turned to "false" by default in case "urls_file" is provided.
+			"normalize_urls" => true
 		}
+	end
+
+	# For urls provided via files list, we ensure that the domain is local.
+	def set_url_domain_to_host(url)
+		uri = Addressable::URI.parse(url)
+		host_uri = Addressable::URI.parse(self.host)
+		l = uri.scheme + "://#{uri.host}"
+		l2 = host_uri.scheme + "://#{host_uri.host}"
+		url = url.gsub(/#{Regexp.escape(l)}/,l2)
+		url
 	end
 
 	## @param[String] base_url : the base_url of the website to be crawled. eg: http://www.google.com OR http://localhost:3000
 	## @param[String] urls_file_absolute_path : If you want to limit the types of urls crawled using a file set the full and absolute path of the file here. 
 	def initialize(host,seed_urls=[],opts={})
-		self.host = NormalizeUrl.process(host)
+		self.host = host
 
-		if seed_urls.blank?
-			self.seed_urls = [host]
+		self.seed_urls = []
+
+		self.opts = default_opts.deep_merge(opts)
+
+		self.urls_from_file = []
+
+		if self.opts["urls_file"]
+			
+			self.opts["crawl_discovered_urls"] = false
+			
+			self.opts["normalize_urls"] = false
+
+			file_urls = IO.read(self.opts["urls_file"]).split(/\n/)
+			self.opts["urls_file_limit"] ||= file_urls.size
+
+			file_urls[0..self.opts["urls_file_limit"]].each do |k|
+				self.seed_urls << set_url_domain_to_host(k)
+			end
 		else
-			self.seed_urls = seed_urls
+			if seed_urls.blank?
+				self.seed_urls = [host]
+			else
+				self.seed_urls = seed_urls
+			end
 		end
-		self.opts = default_opts.merge(opts)
+
 		self.urls = {}
 		self.completed_urls = {}
 		self.halt = false
@@ -95,18 +136,24 @@ class Atilla::Crawler
 		FileUtils.mkdir_p(self.opts["output_path"] + "/#{output_file_path_prefix}")
 	end
 	
+
 	def parse_page(response,url)
 		new_urls_added = 0
+		doc = Nokogiri::HTML(response.body)
+		canon = doc.xpath('//link[@rel="canonical"]/@href')
+		# ADD CANONICAL URL.
+		self.urls[url]["CANONICAL_URL"] = canon.text if (canon and (!canon.text.strip.blank?))
+
+		#byebug
+
+		return new_urls_added unless self.opts["crawl_discovered_urls"]
 		if response.code.to_s == "301" or response.code.to_s == "302" or response.code == "308"
-			add_url(response.headers["LOCATION"])
+			add_url(response.headers["LOCATION"],{"referrer" => url, "redirected_from" => url})
 			#puts "got response code redirect"
 			#byebug
 			new_urls_added += 1
 		else
-			doc = Nokogiri::HTML(response.body)
-			canon = doc.xpath('//link[@rel="canonical"]/@href')
-			# ADD CANONICAL URL.
-			self.urls[url]["CANONICAL_URL"] = canon if (canon and (!canon.text.strip.blank?))
+			
 			# if a canonical exists and we have already completed it, then dont parse this, this makes sure that when the canonical itself comes in with a self ref -> it will parse.
 			if canon and !canon.text.strip.blank? and has_completed_url?(canon.text)
 				#puts "this is canonical"
@@ -135,8 +182,8 @@ class Atilla::Crawler
 					end
 				end
 			end
+			return new_urls_added
 		end
-		new_urls_added
 	end
 
 	def has_completed_url?(url)
@@ -157,7 +204,10 @@ class Atilla::Crawler
 	#########
 	def append_params(url)
 		existing_params = {}
-		if query_string = url.match(/\?.+$/)
+		# this followed by equal to .
+		# dog?cat=10
+		# exp
+		if query_string = url.match(/\?[^\=]+\=.+$/)
 			existing_params = Rack::Utils.parse_nested_query(query_string[0])
 		end
 		unless self.opts["params"].blank?
@@ -165,7 +215,7 @@ class Atilla::Crawler
 		end
 		
 		## Remove existing query params.
-		url = url.gsub(/\?.+$/,'')
+		url = url.gsub(/\?[^\=]+\=.+$/,'')
 
 		
 		## APPEND REBUILT QUERY PARAMS.
@@ -182,7 +232,9 @@ class Atilla::Crawler
 	end
 
 	def add_url(url,opts={})
-		url = NormalizeUrl.process(url)
+			
+		url = NormalizeUrl.process(url) if self.opts["normalize_urls"]
+		
 		k = append_params(url)
 		# remove trailing slash
 		if !has_url?(k)
@@ -223,35 +275,41 @@ class Atilla::Crawler
 		["204","201","200","301","302"]
 	end
 
-	def update_page_info(request,response,new_urls_added)
-		self.urls[response.effective_url].merge!(response.headers)
-		# MERGE URL COUNT
-		self.urls[response.effective_url].merge!({"URL_LENGTH" => response.effective_url.length})
+	def update_page_info(request,response,new_urls_added,url)
 
-		self.urls[response.effective_url]["URL_PARTS"] = []
-		uri = Addressable::URI.parse(response.effective_url)
+		
+		self.urls[url].merge!(response.headers)
+		# MERGE URL COUNT
+		self.urls[url].merge!({"URL_LENGTH" => url.length})
+
+		self.urls[url]["URL_PARTS"] = []
+		uri = Addressable::URI.parse(url)
 		uri.path.split(/\//).size.times do |m|
 			if m > 0
-				self.urls[response.effective_url]["URL_PARTS"] << uri.path.split(/\//)[0..m].join("/") 
+				self.urls[url]["URL_PARTS"] << uri.path.split(/\//)[0..m].join("/") 
 			end
 		end
 		
-		self.urls[response.effective_url]["TIME_TO_FIRST_BYTE"] = response.starttransfer_time
+		self.urls[url]["TIME_TO_FIRST_BYTE"] = response.starttransfer_time
 
-		self.urls[response.effective_url]["TOTAL_TIME"] = response.total_time
+		self.urls[url]["TOTAL_TIME"] = response.total_time
 
-		self.urls[response.effective_url]["TRANSFER_TIME"] = response.total_time - response.starttransfer_time
+		self.urls[url]["TRANSFER_TIME"] = response.total_time - response.starttransfer_time
 
 		## NERGE RESPONSE CODE.
-		self.urls[response.effective_url].merge!({
+		self.urls[url].merge!({
 			"RESPONSE_CODE" => response.code
 		})
 
-		self.urls[response.effective_url]["HOST"] = self.host
+		self.urls[url]["HOST"] = self.host
 
+		self.urls[url]["URL"] = url
+
+
+		
 		if parse_page_codes.include? response.code.to_s
 			#puts "parsing page -- "
-			new_urls_added += parse_page(response,response.effective_url)
+			new_urls_added += parse_page(response,url)
 		end
 
 	end
@@ -299,21 +357,16 @@ class Atilla::Crawler
 
 	def run
 		
-			
 		rate_queue = ::Limiter::RateQueue.new(self.opts["requests_per_second"], interval: 1)
 
 		## ADD URLS FROM THE URL FILE.
-		byebug
-		if self.opts["urls_file"]
-			IO.read(self.opts["urls_file"]).split(/\n/).each do |k|
-				add_url(k)
-			end
-		else
-			self.seed_urls.uniq.each do |k|
-				add_url(k)
-			end
+		##byebug
+		
+		self.seed_urls.uniq.each do |k|
+			add_url(k)
 		end
 		
+
 
 		failed_to_correlate_urls = {}
 
@@ -340,19 +393,7 @@ class Atilla::Crawler
 			hydra.run
 			responses = requests.each_with_index{|request,key|
 				response = request.response
-				#puts response.body.to_s
-				#puts response.code.to_s
-				#begin
-				update_page_info(request,response,new_urls_added)
-=begin
-				rescue => e
-					puts "error #{e}"
-					puts response.effective_url
-					puts "--- fail output ends -- "
-					url = crawled_in_this_run[key].encode("UTF-8", invalid: :replace, undef: :replace)
-					failed_to_correlate_urls[url] = response.effective_url.encode("UTF-8", invalid: :replace, undef: :replace)
-				end
-=end
+				update_page_info(request,response,new_urls_added,request.base_url)
 			}
 
 			crawled_in_this_run.each do |k|
