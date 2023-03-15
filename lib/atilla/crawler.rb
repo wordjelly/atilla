@@ -51,7 +51,9 @@ class Atilla::Crawler
 	## :urls_limit : stop after crawling these many urls. eg : 10, defaults to nil, which means it will never break.
 	###############################################
 	def default_opts
-		{
+		{ 
+			## whether to save the output of the crawl , this is FALSE by default. 
+			"save_output" => false,
 			"params" => {},
 			"max_concurrency" => 200,
 			"headers" => {
@@ -438,10 +440,11 @@ class Atilla::Crawler
 
 		end
 
-		write_completed_urls
-		
-		write_failed_urls(failed_to_correlate_urls)
-
+		if self.opts["save_output"]
+			write_completed_urls
+			
+			write_failed_urls(failed_to_correlate_urls)
+		end
 	end
 
 	
