@@ -399,6 +399,9 @@ class Atilla::Crawler
 			requests = self.urls.map{|url,value|
 				crawled_in_this_run << url
 				request = Typhoeus::Request.new(url, headers: self.opts["headers"])
+
+				
+
 				request.on_complete do |response|
 			      	rate_queue.shift
 =begin
