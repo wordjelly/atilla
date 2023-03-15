@@ -7,6 +7,8 @@ require "limiter"
 require "addressable"
 require "normalize_url"
 require "fileutils"
+require "ruby-progressbar"
+require "concurrent-ruby"
 
 # so we can run it against a code. 
 # like -> do we have a 500
@@ -54,7 +56,7 @@ class Atilla::Crawler
 			"max_concurrency" => 200,
 			"headers" => {
 				"User-Agent" => "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.77 Safari/537.36",
-				"Content-Type" => "text/html", "User-Agent" => "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.77 Safari/537.36",
+				"Content-Type" => "text/html",
 				"Accept" => "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9"
 			},
 			"requests_per_second" => 30,
@@ -148,10 +150,10 @@ class Atilla::Crawler
 
 		return new_urls_added unless self.opts["crawl_discovered_urls"]
 		if response.code.to_s == "301" or response.code.to_s == "302" or response.code == "308"
-			add_url(response.headers["LOCATION"],{"referrer" => url, "redirected_from" => url})
-			#puts "got response code redirect"
-			#byebug
-			new_urls_added += 1
+			if add_url(response.headers["LOCATION"],{"referrer" => url, "redirected_from" => url})
+				new_urls_added += 1
+			end
+			return new_urls_added
 		else
 			
 			# if a canonical exists and we have already completed it, then dont parse this, this makes sure that when the canonical itself comes in with a self ref -> it will parse.
@@ -232,43 +234,47 @@ class Atilla::Crawler
 	end
 
 	def add_url(url,opts={})
+		begin
+			url = NormalizeUrl.process(url) if self.opts["normalize_urls"]
 			
-		url = NormalizeUrl.process(url) if self.opts["normalize_urls"]
-		
-		k = append_params(url)
-		# remove trailing slash
-		if !has_url?(k)
-			# if the 
-			unless self.opts["urls_limit"].blank?
-				if (self.urls.size + self.completed_urls.size) > self.opts["urls_limit"]
-					#puts "hit size limit #{self.urls.size}"
-					return false
+			k = append_params(url)
+			# remove trailing slash
+			if !has_url?(k)
+				# if the 
+				unless self.opts["urls_limit"].blank?
+					if (self.urls.size + self.completed_urls.size) > self.opts["urls_limit"]
+						#puts "hit size limit #{self.urls.size}"
+						return false
+					end
 				end
-			end
-			self.urls[k] = {"REFERRING_URLS" => []}
-			unless opts["referrer"].blank?
-				self.urls[k]["REFERRING_URLS"] << opts["referrer"]
-			end
-			#puts "added url #{k}"
-			return true
-		else
-			# add the referred if the url already exists and the referrer does not.
-			#puts "url already exists #{k}"
-			if self.urls[k]
-				unless self.urls[k]["REFERRING_URLS"].include? opts["referrer"]
+				self.urls[k] = {"REFERRING_URLS" => []}
+				unless opts["referrer"].blank?
 					self.urls[k]["REFERRING_URLS"] << opts["referrer"]
-					self.urls[k]["TOTAL_REFERRING_URLS"] = self.urls[k]["REFERRING_URLS"].size
 				end
-			end
+				#puts "added url #{k}"
+				return true
+			else
+				# add the referred if the url already exists and the referrer does not.
+				#puts "url already exists #{k}"
+				if self.urls[k]
+					unless self.urls[k]["REFERRING_URLS"].include? opts["referrer"]
+						self.urls[k]["REFERRING_URLS"] << opts["referrer"]
+						self.urls[k]["TOTAL_REFERRING_URLS"] = self.urls[k]["REFERRING_URLS"].size
+					end
+				end
 
-			if self.completed_urls[k]
-				unless self.completed_urls[k]["REFERRING_URLS"].include? opts["referrer"]
-					self.completed_urls[k]["REFERRING_URLS"] << opts["referrer"]
-					self.completed_urls[k]["TOTAL_REFERRING_URLS"] = self.completed_urls[k]["REFERRING_URLS"].size
+				if self.completed_urls[k]
+					unless self.completed_urls[k]["REFERRING_URLS"].include? opts["referrer"]
+						self.completed_urls[k]["REFERRING_URLS"] << opts["referrer"]
+						self.completed_urls[k]["TOTAL_REFERRING_URLS"] = self.completed_urls[k]["REFERRING_URLS"].size
+					end
 				end
 			end
+			return false
+		rescue => e
+			puts "url #{url} could not be added due to error"
+			return false
 		end
-		return false
 	end
 
 	def parse_page_codes
@@ -309,7 +315,9 @@ class Atilla::Crawler
 		
 		if parse_page_codes.include? response.code.to_s
 			#puts "parsing page -- "
-			new_urls_added += parse_page(response,url)
+			res = parse_page(response,url)
+			
+			new_urls_added += res
 		end
 
 	end
@@ -341,6 +349,11 @@ class Atilla::Crawler
 			pth = get_crawl_output_dir_path + "/#{code.to_s}.json"
 			IO.write(pth,urls.join("\n"))
 		end
+	end
+
+	# returns the entire crawled list of urls.
+	def get_all_crawled_urls
+		JSON.parse(IO.read(self.get_crawl_output_dir_path + "/all_crawled.json"))
 	end
 
 =begin
@@ -378,24 +391,40 @@ class Atilla::Crawler
 			crawled_in_this_run = []
 			hydra = Typhoeus::Hydra.new(max_concurrency: self.opts["max_concurrency"])
 
-			# lets say the homepage discovered 40 urls.
-			# then we crawled them
-			# and discovered
+			
+			#puts "Queueing requests --------->"
+			#progressbar = ProgressBar.create
+			#unit = self.urls.size/100
+			#processed = Concurrent::AtomicFixnum.new
 			requests = self.urls.map{|url,value|
 				crawled_in_this_run << url
 				request = Typhoeus::Request.new(url, headers: self.opts["headers"])
 				request.on_complete do |response|
-			      rate_queue.shift
+			      	rate_queue.shift
+=begin
+			      	if unit == 0
+			      		progressbar.total = 100
+			      	else
+				      	if processed.value % unit == 0
+				      		puts "incrementing as processed is #{processed}, unit is #{unit}, and mod is #{processed.value % unit}"
+				      		progressbar.increment
+				  	  	end
+			  	  	end
+			  	  	processed.increment
+=end
 			    end
 				hydra.queue(request)
 				request
 			}
+			
+			
 			hydra.run
 			responses = requests.each_with_index{|request,key|
 				response = request.response
 				update_page_info(request,response,new_urls_added,request.base_url)
 			}
 
+			#puts "exited requests loop"
 			crawled_in_this_run.each do |k|
 				self.completed_urls[k] = self.urls.delete(k)
 				urls_removed += 1

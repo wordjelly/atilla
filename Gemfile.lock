@@ -5,11 +5,13 @@ PATH
       activesupport
       addressable
       byebug
+      concurrent-ruby
       elasticsearch-persistence (= 5.0.2)
       nokogiri
       normalize_url
       rack
       ruby-limiter
+      ruby-progressbar
       typhoeus
 
 GEM

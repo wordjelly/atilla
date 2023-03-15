@@ -146,4 +146,10 @@ class Atilla::Es
 		end
 	end
 
+	def self.wipe_index(index_name)
+		delete_index("crawl_responses")
+    
+   	 	create_index("crawl_responses")
+	end
+
 end

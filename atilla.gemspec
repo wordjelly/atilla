@@ -42,6 +42,8 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'addressable'
   spec.add_dependency 'elasticsearch-persistence','5.0.2'
   spec.add_dependency "normalize_url"
+  spec.add_dependency "ruby-progressbar"
+  spec.add_dependency "concurrent-ruby"
 
   # Uncomment to register a new dependency of your gem
   # spec.add_dependency "example-gem", "~> 1.0"
