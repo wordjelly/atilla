@@ -49,6 +49,11 @@ class Atilla::Crawler
 	## :urls_file: if you want to crawl urls specified in a file -> sepcify the whole file path
 	## :output_path : the full path of the file to write the crawl stats
 	## :urls_limit : stop after crawling these many urls. eg : 10, defaults to nil, which means it will never break.
+	## now in order to deploy this. 
+	## for the free-data-viz.
+	## end to end for 20 datasets.
+	## then we look at the webui.
+	## for this -> 
 	###############################################
 	def default_opts
 		{ 
@@ -59,7 +64,8 @@ class Atilla::Crawler
 			"headers" => {
 				"User-Agent" => "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.77 Safari/537.36",
 				"Content-Type" => "text/html",
-				"Accept" => "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9"
+				"Accept" => "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
+				"Accept-Encoding" => "gzip, deflate"
 			},
 			"requests_per_second" => 30,
 			"url_pattern" => "*",
@@ -241,6 +247,9 @@ class Atilla::Crawler
 			
 			k = append_params(url)
 			# remove trailing slash
+
+			#return false if url =~ /\.pdf/
+
 			if !has_url?(k)
 				# if the 
 				unless self.opts["urls_limit"].blank?
@@ -398,13 +407,15 @@ class Atilla::Crawler
 			#progressbar = ProgressBar.create
 			#unit = self.urls.size/100
 			#processed = Concurrent::AtomicFixnum.new
+			k = Marshal.load(Marshal.dump(self.urls))
 			requests = self.urls.map{|url,value|
 				crawled_in_this_run << url
 				request = Typhoeus::Request.new(url, headers: self.opts["headers"])
 
-				
-
 				request.on_complete do |response|
+					#puts "got a response"
+					k.delete(request.url)
+					#puts "pending #{k.keys}"
 			      	rate_queue.shift
 =begin
 			      	if unit == 0
@@ -422,12 +433,17 @@ class Atilla::Crawler
 				request
 			}
 			
+
+			puts "#{requests.size} requests queued"
 			
 			hydra.run
+
 			responses = requests.each_with_index{|request,key|
 				response = request.response
 				update_page_info(request,response,new_urls_added,request.base_url)
 			}
+
+			puts "completed -- "
 
 			#puts "exited requests loop"
 			crawled_in_this_run.each do |k|
