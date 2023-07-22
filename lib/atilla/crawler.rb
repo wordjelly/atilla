@@ -9,6 +9,7 @@ require "normalize_url"
 require "fileutils"
 require "ruby-progressbar"
 require "concurrent-ruby"
+require "sitemap-parser"
 
 # so we can run it against a code. 
 # like -> do we have a 500
@@ -64,8 +65,8 @@ class Atilla::Crawler
 			"headers" => {
 				"User-Agent" => "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.77 Safari/537.36",
 				"Content-Type" => "text/html",
-				"Accept" => "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
-				"Accept-Encoding" => "gzip, deflate"
+				"Accept" => "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9"
+				#{}"Accept-Encoding" => "gzip, deflate"
 			},
 			"requests_per_second" => 30,
 			"url_pattern" => "*",
@@ -74,7 +75,8 @@ class Atilla::Crawler
 			# path at which to write the output
 			"output_path" => nil,
 			"urls_limit" => nil,
-			"kibana_index_name" => "crawl_responses",
+			"only_sitemap" => false,
+ 			"kibana_index_name" => "crawl_responses",
 			# when we are on a given page, we may discover n urls. if set to true -> it will crawl those pages as well. Turned to default "false" in case "urls_file" is provided.
 			"crawl_discovered_urls" => true,
 			# whether to normalize incoming urls. turned to "false" by default in case "urls_file" is provided.
@@ -92,6 +94,17 @@ class Atilla::Crawler
 		url
 	end
 
+	def add_sitemap_urls(host)
+		puts "hitting sitemap"
+		sitemap_url = host + "/sitemap.xml"
+		puts "sitemap url #{sitemap_url}"
+		sitemap = SitemapParser.new sitemap_url
+		self.seed_urls << sitemap.to_a
+		puts "got #{self.urls.size} urls from the sitemap"
+		self.seed_urls.uniq!
+		self.seed_urls.flatten!
+	end
+
 	## @param[String] base_url : the base_url of the website to be crawled. eg: http://www.google.com OR http://localhost:3000
 	## @param[String] urls_file_absolute_path : If you want to limit the types of urls crawled using a file set the full and absolute path of the file here. 
 	def initialize(host,seed_urls=[],opts={})
@@ -103,7 +116,11 @@ class Atilla::Crawler
 
 		self.urls_from_file = []
 
-		if self.opts["urls_file"]
+		if self.opts["only_sitemap"]
+			add_sitemap_urls
+			self.opts["crawl_discovered_urls"] = false
+
+		elsif self.opts["urls_file"]
 			
 			self.opts["crawl_discovered_urls"] = false
 			
@@ -118,6 +135,7 @@ class Atilla::Crawler
 		else
 			if seed_urls.blank?
 				self.seed_urls = [host]
+				add_sitemap_urls
 			else
 				self.seed_urls = seed_urls
 			end
@@ -154,7 +172,7 @@ class Atilla::Crawler
 		# ADD CANONICAL URL.
 		self.urls[url]["CANONICAL_URL"] = canon.text if (canon and (!canon.text.strip.blank?))
 
-		#byebug
+		
 
 		return new_urls_added unless self.opts["crawl_discovered_urls"]
 		if response.code.to_s == "301" or response.code.to_s == "302" or response.code == "308"
@@ -163,7 +181,6 @@ class Atilla::Crawler
 			end
 			return new_urls_added
 		else
-			
 			# if a canonical exists and we have already completed it, then dont parse this, this makes sure that when the canonical itself comes in with a self ref -> it will parse.
 			if canon and !canon.text.strip.blank? and has_completed_url?(canon.text)
 				#puts "this is canonical"
@@ -409,6 +426,7 @@ class Atilla::Crawler
 			#processed = Concurrent::AtomicFixnum.new
 			k = Marshal.load(Marshal.dump(self.urls))
 			requests = self.urls.map{|url,value|
+				puts "doing url #{url}"
 				crawled_in_this_run << url
 				request = Typhoeus::Request.new(url, headers: self.opts["headers"])
 

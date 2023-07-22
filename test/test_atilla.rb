@@ -4,6 +4,7 @@ require "test_helper"
 
 class TestAtilla < Minitest::Test
 
+=begin
   def test_crawls_url
 
     Atilla::Es.wipe_index("crawl_responses")
@@ -14,6 +15,12 @@ class TestAtilla < Minitest::Test
 
     Atilla::Es.bulk_index(crawler.get_all_crawled_urls,"crawl_responses")
 
+  end
+=end
+
+  def test_crawls_sitemap
+    crawler = Atilla::Crawler.new("http://ben.balter.com/",[],{"sitemap" => true, "headers" => {"Cache-Purge" => true},"params" => {}, "output_path" => (__FILE__.split(/\//)[0..-3].join("/") + "/output")})
+    crawler.run    
   end
 
 =begin

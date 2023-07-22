@@ -35,9 +35,37 @@ b. max_concurrency -> how many urls to hit in parallel while crawling
 
 crawler = Atilla::Crawler.new("http://localhost:3000",["http://localhost:3000/entry_point_1","http://localhost:3000/entry_point_2"],{"params" => {"nocache" => true}})
 
-
-
+The third argument is the options hash
 ```
+
+### Options
+
+#### Seed Urls: 
+
+The seed urls, are specified in the second argument of the initializer. If left blank, it uses the host as a seed url. If provided, it will use those seed urls. Optionally the following two options can be set :
+
+1. only_sitemap [DEFAULT FALSE] -> the crawler will only crawl the urls provided in the host/sitemap.xml and no other urls.
+2. urls_file [DEFAULT NIL] -> Will read the provided file path (must be absolute path), and will parse the urls out of that file. Every url should be provided on a new line.
+2a. urls_file_limit [DEFAULT ALL] -> If provided, will restrict the urls from the file to the given number
+
+If either of 'only_sitemap' or 'urls_file' is provided, the 'crawl_discovered_urls' option is set to 'false'. This means that only the urls populated into the 'seed_urls' will be crawled.
+
+Sitemap urls are appended to the seed urls, by default if neither of the above two options are specified. This ensures that the sitemap will always be crawled.
+
+#### Miscellaneous Options:
+
+1. crawl_discovered_urls [DEFAULT TRUE] -> the crawler will follow all 'a' tags on every page that it visits and add those pages to the crawl queue. Thie setting is switched to false if 'only_sitemap' or 'urls_file' is provided. 
+2. urls_limit [DEFAULT ALL] -> limit the number of urls that will be crawled, once this limit is crossed no new urls are crawled. The limit is applied at runtime.
+3. normalize_urls [DEFAULT TRUE] -> whether to normalize all urls, as per the Addressable Gem's specifications.
+4. save_output [DEFAULT FALSE] -> the crawler does not save the crawl output by default. This must be set to true explicitly. The crawler instance holds a hash called 'completed_urls' which contains all information about every url. You can access this directly on the crawler object at the end of the crawl.
+5. output_path [DEFAULT NIL, WILL RAISE] -> you must specify an output directory to write the json of the crawl, only IF you set "save_output" to true.
+6. params [EMPTY HASH] -> custom parameters to append to each url request.
+7. requests_per_second -> how many requests to make per second to the host. Defaults to 30. 
+8. headers -> the request headers for every request.
+
+
+### Indexing to Elasticsearch:
+
 
 ### Url Following System:
 
