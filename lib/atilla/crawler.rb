@@ -10,6 +10,7 @@ require "fileutils"
 require "ruby-progressbar"
 require "concurrent-ruby"
 require "sitemap-parser"
+require "robotstxt"
 
 # so we can run it against a code. 
 # like -> do we have a 500
@@ -103,6 +104,10 @@ class Atilla::Crawler
 		puts "got #{self.urls.size} urls from the sitemap"
 		self.seed_urls.uniq!
 		self.seed_urls.flatten!
+	end
+
+	def check_robots
+
 	end
 
 	## @param[String] base_url : the base_url of the website to be crawled. eg: http://www.google.com OR http://localhost:3000

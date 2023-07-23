@@ -1,3 +1,9 @@
+GIT
+  remote: https://github.com/wordjelly/robotstxt-parser.git
+  revision: c231c1edad730b5226dd5d1f092f7892abf045a8
+  specs:
+    robotstxt-parser (0.1.1)
+
 PATH
   remote: .
   specs:
@@ -141,6 +147,7 @@ DEPENDENCIES
   atilla!
   minitest (~> 5.0)
   rake (~> 13.0)
+  robotstxt-parser!
   rubocop (~> 1.12)
 
 BUNDLED WITH

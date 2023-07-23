@@ -10,3 +10,5 @@ gem "rake", "~> 13.0"
 gem "minitest", "~> 5.0"
 
 gem "rubocop", "~> 1.12"
+
+gem 'robotstxt-parser', :git => "https://github.com/wordjelly/robotstxt-parser.git"

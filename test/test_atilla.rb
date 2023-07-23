@@ -17,11 +17,21 @@ class TestAtilla < Minitest::Test
 
   end
 =end
+  
+  def test_crawls_robotstxt
+    parser = Robotstxt::Parser.new("dog",Typhoeus.get("https://ben.balter.com/robots.txt").body)
+    puts parser.sitemaps.to_s
+    puts parser.allowed?("/")
+    puts parser.allowed?("/404.html")
+  end
+  
 
+=begin
   def test_crawls_sitemap
     crawler = Atilla::Crawler.new("http://ben.balter.com/",[],{"sitemap" => true, "headers" => {"Cache-Purge" => true},"params" => {}, "output_path" => (__FILE__.split(/\//)[0..-3].join("/") + "/output")})
     crawler.run    
   end
+=end
 
 =begin
   def test_crawls_url
