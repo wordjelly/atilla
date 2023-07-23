@@ -19,12 +19,15 @@ class TestAtilla < Minitest::Test
 =end
   
   def test_crawls_robotstxt
-    parser = Robotstxt::Parser.new("dog",Typhoeus.get("https://ben.balter.com/robots.txt").body)
+    response = Typhoeus.get("http://ben.balter.com/robots.txt", {:follow_location => true})
+    puts response.code.to_s
+    puts "body is #{response.body.to_s}"
+    parser = Robotstxt::Parser.new("dog",response.body)
     puts parser.sitemaps.to_s
-    puts parser.allowed?("/")
+    puts parser.allowed?("http://ben.balter.com/")
     puts parser.allowed?("/404.html")
   end
-  
+
 
 =begin
   def test_crawls_sitemap

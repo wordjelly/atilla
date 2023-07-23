@@ -43,6 +43,10 @@ class Atilla::Crawler
 
 	attr_accessor :urls_from_file
 
+	attr_accessor :sitemap_urls
+
+	attr_accessor :robots_parser
+
 		
 	###############################################3
 	## These options help to define the crawl process
@@ -96,18 +100,35 @@ class Atilla::Crawler
 	end
 
 	def add_sitemap_urls(host)
-		puts "hitting sitemap"
-		sitemap_url = host + "/sitemap.xml"
-		puts "sitemap url #{sitemap_url}"
-		sitemap = SitemapParser.new sitemap_url
-		self.seed_urls << sitemap.to_a
-		puts "got #{self.urls.size} urls from the sitemap"
+		#puts "hitting sitemap"
+		if self.sitemap_urls.blank?
+			self.sitemap_urls = host + "/sitemap.xml"
+		end
+
+		self.sitemap_urls.each do |sitemap_url|
+			sitemap = SitemapParser.new sitemap_url
+			self.seed_urls << sitemap.to_a
+		end
+		
+		#puts "got #{self.urls.size} urls from the sitemap"
 		self.seed_urls.uniq!
 		self.seed_urls.flatten!
+		
 	end
 
-	def check_robots
+	def set_robots_parser(host)
+		response = Typhoeus.get(host + "/robots.txt")
+		if response.code.to_s == "200"
+			self.robots_parser = Robotstxt::Parser.new(self.opts["headers"]["User-Agent"],response.body)
+			unless self.robots_parser.sitemaps.blank?
+				self.sitemap_urls = self.robots_parser.sitemaps
+			end
+		end
+	end
 
+	def robots_allowed?(url)
+		return true if self.robots_parser.blank?
+		return self.robots_parser.allowed?(url)
 	end
 
 	## @param[String] base_url : the base_url of the website to be crawled. eg: http://www.google.com OR http://localhost:3000
@@ -120,6 +141,8 @@ class Atilla::Crawler
 		self.opts = default_opts.deep_merge(opts)
 
 		self.urls_from_file = []
+
+		set_robots_parser(host)
 
 		if self.opts["only_sitemap"]
 			add_sitemap_urls
@@ -267,6 +290,11 @@ class Atilla::Crawler
 		begin
 			url = NormalizeUrl.process(url) if self.opts["normalize_urls"]
 			
+			unless robots_allowed?(url)
+				puts "url #{url} not allowed by robots.txt"
+				return false 
+			end
+			
 			k = append_params(url)
 			# remove trailing slash
 
@@ -280,6 +308,7 @@ class Atilla::Crawler
 						return false
 					end
 				end
+
 				self.urls[k] = {"REFERRING_URLS" => []}
 				unless opts["referrer"].blank?
 					self.urls[k]["REFERRING_URLS"] << opts["referrer"]
