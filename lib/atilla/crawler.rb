@@ -10,7 +10,7 @@ require "fileutils"
 require "ruby-progressbar"
 require "concurrent-ruby"
 require "sitemap-parser"
-require "robotstxt"
+#require "robotstxt"
 
 # so we can run it against a code. 
 # like -> do we have a 500
@@ -88,7 +88,7 @@ class Atilla::Crawler
 			"normalize_urls" => true
 		}
 	end
-	
+
 	def write_log(message)
 		puts message
 	end

@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require "robotstxt"
 require_relative "atilla/version"
 require_relative "atilla/crawler"
 require_relative "atilla/es"

@@ -7,7 +7,7 @@ GIT
 PATH
   remote: .
   specs:
-    atilla (0.1.5)
+    atilla (0.1.6)
       activesupport
       addressable
       byebug
@@ -16,6 +16,7 @@ PATH
       nokogiri
       normalize_url
       rack
+      robotstxt-parser
       ruby-limiter
       ruby-progressbar
       sitemap-parser
@@ -101,29 +102,30 @@ GEM
       racc (~> 1.4)
     normalize_url (0.0.6)
       addressable (~> 2.3)
-    parallel (1.20.1)
-    parser (3.2.1.0)
+    parallel (1.23.0)
+    parser (3.2.2.3)
       ast (~> 2.4.1)
+      racc
     public_suffix (4.0.7)
     racc (1.7.1)
     rack (3.0.8)
     rainbow (3.1.1)
     rake (13.0.6)
-    regexp_parser (2.7.0)
+    regexp_parser (2.8.1)
     rexml (3.2.5)
-    rubocop (1.12.1)
+    rubocop (1.28.2)
       parallel (~> 1.10)
-      parser (>= 3.0.0.0)
+      parser (>= 3.1.0.0)
       rainbow (>= 2.2.2, < 4.0)
       regexp_parser (>= 1.8, < 3.0)
       rexml
-      rubocop-ast (>= 1.2.0, < 2.0)
+      rubocop-ast (>= 1.17.0, < 2.0)
       ruby-progressbar (~> 1.7)
       unicode-display_width (>= 1.4.0, < 3.0)
-    rubocop-ast (1.4.1)
-      parser (>= 2.7.1.5)
+    rubocop-ast (1.17.0)
+      parser (>= 3.1.1.0)
     ruby-limiter (1.1.0)
-    ruby-progressbar (1.11.0)
+    ruby-progressbar (1.13.0)
     ruby2_keywords (0.0.5)
     sitemap-parser (0.5.6)
       nokogiri (~> 1.6)
