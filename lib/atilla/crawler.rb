@@ -88,6 +88,10 @@ class Atilla::Crawler
 			"normalize_urls" => true
 		}
 	end
+	
+	def write_log(message)
+		puts message
+	end
 
 	# For urls provided via files list, we ensure that the domain is local.
 	def set_url_domain_to_host(url)
@@ -99,10 +103,10 @@ class Atilla::Crawler
 		url
 	end
 
-	def add_sitemap_urls(host)
+	def add_sitemap_urls
 		#puts "hitting sitemap"
 		if self.sitemap_urls.blank?
-			self.sitemap_urls = host + "/sitemap.xml"
+			self.sitemap_urls = [self.host + "/sitemap.xml"]
 		end
 
 		self.sitemap_urls.each do |sitemap_url|
@@ -117,10 +121,12 @@ class Atilla::Crawler
 	end
 
 	def set_robots_parser(host)
-		response = Typhoeus.get(host + "/robots.txt")
+		response = Typhoeus.get(host + "/robots.txt",{followlocation: true})
 		if response.code.to_s == "200"
+			write_log("got robots.txt")
 			self.robots_parser = Robotstxt::Parser.new(self.opts["headers"]["User-Agent"],response.body)
 			unless self.robots_parser.sitemaps.blank?
+				write_log("robots.txt specified sitemaps")
 				self.sitemap_urls = self.robots_parser.sitemaps
 			end
 		end
@@ -291,7 +297,7 @@ class Atilla::Crawler
 			url = NormalizeUrl.process(url) if self.opts["normalize_urls"]
 			
 			unless robots_allowed?(url)
-				puts "url #{url} not allowed by robots.txt"
+				write_log("url #{url} not allowed by robots.txt")
 				return false 
 			end
 			
@@ -334,7 +340,7 @@ class Atilla::Crawler
 			end
 			return false
 		rescue => e
-			puts "url #{url} could not be added due to error"
+			write_log("url #{url} could not be added due to error")
 			return false
 		end
 	end
@@ -460,7 +466,7 @@ class Atilla::Crawler
 			#processed = Concurrent::AtomicFixnum.new
 			k = Marshal.load(Marshal.dump(self.urls))
 			requests = self.urls.map{|url,value|
-				puts "doing url #{url}"
+				#puts "doing url #{url}"
 				crawled_in_this_run << url
 				request = Typhoeus::Request.new(url, headers: self.opts["headers"])
 
@@ -486,7 +492,7 @@ class Atilla::Crawler
 			}
 			
 
-			puts "#{requests.size} requests queued"
+			write_log("#{requests.size} requests queued")
 			
 			hydra.run
 
@@ -495,7 +501,7 @@ class Atilla::Crawler
 				update_page_info(request,response,new_urls_added,request.base_url)
 			}
 
-			puts "completed -- "
+			write_log("completed -- ")
 
 			#puts "exited requests loop"
 			crawled_in_this_run.each do |k|
@@ -503,7 +509,7 @@ class Atilla::Crawler
 				urls_removed += 1
 			end
 			
-			puts "discovered #{new_urls_added} new urls and crawled #{urls_removed}, total pending urls #{self.urls.size}, total crawled urls #{self.completed_urls.size}"
+			write_log("discovered #{new_urls_added} new urls and crawled #{urls_removed}, total pending urls #{self.urls.size}, total crawled urls #{self.completed_urls.size}")
 
 
 		end

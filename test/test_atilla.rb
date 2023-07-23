@@ -18,6 +18,7 @@ class TestAtilla < Minitest::Test
   end
 =end
   
+=begin
   def test_crawls_robotstxt
     response = Typhoeus.get("http://ben.balter.com/robots.txt", {:follow_location => true})
     puts response.code.to_s
@@ -27,14 +28,12 @@ class TestAtilla < Minitest::Test
     puts parser.allowed?("http://ben.balter.com/")
     puts parser.allowed?("/404.html")
   end
+=end
 
-
-=begin
   def test_crawls_sitemap
     crawler = Atilla::Crawler.new("http://ben.balter.com/",[],{"sitemap" => true, "headers" => {"Cache-Purge" => true},"params" => {}, "output_path" => (__FILE__.split(/\//)[0..-3].join("/") + "/output")})
     crawler.run    
   end
-=end
 
 =begin
   def test_crawls_url

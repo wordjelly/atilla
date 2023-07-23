@@ -2,6 +2,8 @@
 
 source "https://rubygems.org"
 
+gem 'robotstxt-parser', :git => "https://github.com/wordjelly/robotstxt-parser.git"
+
 # Specify your gem's dependencies in atilla.gemspec
 gemspec
 
@@ -11,4 +13,3 @@ gem "minitest", "~> 5.0"
 
 gem "rubocop", "~> 1.12"
 
-gem 'robotstxt-parser', :git => "https://github.com/wordjelly/robotstxt-parser.git"
