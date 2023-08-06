@@ -7,12 +7,13 @@ GIT
 PATH
   remote: .
   specs:
-    atilla (0.1.6)
+    atilla (0.1.7)
       activesupport
       addressable
       byebug
       concurrent-ruby
       elasticsearch-persistence (= 5.0.2)
+      metainspector
       nokogiri
       normalize_url
       rack
@@ -46,6 +47,8 @@ GEM
     concurrent-ruby (1.2.2)
     descendants_tracker (0.0.4)
       thread_safe (~> 0.3, >= 0.3.1)
+    domain_name (0.5.20190701)
+      unf (>= 0.0.5, < 1.0.0)
     elasticsearch (5.0.5)
       elasticsearch-api (= 5.0.5)
       elasticsearch-transport (= 5.0.5)
@@ -79,9 +82,16 @@ GEM
       faraday-rack (~> 1.0)
       faraday-retry (~> 1.0)
       ruby2_keywords (>= 0.0.4)
+    faraday-cookie_jar (0.0.7)
+      faraday (>= 0.8.0)
+      http-cookie (~> 1.0.0)
     faraday-em_http (1.0.0)
     faraday-em_synchrony (1.0.0)
+    faraday-encoding (0.0.5)
+      faraday
     faraday-excon (1.1.0)
+    faraday-http-cache (2.5.0)
+      faraday (>= 0.8)
     faraday-httpclient (1.0.1)
     faraday-multipart (1.0.4)
       multipart-post (~> 2)
@@ -90,14 +100,30 @@ GEM
     faraday-patron (1.0.0)
     faraday-rack (1.0.0)
     faraday-retry (1.0.3)
+    faraday_middleware (1.2.0)
+      faraday (~> 1.0)
+    fastimage (2.2.7)
     ffi (1.15.5)
     hashie (5.0.0)
+    http-cookie (1.0.5)
+      domain_name (~> 0.5)
     i18n (1.14.1)
       concurrent-ruby (~> 1.0)
     ice_nine (0.11.2)
+    metainspector (5.12.1)
+      addressable (~> 2.7)
+      faraday (>= 1.4, < 3.0)
+      faraday-cookie_jar (~> 0.0)
+      faraday-encoding (~> 0.0)
+      faraday-http-cache (~> 2.2)
+      faraday_middleware (~> 1.0)
+      fastimage (~> 2.2)
+      nesty (~> 1.0)
+      nokogiri (~> 1.11)
     minitest (5.15.0)
     multi_json (1.15.0)
     multipart-post (2.3.0)
+    nesty (1.0.2)
     nokogiri (1.12.5-x86_64-linux)
       racc (~> 1.4)
     normalize_url (0.0.6)
@@ -135,6 +161,9 @@ GEM
       ethon (>= 0.9.0)
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
+    unf (0.1.4)
+      unf_ext
+    unf_ext (0.0.8.2)
     unicode-display_width (2.4.2)
     virtus (2.0.0)
       axiom-types (~> 0.1)

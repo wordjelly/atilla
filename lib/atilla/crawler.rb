@@ -10,6 +10,7 @@ require "fileutils"
 require "ruby-progressbar"
 require "concurrent-ruby"
 require "sitemap-parser"
+require "metainspector"
 #require "robotstxt"
 
 # so we can run it against a code. 
@@ -51,7 +52,7 @@ class Atilla::Crawler
 	###############################################3
 	## These options help to define the crawl process
 	## :max_concurrency : how many urls can we hit at the same time. For eg: 10 would mean that we can issue 10 parallel request to the host. Defaults to 10
-	## :url_pattern : if a specific pattern is to be crawled. For eg maybe you only want to crawl /articles. Just specify the pattern as a plain string. Defaults to "*"
+	## :url_patterns : if a specific pattern is to be crawled. For eg maybe you only want to crawl /articles. Just specify the pattern as a plain string. Defaults to "*"
 	## :urls_file: if you want to crawl urls specified in a file -> sepcify the whole file path
 	## :output_path : the full path of the file to write the crawl stats
 	## :urls_limit : stop after crawling these many urls. eg : 10, defaults to nil, which means it will never break.
@@ -64,17 +65,18 @@ class Atilla::Crawler
 	def default_opts
 		{ 
 			## whether to save the output of the crawl , this is FALSE by default. 
+			"urls_per_batch" => 10,
 			"save_output" => false,
 			"params" => {},
-			"max_concurrency" => 200,
+			"max_concurrency" => 5,
 			"headers" => {
 				"User-Agent" => "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.77 Safari/537.36",
 				"Content-Type" => "text/html",
 				"Accept" => "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9"
 				#{}"Accept-Encoding" => "gzip, deflate"
 			},
-			"requests_per_second" => 30,
-			"url_pattern" => "*",
+			"requests_per_second" => 1,
+			"url_patterns" => ["*"],
 			"urls_file" => nil,
 			"urls_file_limit" => nil,
 			# path at which to write the output
@@ -85,12 +87,29 @@ class Atilla::Crawler
 			# when we are on a given page, we may discover n urls. if set to true -> it will crawl those pages as well. Turned to default "false" in case "urls_file" is provided.
 			"crawl_discovered_urls" => true,
 			# whether to normalize incoming urls. turned to "false" by default in case "urls_file" is provided.
-			"normalize_urls" => true
+			"normalize_urls" => true,
+			"log_level" => "debug"
 		}
 	end
 
-	def write_log(message)
-		puts message
+	def log_hierarchy
+		["debug","info","error","fatal"]
+	end
+
+	def write_log(message,log_level="debug")
+		allowed_index = log_hierarchy.index(self.opts["log_level"])
+		#puts "allowed index #{allowed_index}"
+		allowed = log_hierarchy[allowed_index..-1]
+		3puts "allowed #{allowed}"
+		#puts "incoming level #{log_level}"
+		if allowed.include? log_level
+			if self.opts["log_proc"]
+				self.opts["log_proc"].call(message)
+			end
+			puts message
+		else
+			#puts "log not allowed"
+		end
 	end
 
 	# For urls provided via files list, we ensure that the domain is local.
@@ -110,8 +129,13 @@ class Atilla::Crawler
 		end
 
 		self.sitemap_urls.each do |sitemap_url|
-			sitemap = SitemapParser.new sitemap_url
-			self.seed_urls << sitemap.to_a
+			begin
+				sitemap = SitemapParser.new(sitemap_url,{recurse: true})
+				write_log("hitting sitemap recursively","info")
+				self.seed_urls << sitemap.to_a
+			rescue => e
+				write_log("failed to parse sitemap with error #{e.to_s}","error")
+			end
 		end
 		
 		#puts "got #{self.urls.size} urls from the sitemap"
@@ -123,11 +147,13 @@ class Atilla::Crawler
 	def set_robots_parser(host)
 		response = Typhoeus.get(host + "/robots.txt",{followlocation: true})
 		if response.code.to_s == "200"
-			write_log("got robots.txt")
+			write_log("got robots.txt","info")
 			self.robots_parser = Robotstxt::Parser.new(self.opts["headers"]["User-Agent"],response.body)
 			unless self.robots_parser.sitemaps.blank?
-				write_log("robots.txt specified sitemaps")
+				write_log("robots.txt specified sitemaps","info")
 				self.sitemap_urls = self.robots_parser.sitemaps
+			else
+				write_log("robots.txt does not specify a sitemap.","info")
 			end
 		end
 	end
@@ -192,12 +218,19 @@ class Atilla::Crawler
 	end
 
 	def create_crawl_output_dir
+		return unless self.opts["save_output"] == true
 		if self.opts["output_path"].blank?
 			raise "please specify an output path for the directory that will hold the crawl results"
 		end
 		FileUtils.mkdir_p(self.opts["output_path"] + "/#{output_file_path_prefix}")
 	end
 	
+	def extract_shortlink_href(doc)
+	  # To extract the href attribute value using CSS selector
+	  shortlink_node = doc.at('link[rel="shortlink"][type="text/html"]')
+	  return shortlink_node['href'] if shortlink_node
+	  return nil
+	end
 
 	def parse_page(response,url)
 		new_urls_added = 0
@@ -206,7 +239,7 @@ class Atilla::Crawler
 		# ADD CANONICAL URL.
 		self.urls[url]["CANONICAL_URL"] = canon.text if (canon and (!canon.text.strip.blank?))
 
-		
+		self.urls[url]["SHORT_URL"] = extract_shortlink_href(doc)
 
 		return new_urls_added unless self.opts["crawl_discovered_urls"]
 		if response.code.to_s == "301" or response.code.to_s == "302" or response.code == "308"
@@ -292,14 +325,30 @@ class Atilla::Crawler
 		url
 	end
 
+	# so in the crawls -> allow them.
+	def allow_url_patterns?(url)
+		if url =~ /#{self.opts['url_patterns'].map{|r| Regexp.escape(r)}.join('|')}/i
+			return true
+		else
+			return true if url == self.host
+			return false
+		end
+	end
+
 	def add_url(url,opts={})
 		begin
 			url = NormalizeUrl.process(url) if self.opts["normalize_urls"]
 			
 			unless robots_allowed?(url)
-				write_log("url #{url} not allowed by robots.txt")
+				write_log("url #{url} not allowed by robots.txt","info")
 				return false 
 			end
+
+			unless allow_url_patterns?(url)
+				write_log("url #{url} not allowed via specified patterns #{self.opts['url_patterns']}","debug")
+				return false
+			end
+
 			
 			k = append_params(url)
 			# remove trailing slash
@@ -340,13 +389,22 @@ class Atilla::Crawler
 			end
 			return false
 		rescue => e
-			write_log("url #{url} could not be added due to error")
+			#write_log("url #{url} could not be added due to error")
 			return false
 		end
 	end
 
 	def parse_page_codes
 		["204","201","200","301","302"]
+	end
+
+	def meta_inspect(url,response)
+		page = MetaInspector.new(url, :document => response.body)
+		{
+			"title" => page.best_title,
+			"description" => page.best_description,
+			"images" => page.images.map{|r| r.to_s}
+		}
 	end
 
 	def update_page_info(request,response,new_urls_added,url)
@@ -379,7 +437,7 @@ class Atilla::Crawler
 
 		self.urls[url]["URL"] = url
 
-
+		self.urls[url].merge!(meta_inspect(url,response))
 		
 		if parse_page_codes.include? response.code.to_s
 			#puts "parsing page -- "
@@ -387,6 +445,8 @@ class Atilla::Crawler
 			
 			new_urls_added += res
 		end
+
+
 
 	end
 
@@ -436,56 +496,15 @@ class Atilla::Crawler
 	end
 =end
 
-	def run
-		
-		rate_queue = ::Limiter::RateQueue.new(self.opts["requests_per_second"], interval: 1)
-
-		## ADD URLS FROM THE URL FILE.
-		##byebug
-		
-		self.seed_urls.uniq.each do |k|
-			add_url(k)
-		end
-		
-
-
-		failed_to_correlate_urls = {}
-
-		while !self.urls.blank?
-			new_urls_added = 0
-			urls_removed = 0
-			# init hydra
-
-			crawled_in_this_run = []
-			hydra = Typhoeus::Hydra.new(max_concurrency: self.opts["max_concurrency"])
-
-			
-			#puts "Queueing requests --------->"
-			#progressbar = ProgressBar.create
-			#unit = self.urls.size/100
-			#processed = Concurrent::AtomicFixnum.new
-			k = Marshal.load(Marshal.dump(self.urls))
+=begin
 			requests = self.urls.map{|url,value|
 				#puts "doing url #{url}"
 				crawled_in_this_run << url
-				request = Typhoeus::Request.new(url, headers: self.opts["headers"])
+				request = Typhoeus::Request.new(url, headers: self.opts["headers"], connecttimeout: 1, timeout: 3)
 
 				request.on_complete do |response|
-					#puts "got a response"
-					k.delete(request.url)
-					#puts "pending #{k.keys}"
+					#k.delete(request.url)
 			      	rate_queue.shift
-=begin
-			      	if unit == 0
-			      		progressbar.total = 100
-			      	else
-				      	if processed.value % unit == 0
-				      		puts "incrementing as processed is #{processed}, unit is #{unit}, and mod is #{processed.value % unit}"
-				      		progressbar.increment
-				  	  	end
-			  	  	end
-			  	  	processed.increment
-=end
 			    end
 				hydra.queue(request)
 				request
@@ -502,17 +521,82 @@ class Atilla::Crawler
 			}
 
 			write_log("completed -- ")
+=end
 
-			#puts "exited requests loop"
-			crawled_in_this_run.each do |k|
-				self.completed_urls[k] = self.urls.delete(k)
-				urls_removed += 1
-			end
+	# this must be lower.
+	# otherwise doesnt make sense.
+	def run
+		
+		rate_queue = ::Limiter::RateQueue.new(self.opts["requests_per_second"], interval: 1)
+
+		## ADD URLS FROM THE URL FILE.
+		##byebug
+		
+		self.seed_urls.uniq.each do |k|
+			add_url(k)
+		end
+		
+		failed_to_correlate_urls = {}
+		new_urls_added = 0
+		urls_removed = 0
+
+		crawled_in_this_run = []
+
+		max_con = self.opts["max_concurrency"] > self.opts["requests_per_second"] ? self.opts["requests_per_second"] : self.opts["max_concurrency"]
+
+		hydra = Typhoeus::Hydra.new(max_concurrency: max_con)
+
+		while !self.urls.blank?
+
+			urls_snap = Marshal.load(Marshal.dump(self.urls.keys))
+
+			write_log("starting crawl of #{urls_snap.size} urls, at the rate of #{self.opts['max_concurrency']}/requests per second, in batches of #{self.opts['urls_per_batch']} urls.","info")
+
+
+			progressbar = ProgressBar.create(:total => urls_snap.size, format: "%a %e %P% Processed: %c from %C")
+
+			urls_snap.each_slice(self.opts["urls_per_batch"]) do |url_batch|
+				
+				requests = url_batch.map{|url|
+					request = Typhoeus::Request.new(url, headers: self.opts["headers"], connecttimeout: 1, timeout: 3)
+
+					request.on_complete do |response|
+						#k.delete(request.url)
+				      	rate_queue.shift
+				    end
+					hydra.queue(request)
+					request
+				}
+
+				#write_log("#{requests.size} requests queued")
 			
-			write_log("discovered #{new_urls_added} new urls and crawled #{urls_removed}, total pending urls #{self.urls.size}, total crawled urls #{self.completed_urls.size}")
+				hydra.run
 
+				responses = requests.each_with_index{|request,key|
+					response = request.response
+					update_page_info(request,response,new_urls_added,request.base_url)
+					progressbar.increment
+				}
+
+				url_batch.map{|url,value|
+					self.completed_urls[url] = self.urls.delete(url)
+					urls_removed += 1
+				}
+
+				# so how to constrain.
+				# reschedule a post only for a particular network.
+				# what about summarize this
+				# how many did you complete.
+				#write_log("Completed batch of #{url_batch.size}, Total Crawled on Domain #{self.completed_urls.size} -- discovered #{new_urls_added} new urls, total pending urls #{self.urls.size} ")
+			end
 
 		end
+
+		
+		#write_log("discovered #{new_urls_added} new urls and crawled #{urls_removed}, total pending urls #{self.urls.size}, total crawled urls #{self.completed_urls.size}")
+
+
+		#end
 
 		if self.opts["save_output"]
 			write_completed_urls

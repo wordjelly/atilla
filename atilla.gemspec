@@ -46,6 +46,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "concurrent-ruby"
   spec.add_dependency "sitemap-parser"
   spec.add_dependency "robotstxt-parser"
+  spec.add_dependency "metainspector"
   # Uncomment to register a new dependency of your gem
   # spec.add_dependency "example-gem", "~> 1.0"
 

@@ -30,10 +30,25 @@ class TestAtilla < Minitest::Test
   end
 =end
 
+=begin
+  def test_metainspect
+    page = MetaInspector.new("http://localhost:5000", :document => "<html></html>")
+    puts page.title
+  end
+=end
+
+=begin
   def test_crawls_sitemap
-    crawler = Atilla::Crawler.new("http://ben.balter.com/",[],{"sitemap" => true, "headers" => {"Cache-Purge" => true},"params" => {}, "output_path" => (__FILE__.split(/\//)[0..-3].join("/") + "/output")})
+    crawler = Atilla::Crawler.new("http://ben.balter.com/",[],{"save_output" => true, "headers" => {"Cache-Purge" => true},"params" => {}, "output_path" => (__FILE__.split(/\//)[0..-3].join("/") + "/output")})
     crawler.run    
   end
+=end
+
+  def test_crawls_url_patterns
+    crawler = Atilla::Crawler.new("http://www.pathofast.com/",[],{"save_output" => true, "url_patterns" => ["pune/tests/cost-range-about"], "headers" => {"Cache-Purge" => true},"params" => {}, "output_path" => (__FILE__.split(/\//)[0..-3].join("/") + "/output")})
+    crawler.run
+  end
+
 
 =begin
   def test_crawls_url
