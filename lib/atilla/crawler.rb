@@ -11,6 +11,7 @@ require "ruby-progressbar"
 require "concurrent-ruby"
 require "sitemap-parser"
 require "metainspector"
+require "uri"
 #require "robotstxt"
 
 # so we can run it against a code. 
@@ -48,6 +49,9 @@ class Atilla::Crawler
 
 	attr_accessor :robots_parser
 
+	attr_accessor :sitemap_discovered
+
+	attr_accessor :sitemap_urls_count
 		
 	###############################################3
 	## These options help to define the crawl process
@@ -76,7 +80,7 @@ class Atilla::Crawler
 				#{}"Accept-Encoding" => "gzip, deflate"
 			},
 			"requests_per_second" => 1,
-			"url_patterns" => ["*"],
+			"url_patterns" => [".*"],
 			"urls_file" => nil,
 			"urls_file_limit" => nil,
 			# path at which to write the output
@@ -88,7 +92,8 @@ class Atilla::Crawler
 			"crawl_discovered_urls" => true,
 			# whether to normalize incoming urls. turned to "false" by default in case "urls_file" is provided.
 			"normalize_urls" => true,
-			"log_level" => "debug"
+			"log_level" => "debug",
+			"discovery" => false
 		}
 	end
 
@@ -100,7 +105,7 @@ class Atilla::Crawler
 		allowed_index = log_hierarchy.index(self.opts["log_level"])
 		#puts "allowed index #{allowed_index}"
 		allowed = log_hierarchy[allowed_index..-1]
-		3puts "allowed #{allowed}"
+		#puts "allowed #{allowed}"
 		#puts "incoming level #{log_level}"
 		if allowed.include? log_level
 			if self.opts["log_proc"]
@@ -121,18 +126,30 @@ class Atilla::Crawler
 		url = url.gsub(/#{Regexp.escape(l)}/,l2)
 		url
 	end
+	
+	def crawl_sitemap
+		set_robots_parser(self.host)
 
-	def add_sitemap_urls
-		#puts "hitting sitemap"
 		if self.sitemap_urls.blank?
 			self.sitemap_urls = [self.host + "/sitemap.xml"]
 		end
 
 		self.sitemap_urls.each do |sitemap_url|
 			begin
+				puts "checking sitemap url #{sitemap_url}"
+				response = Typhoeus.get(sitemap_url)
+				
+				if response.code.to_s == "200"
+					self.sitemap_discovered = true
+				end
+
 				sitemap = SitemapParser.new(sitemap_url,{recurse: true})
 				write_log("hitting sitemap recursively","info")
+				write_log(sitemap.to_a.to_s,"info")
+				self.sitemap_urls_count = sitemap.to_a.size
 				self.seed_urls << sitemap.to_a
+				self.seed_urls.flatten!
+				write_log("got #{self.seed_urls.size} urls","info")
 			rescue => e
 				write_log("failed to parse sitemap with error #{e.to_s}","error")
 			end
@@ -172,14 +189,13 @@ class Atilla::Crawler
 
 		self.opts = default_opts.deep_merge(opts)
 
+		self.sitemap_urls = opts.delete("sitemap_urls")
+
 		self.urls_from_file = []
 
-		set_robots_parser(host)
-
+		
 		if self.opts["only_sitemap"]
-			add_sitemap_urls
 			self.opts["crawl_discovered_urls"] = false
-
 		elsif self.opts["urls_file"]
 			
 			self.opts["crawl_discovered_urls"] = false
@@ -195,7 +211,6 @@ class Atilla::Crawler
 		else
 			if seed_urls.blank?
 				self.seed_urls = [host]
-				add_sitemap_urls
 			else
 				self.seed_urls = seed_urls
 			end
@@ -205,6 +220,7 @@ class Atilla::Crawler
 		self.completed_urls = {}
 		self.halt = false
 		self.crawl_started_at = Time.now
+
 
 		create_crawl_output_dir
 	end
@@ -327,7 +343,13 @@ class Atilla::Crawler
 
 	# so in the crawls -> allow them.
 	def allow_url_patterns?(url)
-		if url =~ /#{self.opts['url_patterns'].map{|r| Regexp.escape(r)}.join('|')}/i
+		if url =~ /#{self.opts['url_patterns'].map{|r| 
+			unless r == ".*"
+				Regexp.escape(r)
+			else
+				r
+			end
+		}.join('|')}/i
 			return true
 		else
 			return true if url == self.host
@@ -335,12 +357,24 @@ class Atilla::Crawler
 		end
 	end
 
+	def belongs_to_host?(url)
+		uri = URI(url)
+		uri.host == URI(self.host).host
+	end
+
 	def add_url(url,opts={})
 		begin
 			url = NormalizeUrl.process(url) if self.opts["normalize_urls"]
 			
+			write_log("url after normalization #{url}","debug")
+
+			unless belongs_to_host?(url)
+				write_log("url #{url} does not belong to host","debug")
+				return false 
+			end
+
 			unless robots_allowed?(url)
-				write_log("url #{url} not allowed by robots.txt","info")
+				write_log("url #{url} not allowed by robots.txt","debug")
 				return false 
 			end
 
@@ -368,6 +402,8 @@ class Atilla::Crawler
 				unless opts["referrer"].blank?
 					self.urls[k]["REFERRING_URLS"] << opts["referrer"]
 				end
+
+				write_log("added url #{k}","debug")
 				#puts "added url #{k}"
 				return true
 			else
@@ -389,7 +425,7 @@ class Atilla::Crawler
 			end
 			return false
 		rescue => e
-			#write_log("url #{url} could not be added due to error")
+			write_log("url #{url} could not be added due to error #{e.message} #{e.backtrace.to_s}","error")
 			return false
 		end
 	end
@@ -522,16 +558,27 @@ class Atilla::Crawler
 
 			write_log("completed -- ")
 =end
+	def crawl_sitemap
 
+	end
 	# this must be lower.
 	# otherwise doesnt make sense.
 	def run
-		
+
+		write_log("started crawl","info")
+
+		if self.opts["discovery"] == true
+			write_log("not crawling urls as we are in discovery mode","info")
+			return 
+
+		end
+
 		rate_queue = ::Limiter::RateQueue.new(self.opts["requests_per_second"], interval: 1)
 
 		## ADD URLS FROM THE URL FILE.
 		##byebug
-		
+		write_log("seed urls size #{self.seed_urls.size}","info")
+
 		self.seed_urls.uniq.each do |k|
 			add_url(k)
 		end
@@ -545,6 +592,8 @@ class Atilla::Crawler
 		max_con = self.opts["max_concurrency"] > self.opts["requests_per_second"] ? self.opts["requests_per_second"] : self.opts["max_concurrency"]
 
 		hydra = Typhoeus::Hydra.new(max_concurrency: max_con)
+
+		write_log("started crawl with total urls #{self.urls.size}","info")
 
 		while !self.urls.blank?
 
