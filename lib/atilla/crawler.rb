@@ -110,8 +110,11 @@ class Atilla::Crawler
 		end
 
 		self.sitemap_urls.each do |sitemap_url|
-			sitemap = SitemapParser.new sitemap_url
-			self.seed_urls << sitemap.to_a
+			base_response = Typhoeus.get(sitemap_url,{:followlocation => true})
+			if base_response.code.to_s == "200"
+				sitemap = SitemapParser.new sitemap_url
+				self.seed_urls << sitemap.to_a
+			end
 		end
 		
 		#puts "got #{self.urls.size} urls from the sitemap"
