@@ -4,7 +4,7 @@ require "typhoeus"
 require "active_support/all"
 require "rack"
 require "limiter"
-require "addressable"
+require "addressable/uri"
 require "normalize_url"
 require "fileutils"
 require "ruby-progressbar"
@@ -52,6 +52,8 @@ class Atilla::Crawler
 	attr_accessor :sitemap_discovered
 
 	attr_accessor :sitemap_urls_count
+
+	attr_accessor :host_uri_parts
 		
 	###############################################3
 	## These options help to define the crawl process
@@ -185,6 +187,8 @@ class Atilla::Crawler
 	def initialize(host,seed_urls=[],opts={})
 		self.host = host
 
+		#self.host_uri_parts = url_to_parts(self.host)
+
 		self.seed_urls = []
 
 		self.opts = default_opts.deep_merge(opts)
@@ -221,9 +225,10 @@ class Atilla::Crawler
 		self.halt = false
 		self.crawl_started_at = Time.now
 
-
 		create_crawl_output_dir
 	end
+
+	
 
 	def output_file_path_prefix
 		self.host.gsub(/\//,'-') + "-#{self.crawl_started_at.strftime("%Y-%m-%dT%H:%M:%S.%L%:z")}"
@@ -277,18 +282,18 @@ class Atilla::Crawler
 					next if link["href"].blank?
 					next if link["href"].strip.blank?
 
-					if link["href"] =~ /^#{Regexp.escape(self.host)}/
-						if add_url(link["href"],{"referrer" => url})
-							new_urls_added += 1
-						end
-					elsif link["href"] =~ /^(https?\:|www\.)/
-						#puts "its another domain"
+					#url_parts = url_to_parts(link["href"])
+
+
+					# STEP ONE -> ADDRESSABLE PARSE -> 
+					
+					ur = URI.parse(URI.join(self.host,link['href']).to_s)
+					if ur.host != URI.parse(self.host).host
+						puts "link #{link['href']} host #{ur.host}, is different from self.host"
 					else
-						href = link["href"]
-						#puts "href is #{href}, host is#{self.host}, #{link.text}"
-						if add_url(self.host + href,{"referrer" => url})
-							new_urls_added += 1
-						end
+						add_url(URI.join(self.host,link['href']).to_s)
+						new_urls_added += 1
+						#byebug
 					end
 				end
 			end
@@ -364,6 +369,7 @@ class Atilla::Crawler
 
 	def add_url(url,opts={})
 		begin
+			write_log("incoming url #{url}")
 			url = NormalizeUrl.process(url) if self.opts["normalize_urls"]
 			
 			write_log("url after normalization #{url}","debug")
@@ -558,9 +564,6 @@ class Atilla::Crawler
 
 			write_log("completed -- ")
 =end
-	def crawl_sitemap
-
-	end
 	# this must be lower.
 	# otherwise doesnt make sense.
 	def run

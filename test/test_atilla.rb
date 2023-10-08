@@ -45,7 +45,8 @@ class TestAtilla < Minitest::Test
 =end
 
   def test_crawls_url_patterns
-    crawler = Atilla::Crawler.new("http://localhost:4000",[],{"save_output" => true, "sitemap_urls" => ["http://localhost:4000/normal_sitemap.xml"], "headers" => {"Cache-Purge" => true},"params" => {}, "output_path" => (__FILE__.split(/\//)[0..-3].join("/") + "/output")})
+    crawler = Atilla::Crawler.new("http://localhost:4000",[],{"save_output" => true, "requests_per_second" => 100, "sitemap_urls" => ["http://localhost:4000/normal_sitemap.xml"], "headers" => {"Cache-Purge" => true},"params" => {}, "output_path" => (__FILE__.split(/\//)[0..-3].join("/") + "/output")})
+    crawler.crawl_sitemap
     crawler.run
   end
 
