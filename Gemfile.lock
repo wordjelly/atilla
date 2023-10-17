@@ -7,7 +7,7 @@ GIT
 PATH
   remote: .
   specs:
-    atilla (0.1.7)
+    atilla (0.1.8)
       activesupport
       addressable
       byebug

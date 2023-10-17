@@ -14,6 +14,7 @@ require "metainspector"
 require "uri"
 #require "robotstxt"
 
+# so crawler class is only one.
 # so we can run it against a code. 
 # like -> do we have a 500
 # so we keep a finite length for urls.
@@ -28,6 +29,9 @@ require "uri"
 # rebuild the slugs first. 
 # then we can recrawl and check.
 class Atilla::Crawler
+
+	include Atilla::Components::Log
+	include Atilla::Components::Robots
 
 	# the host : https://www.google.com | http://localhost:3000
 	attr_accessor :host
@@ -99,25 +103,10 @@ class Atilla::Crawler
 		}
 	end
 
-	def log_hierarchy
-		["debug","info","error","fatal"]
-	end
+	
 
-	def write_log(message,log_level="debug")
-		allowed_index = log_hierarchy.index(self.opts["log_level"])
-		#puts "allowed index #{allowed_index}"
-		allowed = log_hierarchy[allowed_index..-1]
-		#puts "allowed #{allowed}"
-		#puts "incoming level #{log_level}"
-		if allowed.include? log_level
-			if self.opts["log_proc"]
-				self.opts["log_proc"].call(message)
-			end
-			puts message
-		else
-			#puts "log not allowed"
-		end
-	end
+	# so there is a queue
+	# it 
 
 	# For urls provided via files list, we ensure that the domain is local.
 	def set_url_domain_to_host(url)
@@ -128,6 +117,7 @@ class Atilla::Crawler
 		url = url.gsub(/#{Regexp.escape(l)}/,l2)
 		url
 	end
+		
 	
 	def crawl_sitemap
 		set_robots_parser(self.host)
@@ -163,24 +153,7 @@ class Atilla::Crawler
 		
 	end
 
-	def set_robots_parser(host)
-		response = Typhoeus.get(host + "/robots.txt",{followlocation: true})
-		if response.code.to_s == "200"
-			write_log("got robots.txt","info")
-			self.robots_parser = Robotstxt::Parser.new(self.opts["headers"]["User-Agent"],response.body)
-			unless self.robots_parser.sitemaps.blank?
-				write_log("robots.txt specified sitemaps","info")
-				self.sitemap_urls = self.robots_parser.sitemaps
-			else
-				write_log("robots.txt does not specify a sitemap.","info")
-			end
-		end
-	end
-
-	def robots_allowed?(url)
-		return true if self.robots_parser.blank?
-		return self.robots_parser.allowed?(url)
-	end
+	
 
 	## @param[String] base_url : the base_url of the website to be crawled. eg: http://www.google.com OR http://localhost:3000
 	## @param[String] urls_file_absolute_path : If you want to limit the types of urls crawled using a file set the full and absolute path of the file here. 
@@ -281,19 +254,21 @@ class Atilla::Crawler
 					next if link["href"] == "#"
 					next if link["href"].blank?
 					next if link["href"].strip.blank?
-
-					#url_parts = url_to_parts(link["href"])
-
-
-					# STEP ONE -> ADDRESSABLE PARSE -> 
 					
-					ur = URI.parse(URI.join(self.host,link['href']).to_s)
-					if ur.host != URI.parse(self.host).host
-						puts "link #{link['href']} host #{ur.host}, is different from self.host"
-					else
-						add_url(URI.join(self.host,link['href']).to_s)
-						new_urls_added += 1
-						#byebug
+					begin
+						ur = URI.parse(URI.join(self.host,link['href']).to_s)
+						if ur.host != URI.parse(self.host).host
+							puts "link #{link['href']} host #{ur.host}, is different from self.host"
+						else
+							add_url(URI.join(self.host,link['href']).to_s)
+							new_urls_added += 1
+							#byebug
+						end
+					rescue => e
+						puts e.message.to_s
+						
+						#puts "got error"
+						#sbyebug
 					end
 				end
 			end
@@ -482,13 +457,11 @@ class Atilla::Crawler
 		self.urls[url].merge!(meta_inspect(url,response))
 		
 		if parse_page_codes.include? response.code.to_s
-			#puts "parsing page -- "
+			
 			res = parse_page(response,url)
 			
 			new_urls_added += res
 		end
-
-
 
 	end
 
@@ -566,6 +539,7 @@ class Atilla::Crawler
 =end
 	# this must be lower.
 	# otherwise doesnt make sense.
+	# so here.
 	def run
 
 		write_log("started crawl","info")
@@ -659,3 +633,11 @@ class Atilla::Crawler
 
 	
 end	
+
+# adapters -> 
+# serial 
+# distributed
+# dequeue_pages
+# get_pages
+# process_page
+# enqueue_pages

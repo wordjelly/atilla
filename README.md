@@ -78,6 +78,25 @@ This is useful if your page has multiple urls pointing to it and you want to cac
 <meta alternate-cache-url="/something else" />
 ```
 
+## ROADMAP
+# free
+# meta inspector for data extraction
+# page stats
+# distributed
+# dashboard
+
+
+# speed 2x faster than nokogiri.
+# nap parser inbuilt 
+# internal page weight, and page keyword scoring, to simply search
+# talk to documents
+# auto extraction of structured jsonld and schema
+# distributed - add and remove workers at will, just get a digitalocean api key
+# data qa : use openai to ask questions to the data.
+# outputs structured data to any sheet.
+# dashboard to view progress, use redis to 
+# specify site crawl budget
+
 
 ## Development
 

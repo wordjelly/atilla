@@ -2,6 +2,8 @@
 
 require "robotstxt"
 require_relative "atilla/version"
+require_relative "atilla/adapters"
+require_relative "atilla/components"
 require_relative "atilla/crawler"
 require_relative "atilla/es"
 require_relative "atilla/google_search_console_parser"
