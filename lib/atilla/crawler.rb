@@ -14,6 +14,21 @@ require "metainspector"
 require "uri"
 #require "robotstxt"
 
+# so the way it would work would be
+# crawler
+# outputter
+# parser
+# and the base would be something like coordinator.
+# that would be a master
+# now you can pass in any class.
+# it will just call those methods
+# so the master coordinates.
+# would be a datastore
+# crawlstore - the crawler will wait on that 
+# the outputter is only called by the crawler
+# the outputter is an independent thing.
+# so this has to be daemonized.
+
 # so crawler class is only one.
 # so we can run it against a code. 
 # like -> do we have a 500
@@ -119,42 +134,6 @@ class Atilla::Crawler
 	end
 		
 	
-	def crawl_sitemap
-		set_robots_parser(self.host)
-
-		if self.sitemap_urls.blank?
-			self.sitemap_urls = [self.host + "/sitemap.xml"]
-		end
-
-		self.sitemap_urls.each do |sitemap_url|
-			begin
-				puts "checking sitemap url #{sitemap_url}"
-				response = Typhoeus.get(sitemap_url)
-				
-				if response.code.to_s == "200"
-					self.sitemap_discovered = true
-				end
-
-				sitemap = SitemapParser.new(sitemap_url,{recurse: true})
-				write_log("hitting sitemap recursively","info")
-				write_log(sitemap.to_a.to_s,"info")
-				self.sitemap_urls_count = sitemap.to_a.size
-				self.seed_urls << sitemap.to_a
-				self.seed_urls.flatten!
-				write_log("got #{self.seed_urls.size} urls","info")
-			rescue => e
-				write_log("failed to parse sitemap with error #{e.to_s}","error")
-			end
-		end
-		
-		#puts "got #{self.urls.size} urls from the sitemap"
-		self.seed_urls.uniq!
-		self.seed_urls.flatten!
-		
-	end
-
-	
-
 	## @param[String] base_url : the base_url of the website to be crawled. eg: http://www.google.com OR http://localhost:3000
 	## @param[String] urls_file_absolute_path : If you want to limit the types of urls crawled using a file set the full and absolute path of the file here. 
 	def initialize(host,seed_urls=[],opts={})
@@ -226,6 +205,12 @@ class Atilla::Crawler
 	  return nil
 	end
 
+	# gets any page that should have been crawled by now.
+	# 
+	# so it takes the page
+	# it gathers the links.
+	# it does a pipelined get from the sorted set
+	# looks at the last crawled at -> say it was 10 days ago -> will update a next crawl at.
 	def parse_page(response,url)
 		new_urls_added = 0
 		doc = Nokogiri::HTML(response.body)
@@ -276,6 +261,9 @@ class Atilla::Crawler
 		end
 	end
 
+	# so these will be where.
+	# for eg 
+	# 
 	def has_completed_url?(url)
 		!self.completed_urls[url].nil?
 	end

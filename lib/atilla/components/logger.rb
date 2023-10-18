@@ -1,4 +1,4 @@
-module Atilla::Components::Log
+module Atilla::Components::Logger
 	def log_hierarchy
 		["debug","info","error","fatal"]
 	end

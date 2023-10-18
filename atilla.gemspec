@@ -47,6 +47,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "sitemap-parser"
   spec.add_dependency "robotstxt-parser"
   spec.add_dependency "metainspector", '~> 5.9.0'
+  spec.add_dependency "redis"
   #spec.add_dependency "public_suffix"
   # Uncomment to register a new dependency of your gem
   # spec.add_dependency "example-gem", "~> 1.0"
