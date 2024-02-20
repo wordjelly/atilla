@@ -226,6 +226,10 @@ class Atilla::Crawler
 	  return nil
 	end
 
+	# one option is you take all the /products/something_pages
+	# and you create ELISA For Mouse Antibody in Pune - For Research and Pharmaceutical Companies
+	# 
+
 	def parse_page(response,url)
 		new_urls_added = 0
 		doc = Nokogiri::HTML(response.body)
@@ -245,6 +249,12 @@ class Atilla::Crawler
 			# if a canonical exists and we have already completed it, then dont parse this, this makes sure that when the canonical itself comes in with a self ref -> it will parse.
 			if canon and !canon.text.strip.blank? and has_completed_url?(canon.text)
 				#puts "this is canonical"
+				#target -> xyz
+				#problem -> you need a local lab that can process,
+				#you dont have the know how
+				#safe and effective 
+				#benefits -> transport, access, etc.
+				#
 			else
 				## PROCESS OUTLINKS.
 				doc.css('a').each do |link|
@@ -258,7 +268,7 @@ class Atilla::Crawler
 					begin
 						ur = URI.parse(URI.join(self.host,link['href']).to_s)
 						if ur.host != URI.parse(self.host).host
-							puts "link #{link['href']} host #{ur.host}, is different from self.host"
+							#puts "link #{link['href']} host #{ur.host}, is different from self.host"
 						else
 							add_url(URI.join(self.host,link['href']).to_s)
 							new_urls_added += 1
@@ -344,7 +354,7 @@ class Atilla::Crawler
 
 	def add_url(url,opts={})
 		begin
-			write_log("incoming url #{url}")
+			write_log("incoming url #{url}","debug")
 			url = NormalizeUrl.process(url) if self.opts["normalize_urls"]
 			
 			write_log("url after normalization #{url}","debug")
@@ -384,7 +394,7 @@ class Atilla::Crawler
 					self.urls[k]["REFERRING_URLS"] << opts["referrer"]
 				end
 
-				write_log("added url #{k}","debug")
+				write_log("added url #{k}","info")
 				#puts "added url #{k}"
 				return true
 			else
@@ -455,6 +465,10 @@ class Atilla::Crawler
 		self.urls[url]["URL"] = url
 
 		self.urls[url].merge!(meta_inspect(url,response))
+
+		if self.opts["page_info_proc"]
+			self.opts["page_info_proc"].call(url,response)
+		end
 		
 		if parse_page_codes.include? response.code.to_s
 			

@@ -44,24 +44,35 @@ class TestAtilla < Minitest::Test
   end
 =end
   
-  # enqueue and dequeue are independent functions.
-
+=begin
   def test_crawls_url_patterns
-    crawler = Atilla::Crawler.new("http://localhost:4000",[],{"save_output" => true, "requests_per_second" => 100, "sitemap_urls" => ["http://localhost:4000/normal_sitemap.xml"], "headers" => {"Cache-Purge" => true},"params" => {}, "output_path" => (__FILE__.split(/\//)[0..-3].join("/") + "/output")})
+    crawler = Atilla::Crawler.new("https://localhost:4000",[],{"save_output" => true, "requests_per_second" => 100, "sitemap_urls" => ["http://localhost:4000/normal_sitemap.xml"], "headers" => {"Cache-Purge" => true},"params" => {}, "output_path" => (__FILE__.split(/\//)[0..-3].join("/") + "/output")})
     crawler.crawl_sitemap
     crawler.run
   end
+=end
 
 
-=begin
   def test_crawls_url
+=begin
+crawl_options["log_proc"] = Proc.new{|message|
+      c = CrawlLog.new(message: message, crawl_id: self.id.to_s)
+      c.save
+    }
+=end
+    crawl_opts = {"headers" => {"Cache-Purge" => true},"save_output" => true, "log_level" => "info", "params" => {}, "output_path" => (__FILE__.split(/\//)[0..-3].join("/") + "/output")}
 
-    crawler = Atilla::Crawler.new("https://www.crawler-test.com/",[],{"headers" => {"Cache-Purge" => true},"params" => {}, "output_path" => (__FILE__.split(/\//)[0..-3].join("/") + "/output")})
+    crawl_opts["page_info_proc"] = Proc.new{|url,response|
+      # so we will handle this there
+      # and use open ai to instantly build these pages, and the csvs.
+    }
+
+    crawler = Atilla::Crawler.new("https://www.chondrex.com/",[],crawl_opts)
 
     crawler.run
 
   end
-=end
+
 
 =begin
   def test_crawls_files_in_url_list
