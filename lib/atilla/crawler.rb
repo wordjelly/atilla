@@ -153,7 +153,6 @@ class Atilla::Crawler
 		
 	end
 
-	
 
 	## @param[String] base_url : the base_url of the website to be crawled. eg: http://www.google.com OR http://localhost:3000
 	## @param[String] urls_file_absolute_path : If you want to limit the types of urls crawled using a file set the full and absolute path of the file here. 
@@ -170,7 +169,6 @@ class Atilla::Crawler
 
 		self.urls_from_file = []
 
-		
 		if self.opts["only_sitemap"]
 			self.opts["crawl_discovered_urls"] = false
 		elsif self.opts["urls_file"]
@@ -228,8 +226,6 @@ class Atilla::Crawler
 
 	# one option is you take all the /products/something_pages
 	# and you create ELISA For Mouse Antibody in Pune - For Research and Pharmaceutical Companies
-	# 
-
 	def parse_page(response,url)
 		new_urls_added = 0
 		doc = Nokogiri::HTML(response.body)
@@ -270,8 +266,9 @@ class Atilla::Crawler
 						if ur.host != URI.parse(self.host).host
 							#puts "link #{link['href']} host #{ur.host}, is different from self.host"
 						else
-							add_url(URI.join(self.host,link['href']).to_s)
-							new_urls_added += 1
+							if add_url(URI.join(self.host,link['href']).to_s)
+								new_urls_added += 1
+							end
 							#byebug
 						end
 					rescue => e
@@ -351,6 +348,7 @@ class Atilla::Crawler
 		uri = URI(url)
 		uri.host == URI(self.host).host
 	end
+
 
 	def add_url(url,opts={})
 		begin
