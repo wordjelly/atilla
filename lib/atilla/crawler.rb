@@ -352,10 +352,10 @@ class Atilla::Crawler
 
 	def add_url(url,opts={})
 		begin
-			write_log("incoming url #{url}","debug")
+			#write_log("incoming url #{url}","debug")
 			url = NormalizeUrl.process(url) if self.opts["normalize_urls"]
 			
-			write_log("url after normalization #{url}","debug")
+			#write_log("url after normalization #{url}","debug")
 
 			unless belongs_to_host?(url)
 				write_log("url #{url} does not belong to host","debug")
@@ -382,6 +382,7 @@ class Atilla::Crawler
 				# if the 
 				unless self.opts["urls_limit"].blank?
 					if (self.urls.size + self.completed_urls.size) > self.opts["urls_limit"]
+						write_log("hit size limit #{self.urls.size}, max urls is #{self.opts['urls_limit']}","debug")
 						#puts "hit size limit #{self.urls.size}"
 						return false
 					end
@@ -392,7 +393,7 @@ class Atilla::Crawler
 					self.urls[k]["REFERRING_URLS"] << opts["referrer"]
 				end
 
-				write_log("added url #{k}","info")
+				write_log("added url #{k}","debug")
 				#puts "added url #{k}"
 				return true
 			else
@@ -432,6 +433,37 @@ class Atilla::Crawler
 		}
 	end
 
+	# we need a get_crawl
+	# to update its status.
+	# on page update
+	# on multi update
+	# how do we know the current crawl.
+	# step comes to discovery_completed
+	# then crawl scheduled.
+	# if a page is updated
+	# the js erb will only update that.
+
+	def get_url_tokens(url)
+		uri = Addressable::URI.parse(url)
+		url_parts = []
+		all_parts = uri.path.split(/\//)
+		all_parts.map!{|part|
+			part.split(/\b/)
+		}.flatten
+	end
+
+	def get_url_parts(url)
+		uri = Addressable::URI.parse(url)
+		url_parts = []
+		all_parts = uri.path.split(/\//)
+		all_parts.size.times do |m|
+			if m > 0 and m < (all_parts.size - 1)
+				url_parts << all_parts[0..m].join("/") 
+			end
+		end
+		url_parts
+	end
+
 	def update_page_info(request,response,new_urls_added,url)
 
 		
@@ -439,13 +471,8 @@ class Atilla::Crawler
 		# MERGE URL COUNT
 		self.urls[url].merge!({"URL_LENGTH" => url.length})
 
-		self.urls[url]["URL_PARTS"] = []
-		uri = Addressable::URI.parse(url)
-		uri.path.split(/\//).size.times do |m|
-			if m > 0
-				self.urls[url]["URL_PARTS"] << uri.path.split(/\//)[0..m].join("/") 
-			end
-		end
+		self.urls[url]["URL_PARTS"] = get_url_parts(url)
+		self.urls[url]["URL_PARTS"].flatten!
 		
 		self.urls[url]["TIME_TO_FIRST_BYTE"] = response.starttransfer_time
 
