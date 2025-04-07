@@ -52,14 +52,8 @@ class TestAtilla < Minitest::Test
   end
 =end
 
-
-  def test_crawls_url
 =begin
-crawl_options["log_proc"] = Proc.new{|message|
-      c = CrawlLog.new(message: message, crawl_id: self.id.to_s)
-      c.save
-    }
-=end
+  def test_crawls_url
     crawl_opts = {"headers" => {"Cache-Purge" => true},"save_output" => true, "log_level" => "info", "params" => {}, "output_path" => (__FILE__.split(/\//)[0..-3].join("/") + "/output")}
 
     crawl_opts["page_info_proc"] = Proc.new{|url,response|
@@ -67,9 +61,23 @@ crawl_options["log_proc"] = Proc.new{|message|
       # and use open ai to instantly build these pages, and the csvs.
     }
 
-    crawler = Atilla::Crawler.new("https://www.chondrex.com/",[],crawl_opts)
+    crawler = Atilla::Crawler.new("https://www.pathofast.com/",[],crawl_opts)
 
     crawler.run
+
+  end
+=end
+  def test_outputs_title_description_keywords
+    crawl_opts = {"headers" => {"Cache-Purge" => true},"save_output" => true, "log_level" => "info", "params" => {}, "output_path" => (__FILE__.split(/\//)[0..-3].join("/") + "/output")}
+
+    crawl_opts["page_info_proc"] = Proc.new{|url,response|
+      # so we will handle this there
+      # and use open ai to instantly build these pages, and the csvs.
+    }
+
+    crawler = Atilla::Crawler.new("https://www.pathofast.com/",[],crawl_opts)
+
+    crawler.titles_descriptions_keywords_csv("/home/root1/Desktop/Github/atilla/output/https:--www.pathofast.com--2025-03-15T15:41:07.618+05:30/all_crawled.json","/home/root1/Desktop/Github/atilla/output/https:--www.pathofast.com--2025-03-15T15:41:07.618+05:30/titles_descriptions_keywords.csv",[200])
 
   end
 

@@ -32,6 +32,7 @@ class Atilla::Crawler
 
 	include Atilla::Components::Log
 	include Atilla::Components::Robots
+	include Atilla::Components::Seo
 
 	# the host : https://www.google.com | http://localhost:3000
 	attr_accessor :host
@@ -424,13 +425,22 @@ class Atilla::Crawler
 		["204","201","200","301","302"]
 	end
 
+	# expand on this later to get product markup images using ldjson.
+	def get_best_image(meta_inspector_page,url,response)
+		meta_inspector_page.images.best
+	end
+
 	def meta_inspect(url,response)
 		page = MetaInspector.new(url, :document => response.body)
 		{
 			"title" => page.best_title,
 			"description" => page.best_description,
-			"images" => page.images.map{|r| r.to_s}
-		}
+			"images" => page.images.map{|r| r.to_s},
+			"favicon" => page.images.favicon,
+			"best_image" => get_best_image(page, url, response)
+			"head_title" => page.title,
+			"head_description" => page.description,
+		}.merge(page.meta)
 	end
 
 	# we need a get_crawl
@@ -463,6 +473,8 @@ class Atilla::Crawler
 		end
 		url_parts
 	end
+
+	# no test just rail task.
 
 	def update_page_info(request,response,new_urls_added,url)
 
