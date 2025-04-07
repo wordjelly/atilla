@@ -437,7 +437,7 @@ class Atilla::Crawler
 			"description" => page.best_description,
 			"images" => page.images.map{|r| r.to_s},
 			"favicon" => page.images.favicon,
-			"best_image" => get_best_image(page, url, response)
+			"best_image" => get_best_image(page, url, response),
 			"head_title" => page.title,
 			"head_description" => page.description,
 		}.merge(page.meta)
