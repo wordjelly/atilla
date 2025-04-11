@@ -52,7 +52,14 @@ class TestAtilla < Minitest::Test
   end
 =end
 
+  def test_urls_limit
+    crawler = Atilla::Crawler.new("http://ben.balter.com/",[],{"save_output" => true, "requests_per_second" => 5, "urls_limit" => 5, "url_patterns" => ["/2010/09/12/"], "headers" => {"Cache-Purge" => true},"params" => {}, "output_path" => (__FILE__.split(/\//)[0..-3].join("/") + "/output")})
+    crawler.crawl_sitemap
+    crawler.run
+  end 
+
 =begin
+  MAIN TESTS THAT WE USE FOR PATHOFAST
   def test_crawls_url
     crawl_opts = {"headers" => {"Cache-Purge" => true},"save_output" => true, "log_level" => "info", "params" => {}, "output_path" => (__FILE__.split(/\//)[0..-3].join("/") + "/output")}
 
@@ -66,7 +73,7 @@ class TestAtilla < Minitest::Test
     crawler.run
 
   end
-=end
+
   def test_outputs_title_description_keywords
     crawl_opts = {"headers" => {"Cache-Purge" => true},"save_output" => true, "log_level" => "info", "params" => {}, "output_path" => (__FILE__.split(/\//)[0..-3].join("/") + "/output")}
 
@@ -80,6 +87,8 @@ class TestAtilla < Minitest::Test
     crawler.titles_descriptions_keywords_csv("/home/root1/Desktop/Github/atilla/output/https:--www.pathofast.com--2025-03-15T15:41:07.618+05:30/all_crawled.json","/home/root1/Desktop/Github/atilla/output/https:--www.pathofast.com--2025-03-15T15:41:07.618+05:30/titles_descriptions_keywords.csv",[200])
 
   end
+=end
+  
 
 
 =begin

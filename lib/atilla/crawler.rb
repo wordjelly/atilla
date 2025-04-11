@@ -148,9 +148,13 @@ class Atilla::Crawler
 			end
 		end
 		
+		#lets say it is 1 -> then we respect that
 		#puts "got #{self.urls.size} urls from the sitemap"
 		self.seed_urls.uniq!
 		self.seed_urls.flatten!
+		unless self.opts["urls_limit"].blank?
+			self.seed_urls = self.seed_urls[0..(self.opts["urls_limit"] - 1)]
+		end
 		
 	end
 
@@ -331,13 +335,15 @@ class Atilla::Crawler
 
 	# so in the crawls -> allow them.
 	def allow_url_patterns?(url)
-		if url =~ /#{self.opts['url_patterns'].map{|r| 
+		patterns = self.opts['url_patterns'].map{|r| 
 			unless r == ".*"
 				Regexp.escape(r)
 			else
 				r
 			end
-		}.join('|')}/i
+		}.join('|')
+		#write_log("permitted url patterns are #{patterns}","debug")
+		if url =~ /#{patterns}/i
 			return true
 		else
 			return true if url == self.host
