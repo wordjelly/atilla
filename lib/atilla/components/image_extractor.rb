@@ -89,7 +89,6 @@ module Atilla::Components::ImageExtractor
 				r
 			end
 		}
-		return images[0] unless images.blank?
-		return nil
+		return images
 	end
 end
