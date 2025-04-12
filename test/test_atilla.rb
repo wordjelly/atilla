@@ -62,8 +62,8 @@ class TestAtilla < Minitest::Test
 
   def test_extracts_images
      crawler = Atilla::Crawler.new("http://ben.balter.com/",[],{"save_output" => true, "requests_per_second" => 5, "urls_limit" => 5, "url_patterns" => ["/2010/09/12/"], "headers" => {"Cache-Purge" => true},"params" => {}, "output_path" => (__FILE__.split(/\//)[0..-3].join("/") + "/output")})
-     doc = Nokogiri::HTML(IO.read("#{__FILE__.split(/\//)[0..-2].join("/")}/resources/raut_eye_care"))
-     puts crawler.get_best_image(nil,nil,nil,doc,"www.rauteyecare.com")
+     doc = Nokogiri::HTML(IO.read("#{__FILE__.split(/\//)[0..-2].join("/")}/resources/urine-routine-test"))
+     puts crawler.get_best_image(nil,nil,nil,doc,"https://www.pathofast.com")
   end
 
 =begin

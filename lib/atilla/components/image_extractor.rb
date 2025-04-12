@@ -57,7 +57,7 @@ module Atilla::Components::ImageExtractor
 			json = JSON.parse(txt)
 			images << json['image'] unless json['image'].blank?
 		end
-		images
+		images.flatten
 	end
 
 	# how do you manage to ignore them?
@@ -73,22 +73,47 @@ module Atilla::Components::ImageExtractor
 		images
 	end
 
+	def combine_images(arrs)
+		images = {}
+		arrs.each do |img|
+			if images[img[:src]].blank?
+				images[img[:src]] = img
+			else
+				images[img[:src]].merge!(img)
+			end
+		end
+		images.values.flatten
+	end
+
+	def add_host(img_url,host)
+		unless img_url =~ /#{Regexp.escape(host)}/
+			img_url = host + img_url
+		end
+		NormalizeUrl.process(img_url)
+	end
+
 	# expand on this later to get product markup images using ldjson
 	# doc here is nokogigir doc..
 	def get_best_image(meta_inspector_page,url,response,doc,host)
 		images = []
-		images << get_og_images(doc)
-		images << get_ld_json_images(doc)
-		images << get_sorted_images_by_size("body",doc, host)
-		images.flatten!
-		images.uniq!
-		images.map!{|r|
-			unless r =~ /#{Regexp.escape(host)}/
-				host + r
-			else
-				r
-			end
+		og_images = get_og_images(doc).map{|img|
+			{
+				:src => add_host(img,host),
+				:is_og => true
+			}
 		}
-		return images
+		
+		ld_json_images = get_ld_json_images(doc).map{|img|
+			{
+				:src => add_host(img,host),
+				:is_ldjson => true
+			}
+		}
+		body_images = get_sorted_images_by_size("body",doc, host).map{|img|
+			{
+				:src => add_host(img,host)
+			}
+		}
+		return combine_images(og_images + ld_json_images + body_images)
 	end
 end
