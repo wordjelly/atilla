@@ -33,6 +33,7 @@ class Atilla::Crawler
 	include Atilla::Components::Log
 	include Atilla::Components::Robots
 	include Atilla::Components::Seo
+	include Atilla::Components::ImageExtractor
 
 	# the host : https://www.google.com | http://localhost:3000
 	attr_accessor :host
@@ -201,7 +202,7 @@ class Atilla::Crawler
 		self.halt = false
 		self.crawl_started_at = Time.now
 
-		create_crawl_output_dir
+		
 	end
 
 	
@@ -231,9 +232,8 @@ class Atilla::Crawler
 
 	# one option is you take all the /products/something_pages
 	# and you create ELISA For Mouse Antibody in Pune - For Research and Pharmaceutical Companies
-	def parse_page(response,url)
+	def parse_page(response,url,doc)
 		new_urls_added = 0
-		doc = Nokogiri::HTML(response.body)
 		canon = doc.xpath('//link[@rel="canonical"]/@href')
 		# ADD CANONICAL URL.
 		self.urls[url]["CANONICAL_URL"] = canon.text if (canon and (!canon.text.strip.blank?))
@@ -431,19 +431,17 @@ class Atilla::Crawler
 		["204","201","200","301","302"]
 	end
 
-	# expand on this later to get product markup images using ldjson.
-	def get_best_image(meta_inspector_page,url,response)
-		meta_inspector_page.images.best
-	end
 
-	def meta_inspect(url,response)
+
+	def meta_inspect(url,response,doc,host)
+
 		page = MetaInspector.new(url, :document => response.body)
 		{
 			"title" => page.best_title,
 			"description" => page.best_description,
 			"images" => page.images.map{|r| r.to_s},
 			"favicon" => page.images.favicon,
-			"best_image" => get_best_image(page, url, response),
+			"best_image" => get_best_image(page, url, response, doc, host),
 			"head_title" => page.title,
 			"head_description" => page.description,
 		}.merge(page.meta)
@@ -484,6 +482,7 @@ class Atilla::Crawler
 
 	def update_page_info(request,response,new_urls_added,url)
 
+
 		
 		self.urls[url].merge!(response.headers)
 		# MERGE URL COUNT
@@ -507,15 +506,19 @@ class Atilla::Crawler
 
 		self.urls[url]["URL"] = url
 
-		self.urls[url].merge!(meta_inspect(url,response))
+		
 
 		if self.opts["page_info_proc"]
 			self.opts["page_info_proc"].call(url,response)
 		end
 		
 		if parse_page_codes.include? response.code.to_s
+
+			doc = Nokogiri::HTML(response.body)
+
+			self.urls[url].merge!(meta_inspect(url,response,doc,self.host))
 			
-			res = parse_page(response,url)
+			res = parse_page(response,url,doc)
 			
 			new_urls_added += res
 		end
@@ -598,6 +601,8 @@ class Atilla::Crawler
 	# otherwise doesnt make sense.
 	# so here.
 	def run
+
+		create_crawl_output_dir
 
 		write_log("started crawl","info")
 
