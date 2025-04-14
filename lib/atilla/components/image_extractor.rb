@@ -50,12 +50,19 @@ module Atilla::Components::ImageExtractor
 		end
 	end
 
+	def extract_image_value(json_str)
+		match = json_str.match(/"image"\s*:\s*"(.*?)"/)
+		match ? match[1] : nil
+	end
+
 	def get_ld_json_images(doc)
 		images = []
 		doc.css('script[type="application/ld+json"]').each do |k|
-			txt = fix_newline_in_json(k.text)
-			json = JSON.parse(txt)
-			images << json['image'] unless json['image'].blank?
+			#txt = fix_newline_in_json(k.text)
+			#json = JSON.parse(txt)
+			txt = k.text
+			img = extract_image_value(txt)
+			images << img unless img.blank?
 		end
 		images.flatten
 	end
@@ -94,24 +101,24 @@ module Atilla::Components::ImageExtractor
 
 	# expand on this later to get product markup images using ldjson
 	# doc here is nokogigir doc..
-	def get_best_image(meta_inspector_page,url,response,doc,host)
+	def get_images(meta_inspector_page,url,response,doc,opts)
 		images = []
 		og_images = get_og_images(doc).map{|img|
 			{
-				:src => add_host(img,host),
+				:src => process_url(img,opts),
 				:is_og => true
 			}
 		}
 		
 		ld_json_images = get_ld_json_images(doc).map{|img|
 			{
-				:src => add_host(img,host),
+				:src => process_url(img,opts),
 				:is_ldjson => true
 			}
 		}
 		body_images = get_sorted_images_by_size("body",doc, host).map{|img|
 			{
-				:src => add_host(img,host)
+				:src => process_url(img,opts)
 			}
 		}
 		return combine_images(og_images + ld_json_images + body_images)

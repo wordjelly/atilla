@@ -4,6 +4,20 @@ require "test_helper"
 
 class TestAtilla < Minitest::Test
 
+  def test_normalizes_urls
+    crawler = Atilla::Crawler.new("http://localhost:8090",[],{"save_output" => true, "requests_per_second" => 5, "headers" => {"Cache-Purge" => true},"params" => {}, "output_path" => (__FILE__.split(/\//)[0..-3].join("/") + "/output")})
+    crawler.run
+  end
+
+=begin
+  def skips_non_html_urls
+
+  end
+
+  def skips_non_host_urls
+
+  end
+=end
 =begin
   def test_crawls_url
 
@@ -60,11 +74,13 @@ class TestAtilla < Minitest::Test
   end 
 =end
 
+=begin
   def test_extracts_images
      crawler = Atilla::Crawler.new("http://ben.balter.com/",[],{"save_output" => true, "requests_per_second" => 5, "urls_limit" => 5, "url_patterns" => ["/2010/09/12/"], "headers" => {"Cache-Purge" => true},"params" => {}, "output_path" => (__FILE__.split(/\//)[0..-3].join("/") + "/output")})
      doc = Nokogiri::HTML(IO.read("#{__FILE__.split(/\//)[0..-2].join("/")}/resources/urine-routine-test"))
      puts crawler.get_best_image(nil,nil,nil,doc,"https://www.pathofast.com")
   end
+=end
 
 =begin
   MAIN TESTS THAT WE USE FOR PATHOFAST

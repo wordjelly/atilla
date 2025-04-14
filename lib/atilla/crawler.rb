@@ -34,6 +34,7 @@ class Atilla::Crawler
 	include Atilla::Components::Robots
 	include Atilla::Components::Seo
 	include Atilla::Components::ImageExtractor
+	include Atilla::Components::UrlProcessor
 
 	# the host : https://www.google.com | http://localhost:3000
 	attr_accessor :host
@@ -101,14 +102,12 @@ class Atilla::Crawler
 			# whether to normalize incoming urls. turned to "false" by default in case "urls_file" is provided.
 			"normalize_urls" => true,
 			"log_level" => "debug",
-			"discovery" => false
+			"discovery" => false,
+			"ignore_extensions" => ["images","movies","files","others"]
 		}
 	end
 
 	
-
-	# so there is a queue
-	# it 
 
 	# For urls provided via files list, we ensure that the domain is local.
 	def set_url_domain_to_host(url)
@@ -163,13 +162,16 @@ class Atilla::Crawler
 	## @param[String] base_url : the base_url of the website to be crawled. eg: http://www.google.com OR http://localhost:3000
 	## @param[String] urls_file_absolute_path : If you want to limit the types of urls crawled using a file set the full and absolute path of the file here. 
 	def initialize(host,seed_urls=[],opts={})
-		self.host = host
-
-		#self.host_uri_parts = url_to_parts(self.host)
 
 		self.seed_urls = []
 
 		self.opts = default_opts.deep_merge(opts)
+
+		output = process_url(host,self.opts)
+
+		self.host = output[:url]
+
+		
 
 		self.sitemap_urls = opts.delete("sitemap_urls")
 
@@ -267,14 +269,8 @@ class Atilla::Crawler
 					next if link["href"].strip.blank?
 					
 					begin
-						ur = URI.parse(URI.join(self.host,link['href']).to_s)
-						if ur.host != URI.parse(self.host).host
-							#puts "link #{link['href']} host #{ur.host}, is different from self.host"
-						else
-							if add_url(URI.join(self.host,link['href']).to_s)
-								new_urls_added += 1
-							end
-							#byebug
+						if add_url(link["href"])
+							new_urls_added += 1
 						end
 					rescue => e
 						puts e.message.to_s
@@ -333,38 +329,17 @@ class Atilla::Crawler
 		url
 	end
 
-	# so in the crawls -> allow them.
-	def allow_url_patterns?(url)
-		patterns = self.opts['url_patterns'].map{|r| 
-			unless r == ".*"
-				Regexp.escape(r)
-			else
-				r
-			end
-		}.join('|')
-		#write_log("permitted url patterns are #{patterns}","debug")
-		if url =~ /#{patterns}/i
-			return true
-		else
-			return true if url == self.host
-			return false
-		end
-	end
+	
 
-	def belongs_to_host?(url)
-		uri = URI(url)
-		uri.host == URI(self.host).host
-	end
-
-
+	# the opts passed here may be different,
 	def add_url(url,opts={})
 		begin
 			#write_log("incoming url #{url}","debug")
-			url = NormalizeUrl.process(url) if self.opts["normalize_urls"]
-			
+			response = process_url(url,self.opts)
+			url = response[:url]
 			#write_log("url after normalization #{url}","debug")
 
-			unless belongs_to_host?(url)
+			if response[:host_name] != self.opts[:host_name]
 				write_log("url #{url} does not belong to host","debug")
 				return false 
 			end
@@ -374,8 +349,15 @@ class Atilla::Crawler
 				return false 
 			end
 
+
+
 			unless allow_url_patterns?(url)
 				write_log("url #{url} not allowed via specified patterns #{self.opts['url_patterns']}","debug")
+				return false
+			end
+
+			if has_ignore_extensions?(url,self.opts)
+				write_log("url #{url} not allowed as it has an extension other than .html","debug")
 				return false
 			end
 
@@ -433,7 +415,7 @@ class Atilla::Crawler
 
 
 
-	def meta_inspect(url,response,doc,host)
+	def meta_inspect(url,response,doc)
 
 		page = MetaInspector.new(url, :document => response.body)
 		{
@@ -441,7 +423,7 @@ class Atilla::Crawler
 			"description" => page.best_description,
 			#{}"images" => page.images.map{|r| r.to_s},
 			"favicon" => page.images.favicon,
-			"images" => get_best_image(page, url, response, doc, host),
+			"images" => get_images(page, url, response, doc, self.opts),
 			"head_title" => page.title,
 			"head_description" => page.description,
 		}.merge(page.meta)
@@ -516,7 +498,7 @@ class Atilla::Crawler
 
 			doc = Nokogiri::HTML(response.body)
 
-			self.urls[url].merge!(meta_inspect(url,response,doc,self.host))
+			self.urls[url].merge!(meta_inspect(url,response,doc))
 			
 			res = parse_page(response,url,doc)
 			
@@ -656,7 +638,7 @@ class Atilla::Crawler
 					request
 				}
 
-				#write_log("#{requests.size} requests queued")
+				write_log("#{requests.size} requests queued")
 			
 				hydra.run
 
@@ -681,8 +663,7 @@ class Atilla::Crawler
 		end
 
 		
-		#write_log("discovered #{new_urls_added} new urls and crawled #{urls_removed}, total pending urls #{self.urls.size}, total crawled urls #{self.completed_urls.size}")
-
+		#write_log(self.completed_urls,"debug")
 
 		#end
 
