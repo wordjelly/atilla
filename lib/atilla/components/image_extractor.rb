@@ -105,20 +105,20 @@ module Atilla::Components::ImageExtractor
 		images = []
 		og_images = get_og_images(doc).map{|img|
 			{
-				:src => process_url(img,opts),
+				:src => process_url(img,opts)[:url],
 				:is_og => true
 			}
 		}
 		
 		ld_json_images = get_ld_json_images(doc).map{|img|
 			{
-				:src => process_url(img,opts),
+				:src => process_url(img,opts)[:url],
 				:is_ldjson => true
 			}
 		}
 		body_images = get_sorted_images_by_size("body",doc, host).map{|img|
 			{
-				:src => process_url(img,opts)
+				:src => process_url(img,opts)[:url]
 			}
 		}
 		return combine_images(og_images + ld_json_images + body_images)
