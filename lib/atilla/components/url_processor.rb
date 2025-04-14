@@ -48,62 +48,70 @@ module Atilla::Components::UrlProcessor
 	# just adds theh host url, scheme and port to the given url, normalizes it and returns it.
 	def process_url(raw_url, opts={})
 
-		
-		is_host = (raw_url == self.host) || (self.host.blank?)
+		begin
+			is_host = (raw_url == self.host) || (self.host.blank?)
 
-		
-		#prepend http if there is no scheme, as addressable does no
-		#not parse the host otherwise
-		unless raw_url =~ /^(https?|tel|mail)\:\/\//
-			raw_url = "http://#{raw_url}"
-		end
+			
+			#prepend http if there is no scheme, as addressable does no
+			#not parse the host otherwise
+			unless raw_url =~ /^(https?|tel|mail)\:\/\//
+				raw_url = "http://#{raw_url}"
+			end
 
-		
-		uri = Addressable::URI.parse(raw_url)	  	
+			
+			uri = Addressable::URI.parse(raw_url)	  	
 
-	  	if is_host
-	  		opts[:host_scheme] = uri.scheme
-	  		opts[:host_name] = uri.host
-	  		opts[:host_port] = uri.port
-	  		#puts "is host and opts become"
-	  		# Normalize with your own normalization method
-		  	output = {
-		  		:url => NormalizeUrl.process(uri.to_s),
-		  		:host_name => uri.host,
-		  		:port => uri.port,
-		  		:scheme => uri.scheme
-		  	}
-	  	else
-	  		# there may be errors adding the host to 
-	  		# some urls
-	  		# these are usually malformed urls.
-	  		# so in that case, we just return the raw_url as the
-	  		# url for now.
-	  		begin
-	  			if uri.host.blank?
-    				uri.host = opts[:host_name].to_s
-    				if uri.port.blank?
-	    				uri.port = opts[:host_port] if opts[:host_port]
-	    			end
-    			end
-    			
-
+		  	if is_host
+		  		opts[:host_scheme] = uri.scheme
+		  		opts[:host_name] = uri.host
+		  		opts[:host_port] = uri.port
+		  		#puts "is host and opts become"
+		  		# Normalize with your own normalization method
 			  	output = {
 			  		:url => NormalizeUrl.process(uri.to_s),
 			  		:host_name => uri.host,
 			  		:port => uri.port,
 			  		:scheme => uri.scheme
 			  	}
-	  		rescue => e
-	  			puts e.to_s
-	  			output = {
-			  		:url => raw_url,
-			  		:scheme => uri.scheme
-			  	}
-	  		end
-	  	end
+		  	else
+		  		# there may be errors adding the host to 
+		  		# some urls
+		  		# these are usually malformed urls.
+		  		# so in that case, we just return the raw_url as the
+		  		# url for now.
+		  		begin
+		  			if uri.host.blank?
+	    				uri.host = opts[:host_name].to_s
+	    				if uri.port.blank?
+		    				uri.port = opts[:host_port] if opts[:host_port]
+		    			end
+	    			end
+	    			
 
-	  	output
+				  	output = {
+				  		:url => NormalizeUrl.process(uri.to_s),
+				  		:host_name => uri.host,
+				  		:port => uri.port,
+				  		:scheme => uri.scheme
+				  	}
+		  		rescue => e
+		  			puts e.to_s
+		  			output = {
+				  		:url => raw_url,
+				  		:scheme => uri.scheme
+				  	}
+		  		end
+		  	end
+
+		  	output
+	  	rescue => e
+	  		puts e.to_s
+	  		puts e.backtrace.join('\n')
+	  		write_log(e.backtrace.join('\n'),'error')
+	  		{
+	  			:url => raw_url
+	  		}
+	  	end
 
 	end
 

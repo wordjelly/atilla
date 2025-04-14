@@ -5,8 +5,10 @@ require "test_helper"
 class TestAtilla < Minitest::Test
 
   def test_normalizes_urls
-    crawler = Atilla::Crawler.new("http://localhost:8090",[],{"save_output" => true, "requests_per_second" => 5, "headers" => {"Cache-Purge" => true},"params" => {}, "output_path" => (__FILE__.split(/\//)[0..-3].join("/") + "/output")})
-    crawler.run
+    crawler = Atilla::Crawler.new("https://www.pathofast.com/",[],{"save_output" => true, "requests_per_second" => 5, "headers" => {"Cache-Purge" => true},"params" => {}, "output_path" => (__FILE__.split(/\//)[0..-3].join("/") + "/output")})
+    doc = Nokogiri::HTML(IO.read("#{__FILE__.split(/\//)[0..-2].join("/")}/resources/pathofast"))
+     puts crawler.get_images(nil,nil,nil,doc,crawler.opts)
+    #crawler.run
   end
 
 =begin

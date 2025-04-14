@@ -1,0 +1,1964 @@
+<!doctype html>
+<html class="no-js" lang="zxx">
+
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        
+        
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <!-- Place favicon.png in the root directory -->
+        <link rel="shortcut icon" href="img/favicon.png" type="image/x-icon" />
+        <link rel="icon" type="image/png" href="/favicon.png" sizes="32x32">
+        <link rel="apple-touch-icon" sizes="180x180" href="/favicon.png">
+
+            <title>Pathofast Lab Pune | Blood Test in Pune</title>
+            
+              <meta name="description" content="Pathofast is a blood testing lab in Pune. 600+ tests include Semen test, HIV test/STD Testing, Vitamin D test, Vitamin B12 test, Dengue Test, LFT Test,CBC, Urine and Stool Tests in all parts of Pune City, with free home sample collection." >
+
+        
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/icomoon@1.0.0/style.min.css">
+        
+
+        <link rel="stylesheet" media="all" href="https://www.pathofast.com/assets/vicodin-a5a4298747a575ad9b8d3c26a3f6811dd627e53065087121e1769fefb01d9b4c.css" />
+
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/tomickigrzegorz/autocomplete@2.0.2/dist/css/autocomplete.min.css"/>
+
+
+        
+        <meta id="reports_index_query_params" name="reports_index_query_params" data-content="{&quot;should&quot;:[&quot;human_score&quot;,&quot;template_report_names_exist&quot;,&quot;advise_count&quot;,&quot;outsourced&quot;,&quot;questions_exist&quot;],&quot;status_ids&quot;:[&quot;mask&quot;,&quot;components&quot;],&quot;human_score&quot;:1,&quot;template_report_names_exist&quot;:1,&quot;advise_count&quot;:1,&quot;outsourced&quot;:0,&quot;questions_exist&quot;:1,&quot;placeholder_for_package_id&quot;:0,&quot;composite_aggregation_bucket_size&quot;:20}" %>
+
+        <meta id="reports_index_source" name="reports_index_source" data-content="[&quot;display_name&quot;,&quot;name&quot;,&quot;description&quot;,&quot;rates&quot;,&quot;owner_ids&quot;,&quot;currently_held_by_organization&quot;,&quot;outsourced&quot;,&quot;active&quot;,&quot;sample_types&quot;,&quot;sample_type_tag_ids&quot;,&quot;notes_for_lab_personnel&quot;,&quot;tags&quot;,&quot;slug&quot;,&quot;documents&quot;,&quot;images&quot;,&quot;what_is_this_test&quot;,&quot;translations&quot;,&quot;fragments&quot;]" >
+          
+        <meta id="packages_index_query_params" name="packages_index_query_params" data-content="{&quot;should&quot;:[&quot;human_score&quot;,&quot;reports_exist&quot;,&quot;popularity&quot;,&quot;questions_exist&quot;],&quot;human_score&quot;:1,&quot;reports_exist&quot;:1,&quot;popularity&quot;:1,&quot;questions_exist&quot;:1,&quot;composite_aggregation_bucket_size&quot;:10}">
+
+
+        <meta name="facebook-domain-verification" content="x0wj1tbdzs55jk7cd0cm14kfm9huf4" />
+
+        
+        <!-- canonical rel -->
+        <!-- this if statement is no longer used as we use self referencing canonicals everywhere 
+ if !is_canonical?(object) 
+ end 
+canonical_url = get_update_path(canonical_identifier(object))
+-->
+	<link rel="canonical" href="https://www.pathofast.com/" />
+
+
+
+        <meta name="csrf-param" content="authenticity_token" />
+<meta name="csrf-token" content="eEKUnhyJl0jRnqyFxDLdi+OfAhc5c5fcJPsoawkv+eTk+7+qbWSvQ/bsl8UD6erVTiAYgqVbOwEjvXQgGq+bpg==" />
+
+        <script defer src="https://www.google.com/recaptcha/api.js" async defer></script>
+
+        
+
+        <link rel="shortcut icon" type="image/x-icon" href="https://www.pathofast.com/favicon.ico" />
+
+          <script type="application/ld+json">
+            {
+              "@context": "https://schema.org",
+              "@type": "MedicalBusiness",
+              "image": [
+                "https://pathofast.com/lab_three.jpeg",
+                "https://pathofast.com/lab_four.jpeg"
+               ],
+              "name": "Pathofast Lab Pune | HIV, Semen, Home Blood Test",
+              "address": {
+                "@type": "PostalAddress",
+                "streetAddress": "2nd Floor, Manisha Terrace, 411001, Moledina Rd, Camp, Pune, Maharashtra 411001",
+                "addressLocality": "Pune",
+                "addressRegion": "MH",
+                "postalCode": "411001",
+                "addressCountry": "IN"
+              },
+              "geo": {
+                "@type": "GeoCoordinates",
+                "latitude": 18.5196214,
+                "longitude": 73.8754939
+              },
+              "areaServed": {
+                  "@type": "GeoCircle",
+                  "geoMidpoint": {
+                      "@type": "GeoCoordinates",
+                      "latitude": 18.5196214,
+                      "longitude": 73.8754939
+                  },
+                  "geoRadius": 30000
+              },
+              "url": "https://www.pathofast.com/pune/tests",
+              "priceRange": "$$$",
+              "telephone": "+9102049304930",
+              "aggregateRating": {
+                "@type": "AggregateRating",
+                "ratingValue": "4.9",
+                "reviewCount": "375"
+              },
+              "openingHoursSpecification": [
+                {
+                  "@type": "OpeningHoursSpecification",
+                  "dayOfWeek": [
+                    "Monday",
+                    "Tuesday",
+                    "Wednesday",
+                    "Thursday",
+                    "Friday",
+                    "Saturday"
+                  ],
+                  "opens": "08:00",
+                  "closes": "18:00"
+                }
+              ]
+            }
+          </script>
+    </head>
+
+    <body>
+        <div class="body-wrapper">
+            <!-- HEADER AREA START (header-3) -->
+            <!-- HEADER AREA START (header-3) -->
+<header class="ltn__header-area ltn__header-3">       
+    
+    <!-- ltn__header-top-area end --> 
+    <!-- ltn__header-middle-area start -->
+    <div class="ltn__header-middle-area">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <div class="site-logo">
+                        <a href="/"><img src="/vicodin_logo.png" alt="Pathofast Lab Pune Logo"></a>
+                    </div>
+                </div>
+                <div class="col header-contact-serarch-column d-none d-lg-block">
+                    <div class="header-contact-search">
+                        <!-- header-feature-item -->
+                        <div class="header-feature-item">
+                            <div class="header-feature-icon">
+                                <i class="icon-call"></i>
+                            </div>
+                            <div class="header-feature-info">
+                                <h6>Phone</h6>
+                                <p><a href="tel:02049304930">02049304930</a></p>
+                            </div>
+                        </div>
+                        <!-- header-search-2 -->
+                        <div class="header-search-2 auto-search-wrapper">
+                            <form>
+                                <input type="text" id="search" name="search" value="" placeholder="Search here..."/>
+                                <button type="submit">
+                                    <span><i class="icon-search"></i></span>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <!-- header-options -->
+                    <div class="ltn__header-options">
+                        <ul>
+                            <li>
+                                <div class="mini-cart-icon mini-cart-icon-2">
+                                    <a href="tel:02049304930"><span class="mini-cart-icon">
+                                        <i class="fas fa-phone"></i>
+                                    </span>
+                                    </a>
+                                </div>
+                            </li>
+                            <li class="d-none---"> 
+                                    <!-- user-menu -->
+                                <div class="ltn__drop-menu user-menu">
+                                    <ul>
+                                        <li>
+                                            <a><i class="fas fa-language"></i></a>
+                                            <ul>
+                                            </ul>
+
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li class="d-lg-none">
+                                <!-- header-search-1 -->
+                                <div class="header-search-wrap">
+                                    <div class="header-search-1">
+                                        <div class="search-icon">
+                                            <i id="show_small_search" class="fas fa-search  for-search-show"></i>
+                                            <i id="hide_small_search" class="fas fa-window-close  for-search-close"></i>
+                                        </div>
+                                    </div>
+                                    <div class="header-search-1-form" id="header-search-1-form">
+                                        <div class="auto-search-wrapper">
+                                            <form>
+                                                <input type="text" name="search_1" id="search_mobile_small" placeholder="Search here..."/>
+                                                
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="d-lg-none">
+                                <div class="mini-cart-icon mini-cart-icon-2">
+                                    <a href="#ltn__utilize-mobile-menu" class="ltn__utilize-toggle">
+                                        <span class="mini-cart-icon">
+                                            <i class=" fas fa-bars"></i>
+                                        </span>
+                                    </a>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ltn__header-middle-area end -->
+    <!-- header-bottom-area start -->
+    <div class="header-bottom-area ltn__border-top ltn__header-sticky  ltn__sticky-bg-white--- ltn__sticky-bg-secondary ltn__secondary-bg section-bg-1 menu-color-white d-none d-lg-block">
+        <div class="container">
+            <div class="row">
+                <div class="col header-menu-column justify-content-center">
+                    <div class="sticky-logo">
+                        <div class="site-logo">
+                            <a href="/"><img src="/vicodin_logo.png" alt="Pathofast Lab Pune"></a>
+                        </div>
+                    </div>
+                    <div class="header-menu header-menu-2">
+                        <nav>
+    <div class="ltn__main-menu">
+        <ul>
+                    <li class="menu-icon"><a href="">About</a>
+                        <ul class="">
+                                <li><a href="/contact_us">Contact Us</a>
+                                </li>
+                                <li><a href="/hours">Hours</a>
+                                </li>
+                                <li><a href="/testimonials">Testimonials</a>
+                                </li>
+                                <li><a href="/center_locator">Find Center</a>
+                                </li>
+                                <li><a href="/location">Location</a>
+                                </li>
+                        </ul>
+                    </li>
+                    <li class="menu-icon"><a href="">Packages</a>
+                        <ul class="">
+                                <li><a href="/test-packages">All Health Checkup Packages</a>
+                                </li>
+                                <li><a href="/test-packages/yearly-check-up-package">Gold Health Checkup Package</a>
+                                </li>
+                                <li><a href="/test-packages/diabetes-package">Diabetes Package</a>
+                                </li>
+                                <li><a href="/test-packages/fever-package">Fever Package</a>
+                                </li>
+                                <li><a href="/test-packages/hair-fall-package">Hair Fall</a>
+                                </li>
+                                <li><a href="/test-packages/std-screening-tests">STD</a>
+                                </li>
+                                <li><a href="/test-packages/overweight-or-obesity-package">Weight Gain</a>
+                                </li>
+                                <li><a href="/test-packages/female-cancer-screening-tests">Female Cancer</a>
+                                </li>
+                                <li><a href="/test-packages/fertility-panel-for-men">Male Fertility</a>
+                                </li>
+                                <li><a href="/test-packages/full-body-health-checkup-vitamins-and-screening-tests">Full Body Mini + Vitamins</a>
+                                </li>
+                                <li><a href="/test-packages/vitamin-d3-and-b12-test">D3 &amp; B12</a>
+                                </li>
+                                <li><a href="/test-packages/full-body-health-checkup-package-silver">Silver Health Checkup Package</a>
+                                </li>
+                                <li><a href="/test-packages/premarital-health-checkup-package">Premarital Health Checkup</a>
+                                </li>
+                        </ul>
+                    </li>
+                    <li class="menu-icon"><a href="">Lab Tests</a>
+                        <ul class="mega-menu">
+                                <li><a href="">Routine Tests</a>
+                                        <ul>
+                                                <li><a href="/tests">All Blood Tests</a></li>
+                                                <li><a href="/tests/cbc-complete-blood-count">Hemogram/CBC Test</a></li>
+                                                <li><a href="/tests/urine-routine-test">Urine Test</a></li>
+                                                <li><a href="/tests/blood-group-test">Blood Group Test</a></li>
+                                                <li><a href="/tests/vitamin-b12-test">Vitamin B12 Test</a></li>
+                                                <li><a href="/tests/vitamin-d-test">Vitamin D3</a></li>
+                                                <li><a href="/tests/liver-function-tests">Liver Profile</a></li>
+                                                <li><a href="/tests/kidney-profile">Kidney Test</a></li>
+                                                <li><a href="/tests/stool-routine-test">Stool Test</a></li>
+                                                <li><a href="/tests/thyroid-profile-t4-t4-tsh">Thyroid Test</a></li>
+                                        </ul>
+                                </li>
+                                <li><a href="">Pregnancy Tests</a>
+                                        <ul>
+                                                <li><a href="/tests/beta-hcg-test">Beta HCG Test</a></li>
+                                                <li><a href="/tests/double-marker-test">Double Marker Test</a></li>
+                                                <li><a href="/tests/triple-marker-test">Triple Marker Test</a></li>
+                                                <li><a href="/tests/quadruple-test-for-pregnancy">Quadruple Marker Test</a></li>
+                                                <li><a href="/tests/pregnancy-gtt">Pregnancy Glucose Tolerance Test (GTT)</a></li>
+                                                <li><a href="/tests/torch-8-parameters-igm-igg">TORCH Test</a></li>
+                                        </ul>
+                                </li>
+                                <li><a href="">Fertility Tests</a>
+                                        <ul>
+                                                <li><a href="/tests/semen-test">Semen Test</a></li>
+                                                <li><a href="/tests/amh-anti-mullerian-hormone">AMH Test</a></li>
+                                                <li><a href="/tests/fsh-lh-prolactin-test">FSH, LH, Prolactin</a></li>
+                                                <li><a href="/tests/testosterone-test">Testosterone Test</a></li>
+                                                <li><a href="/tests/dheas-dehydroepiandrosterone-sulfate">DHEA Test</a></li>
+                                        </ul>
+                                </li>
+                                <li><a href="">Diabetes and Heart</a>
+                                        <ul>
+                                                <li><a href="/tests/hba1c-test">HBA1C Test</a></li>
+                                                <li><a href="/tests/fasting-blood-sugar">Blood Sugar Test (Fasting)</a></li>
+                                                <li><a href="/tests/lipid-profile">Cholesterol Test</a></li>
+                                                <li><a href="/tests/troponin-i-test">Troponin Test</a></li>
+                                                <li><a href="/tests/electrolytes-test">Electrolytes Test</a></li>
+                                        </ul>
+                                </li>
+                                <li><a href="">Cancer Tests</a>
+                                        <ul>
+                                                <li><a href="/tests/ca-19-9">CA 19-9</a></li>
+                                                <li><a href="/tests/carcino-embryonic-antigen-cea">CEA</a></li>
+                                                <li><a href="/tests/ca-15-3">CA 15-3</a></li>
+                                                <li><a href="/tests/prostate-profile">Prostate Profile</a></li>
+                                                <li><a href="/tests/total-psa-level">PSA Test</a></li>
+                                        </ul>
+                                </li>
+                                <li><a href="">Allergy and Autoimmune Tests</a>
+                                        <ul>
+                                                <li><a href="/tests/ige-test">IGE Test</a></li>
+                                                <li><a href="/tests/common-veg-food-allergen-test">Veg Food Allergy Test</a></li>
+                                                <li><a href="/tests/non-veg-food-allergen-test">Non Veg Food Allergy Test</a></li>
+                                                <li><a href="/tests/asthma-allergen-test">Asthama Profile</a></li>
+                                                <li><a href="/tests/combined-allergy-test">Complete Allergy Test</a></li>
+                                                <li><a href="/tests/ra-factor">RA Factor Test</a></li>
+                                                <li><a href="/tests/anti-ccp-test">Anti CCP Test</a></li>
+                                                <li><a href="/tests/ana">ANA Test</a></li>
+                                        </ul>
+                                </li>
+                                <li><a href="">STD Tests</a>
+                                        <ul>
+                                                <li><a href="/tests/hiv-test">HIV Test</a></li>
+                                                <li><a href="/tests/hepatitis-b-antigen-test">Hepatitis B Test</a></li>
+                                                <li><a href="/tests/total-antibodies-to-hcv-test">Hepatitis C Test</a></li>
+                                                <li><a href="/tests/vdrl-test-rpr">VDRL Test</a></li>
+                                                <li><a href="/tests/tpha-syphilis-haemagglutination-test">TPHA Test</a></li>
+                                                <li><a href="/tests/hiv-1-rna-detection-test">HIV 1 RNA Test</a></li>
+                                                <li><a href="/tests/hiv-2-rna-test">HIV 2 RNA Test</a></li>
+                                                <li><a href="/tests/hiv-1-viral-load-test">HIV 1 Viral Load Test</a></li>
+                                                <li><a href="/tests/chlamydia-and-gonorrhea-dna-pcr">Chlamydia &amp; Gonorrhea Urine Test</a></li>
+                                                <li><a href="/tests/herpes-test-hsv1-hsv2-antibodies">Herpes 1 &amp; 2 Test</a></li>
+                                        </ul>
+                                </li>
+                        </ul>
+                    </li>
+                    <li class="menu-icon"><a href="">Services</a>
+                        <ul class="">
+                                <li><a href="/services/blood-testing">Blood Test in Pune</a>
+                                </li>
+                                <li><a href="/pune/home_sample_collection">Home Sample Collection in Pune</a>
+                                </li>
+                                <li><a href="/services/elisa-testing-facility-for-clinical-research-organizations-in-pune">ELISA Research Lab in Pune</a>
+                                </li>
+                                <li><a href="/services/pregnancy-tests-in-pune-book-appointment-with-pathofast-lab">Pregnancy Test in Pune</a>
+                                </li>
+                                <li><a href="/services/fever-tests-in-pune-book-appointment-with-pathofast-lab">Fever Test in Pune</a>
+                                </li>
+                                <li><a href="/test-packages">Full Body Health Checkup in Pune</a>
+                                </li>
+                                <li><a href="/services/male-fertility-tests-in-pune-prices-preparation-packages">Male Fertility Testing in Pune</a>
+                                </li>
+                                <li><a href="/services/std-test-pune-prices-panels-book-online">STD Tests in Pune</a>
+                                </li>
+                        </ul>
+                    </li>
+                    <li><a href="/blogs">Blogs</a></li>
+                    <li class="menu-icon"><a href="">More</a>
+                        <ul class="">
+                                <li><a href="/tests">Test Catalog</a>
+                                </li>
+                                <li><a href="/test-packages">Offers</a>
+                                </li>
+                                <li><a href="/symptoms">Symptoms</a>
+                                </li>
+                                <li><a href="/service_categories">Service Categories</a>
+                                </li>
+                                <li><a href="/video-tests">Video Tests</a>
+                                </li>
+                                <li><a href="/diagnostics/questionnaires/questionnaires">Self Tests</a>
+                                </li>
+                        </ul>
+                    </li>
+        </ul>
+    </div>
+</nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- header-bottom-area end -->
+</header>
+<!-- HEADER AREA END -->
+
+<!-- MOBILE MENU START -->
+<div class="mobile-header-menu-fullwidth mb-30 d-block d-none">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <!-- Mobile Menu Button -->
+                <div class="mobile-menu-toggle d-lg-none">
+                    <span>MENU</span>
+                    <a href="#ltn__utilize-mobile-menu" class="ltn__utilize-toggle">
+                        <svg viewBox="0 0 800 600">
+                            <path d="M300,220 C300,220 520,220 540,220 C740,220 640,540 520,420 C440,340 300,200 300,200" id="top"></path>
+                            <path d="M300,320 L540,320" id="middle"></path>
+                            <path d="M300,210 C300,210 520,210 540,210 C740,210 640,530 520,410 C440,330 300,190 300,190" id="bottom" transform="translate(480, 320) scale(1, -1) translate(-480, -318) "></path>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+            <!-- Utilize Mobile Menu Start -->
+<div id="ltn__utilize-mobile-menu" class="ltn__utilize ltn__utilize-mobile-menu">
+    <div class="ltn__utilize-menu-inner ltn__scrollbar">
+        <div class="ltn__utilize-menu-head">
+            <div class="site-logo">
+                <a href="/"><img src="/vicodin_logo.png" alt="Logo"></a>
+            </div>
+            <button class="ltn__utilize-close">×</button>
+        </div>
+        <div class="ltn__utilize-menu-search-form auto-search-wrapper">
+            <form>
+                <input type="text" placeholder="Search..." id="search_mobile">
+                <button><i class="fas fa-search"></i></button>
+            </form>
+        </div>
+        <div class="ltn__utilize-menu">
+            <ul>
+                    <li><a href="#">About</a>
+                        <ul class="sub-menu">
+                                <li><a href="/contact_us">Contact Us</a>
+                                </li>
+                                <li><a href="/hours">Hours</a>
+                                </li>
+                                <li><a href="/testimonials">Testimonials</a>
+                                </li>
+                                <li><a href="/center_locator">Find Center</a>
+                                </li>
+                                <li><a href="/location">Location</a>
+                                </li>
+                        </ul>
+                    </li>
+                    <li><a href="#">Packages</a>
+                        <ul class="sub-menu">
+                                <li><a href="/test-packages">All Health Checkup Packages</a>
+                                </li>
+                                <li><a href="/test-packages/yearly-check-up-package">Gold Health Checkup Package</a>
+                                </li>
+                                <li><a href="/test-packages/diabetes-package">Diabetes Package</a>
+                                </li>
+                                <li><a href="/test-packages/fever-package">Fever Package</a>
+                                </li>
+                                <li><a href="/test-packages/hair-fall-package">Hair Fall</a>
+                                </li>
+                                <li><a href="/test-packages/std-screening-tests">STD</a>
+                                </li>
+                                <li><a href="/test-packages/overweight-or-obesity-package">Weight Gain</a>
+                                </li>
+                                <li><a href="/test-packages/female-cancer-screening-tests">Female Cancer</a>
+                                </li>
+                                <li><a href="/test-packages/fertility-panel-for-men">Male Fertility</a>
+                                </li>
+                                <li><a href="/test-packages/full-body-health-checkup-vitamins-and-screening-tests">Full Body Mini + Vitamins</a>
+                                </li>
+                                <li><a href="/test-packages/vitamin-d3-and-b12-test">D3 &amp; B12</a>
+                                </li>
+                                <li><a href="/test-packages/full-body-health-checkup-package-silver">Silver Health Checkup Package</a>
+                                </li>
+                                <li><a href="/test-packages/premarital-health-checkup-package">Premarital Health Checkup</a>
+                                </li>
+                        </ul>
+                    </li>
+                    <li><a href="#">Services</a>
+                        <ul class="sub-menu">
+                                <li><a href="/services/blood-testing">Blood Test in Pune</a>
+                                </li>
+                                <li><a href="/pune/home_sample_collection">Home Sample Collection in Pune</a>
+                                </li>
+                                <li><a href="/services/elisa-testing-facility-for-clinical-research-organizations-in-pune">ELISA Research Lab in Pune</a>
+                                </li>
+                                <li><a href="/services/pregnancy-tests-in-pune-book-appointment-with-pathofast-lab">Pregnancy Test in Pune</a>
+                                </li>
+                                <li><a href="/services/fever-tests-in-pune-book-appointment-with-pathofast-lab">Fever Test in Pune</a>
+                                </li>
+                                <li><a href="/test-packages">Full Body Health Checkup in Pune</a>
+                                </li>
+                                <li><a href="/services/male-fertility-tests-in-pune-prices-preparation-packages">Male Fertility Testing in Pune</a>
+                                </li>
+                                <li><a href="/services/std-test-pune-prices-panels-book-online">STD Tests in Pune</a>
+                                </li>
+                        </ul>
+                    </li>
+                    <li><a href="/blogs">Blogs</a>
+                        <ul class="sub-menu">
+                        </ul>
+                    </li>
+                    <li><a href="#">More</a>
+                        <ul class="sub-menu">
+                                <li><a href="/tests">Test Catalog</a>
+                                </li>
+                                <li><a href="/test-packages">Offers</a>
+                                </li>
+                                <li><a href="/symptoms">Symptoms</a>
+                                </li>
+                                <li><a href="/service_categories">Service Categories</a>
+                                </li>
+                                <li><a href="/video-tests">Video Tests</a>
+                                </li>
+                                <li><a href="/diagnostics/questionnaires/questionnaires">Self Tests</a>
+                                </li>
+                        </ul>
+                    </li>
+                    <li><a href="#">Routine Tests</a>
+                        <ul class="sub-menu">
+                                <li><a href="/tests">All Blood Tests</a>
+                                </li>
+                                <li><a href="/tests/cbc-complete-blood-count">Hemogram/CBC Test</a>
+                                </li>
+                                <li><a href="/tests/urine-routine-test">Urine Test</a>
+                                </li>
+                                <li><a href="/tests/blood-group-test">Blood Group Test</a>
+                                </li>
+                                <li><a href="/tests/vitamin-b12-test">Vitamin B12 Test</a>
+                                </li>
+                                <li><a href="/tests/vitamin-d-test">Vitamin D3</a>
+                                </li>
+                                <li><a href="/tests/liver-function-tests">Liver Profile</a>
+                                </li>
+                                <li><a href="/tests/kidney-profile">Kidney Test</a>
+                                </li>
+                                <li><a href="/tests/stool-routine-test">Stool Test</a>
+                                </li>
+                                <li><a href="/tests/thyroid-profile-t4-t4-tsh">Thyroid Test</a>
+                                </li>
+                        </ul>
+                    </li>
+                    <li><a href="#">Pregnancy Tests</a>
+                        <ul class="sub-menu">
+                                <li><a href="/tests/beta-hcg-test">Beta HCG Test</a>
+                                </li>
+                                <li><a href="/tests/double-marker-test">Double Marker Test</a>
+                                </li>
+                                <li><a href="/tests/triple-marker-test">Triple Marker Test</a>
+                                </li>
+                                <li><a href="/tests/quadruple-test-for-pregnancy">Quadruple Marker Test</a>
+                                </li>
+                                <li><a href="/tests/pregnancy-gtt">Pregnancy Glucose Tolerance Test (GTT)</a>
+                                </li>
+                                <li><a href="/tests/torch-8-parameters-igm-igg">TORCH Test</a>
+                                </li>
+                        </ul>
+                    </li>
+                    <li><a href="#">Fertility Tests</a>
+                        <ul class="sub-menu">
+                                <li><a href="/tests/semen-test">Semen Test</a>
+                                </li>
+                                <li><a href="/tests/amh-anti-mullerian-hormone">AMH Test</a>
+                                </li>
+                                <li><a href="/tests/fsh-lh-prolactin-test">FSH, LH, Prolactin</a>
+                                </li>
+                                <li><a href="/tests/testosterone-test">Testosterone Test</a>
+                                </li>
+                                <li><a href="/tests/dheas-dehydroepiandrosterone-sulfate">DHEA Test</a>
+                                </li>
+                        </ul>
+                    </li>
+                    <li><a href="#">Diabetes and Heart</a>
+                        <ul class="sub-menu">
+                                <li><a href="/tests/hba1c-test">HBA1C Test</a>
+                                </li>
+                                <li><a href="/tests/fasting-blood-sugar">Blood Sugar Test (Fasting)</a>
+                                </li>
+                                <li><a href="/tests/lipid-profile">Cholesterol Test</a>
+                                </li>
+                                <li><a href="/tests/troponin-i-test">Troponin Test</a>
+                                </li>
+                                <li><a href="/tests/electrolytes-test">Electrolytes Test</a>
+                                </li>
+                        </ul>
+                    </li>
+                    <li><a href="#">Cancer Tests</a>
+                        <ul class="sub-menu">
+                                <li><a href="/tests/ca-19-9">CA 19-9</a>
+                                </li>
+                                <li><a href="/tests/carcino-embryonic-antigen-cea">CEA</a>
+                                </li>
+                                <li><a href="/tests/ca-15-3">CA 15-3</a>
+                                </li>
+                                <li><a href="/tests/prostate-profile">Prostate Profile</a>
+                                </li>
+                                <li><a href="/tests/total-psa-level">PSA Test</a>
+                                </li>
+                        </ul>
+                    </li>
+                    <li><a href="#">Allergy and Autoimmune Tests</a>
+                        <ul class="sub-menu">
+                                <li><a href="/tests/ige-test">IGE Test</a>
+                                </li>
+                                <li><a href="/tests/common-veg-food-allergen-test">Veg Food Allergy Test</a>
+                                </li>
+                                <li><a href="/tests/non-veg-food-allergen-test">Non Veg Food Allergy Test</a>
+                                </li>
+                                <li><a href="/tests/asthma-allergen-test">Asthama Profile</a>
+                                </li>
+                                <li><a href="/tests/combined-allergy-test">Complete Allergy Test</a>
+                                </li>
+                                <li><a href="/tests/ra-factor">RA Factor Test</a>
+                                </li>
+                                <li><a href="/tests/anti-ccp-test">Anti CCP Test</a>
+                                </li>
+                                <li><a href="/tests/ana">ANA Test</a>
+                                </li>
+                        </ul>
+                    </li>
+                    <li><a href="#">STD Tests</a>
+                        <ul class="sub-menu">
+                                <li><a href="/tests/hiv-test">HIV Test</a>
+                                </li>
+                                <li><a href="/tests/hepatitis-b-antigen-test">Hepatitis B Test</a>
+                                </li>
+                                <li><a href="/tests/total-antibodies-to-hcv-test">Hepatitis C Test</a>
+                                </li>
+                                <li><a href="/tests/vdrl-test-rpr">VDRL Test</a>
+                                </li>
+                                <li><a href="/tests/tpha-syphilis-haemagglutination-test">TPHA Test</a>
+                                </li>
+                                <li><a href="/tests/hiv-1-rna-detection-test">HIV 1 RNA Test</a>
+                                </li>
+                                <li><a href="/tests/hiv-2-rna-test">HIV 2 RNA Test</a>
+                                </li>
+                                <li><a href="/tests/hiv-1-viral-load-test">HIV 1 Viral Load Test</a>
+                                </li>
+                                <li><a href="/tests/chlamydia-and-gonorrhea-dna-pcr">Chlamydia &amp; Gonorrhea Urine Test</a>
+                                </li>
+                                <li><a href="/tests/herpes-test-hsv1-hsv2-antibodies">Herpes 1 &amp; 2 Test</a>
+                                </li>
+                        </ul>
+                    </li>
+            </ul>
+        </div>
+        <div class="ltn__utilize-buttons ltn__utilize-buttons-2">
+            <ul>
+                <li>
+                    <a href="/sign_in_or_sign_up" title="Sign In">
+                        <span class="utilize-btn-icon">
+                            <i class="far fa-user"></i>
+                        </span>
+                        Sign In
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="ltn__social-media-2">
+            <ul>
+                <li><a href="https://www.facebook.com/pathofast" title="Facebook"><i class="fab fa-facebook-f"></i></a></li>
+                <li><a href="https://www.linkedin.com/pathofast" title="Linkedin"><i class="fab fa-linkedin"></i></a></li>
+                <li><a href="https://www.instagram.com/pathofast" title="Instagram"><i class="fab fa-instagram"></i></a></li>
+                <li><a href="https://www.youtube.com/@pathofast" title="Youtube"><i class="fab fa-youtube"></i></a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!-- Utilize Mobile Menu End -->
+
+<div class="ltn__utilize-overlay"></div>
+
+            
+
+<div class="ltn__about-us-area pt-25 pb-25 section-bg-1">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 align-self-center">
+                <div class="about-us-img-wrap about-img-left">
+                    <img src="/pune_new/lab_in_pune.webp" alt="Pathofast - Pathology Lab in Pune">
+                </div>
+            </div>
+            <div class="col-lg-6 align-self-center">
+                <div class="about-us-info-wrap">
+                    <div class="section-title-area ltn__section-title-2--- mb-30">
+                        <h1>Pathofast Lab Pune</h1>
+                        <p>We are a pathology lab in Pune, Camp. Get a <b>blood test in Pune</b>, in the convenience of your <b>home</b>. We are the <b>best lab in Pune</b>, offering a wide range of diagnostic tests like HIV Test, Semen Test, CBC Test, Urine Test, Vitamin D Test and More.</p>
+                    </div>
+                    <ul class="ltn__list-item-1 ltn__list-item-1-before--- clearfix">
+                        <li><i class="fas fa-check-square"></i>Get reliable <b>blood test in Pune</b>, at affordable prices</li>
+                        <li><i class="fas fa-check-square"></i><b>Blood test at home</b> in all parts of Pune</li>
+                        <li><i class="fas fa-check-square"></i>Get reports by Email and Watsapp in 30 minutes*</li>
+                        <li><i class="fas fa-check-square"></i>Full Body Health Checkup Packages starting from Rs.999</li>
+                        <li><i class="fas fa-check-square"></i>HIV, Semen, Home Blood Test</li>
+                    </ul>
+                    <div class="btn-wrapper mt-20 pt-20">
+                        <button class="btn theme-btn-1 btn-effect-1 text-uppercase"><a href="tel:02049304930">Call Now</a></button>
+                        <button class="btn theme-btn-1 btn-effect-1 text-uppercase"><a href="/business/prescriptions/new">Book Online</a></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="ltn__about-us-area pt-50 pb-50">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 align-self-center">
+                <div class="about-us-info-wrap">
+                    <div class="section-title-area ltn__section-title-2--- mb-30">
+                        <h2>Get Home Visit for Blood Test | Instant Callback</h2>
+                        <p>If you need a <a href="/tests">blood test in Pune</a>, look no further than Pathofast Lab Pune. We offer <b>blood test in Pune</b>, in all parts of Pune with <b>home sample collection services</b>. This means you can <b>book a lab test</b> online and get home service without having to visit lab centers. Lab tests are also a part of <a href="/test-packages">Health Checkup Packages</a> that are done for preventive and full body health checkups</p>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <form id="contact-form" action="/callback_form" method="post">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="input-item input-item-phone ltn__custom-icon">
+                <input required type="text" name="mobile_number" placeholder="Enter Mobile Number">
+            </div>
+        </div>
+    </div>
+    <div class="row d-none">
+        <div class="col-md-12">
+            <div class="input-item">
+                <select required name="location" class="nice-select" style="display: none;">
+                    <option>Choose Your Location</option>
+                        <option>Jangli Maharaj Nagar</option>
+                        <option>Ravet</option>
+                        <option>Viman Nagar</option>
+                        <option>Shastrinagar, Yerawada</option>
+                        <option>NIBM Undri Road, Kondhwa</option>
+                        <option>Camp</option>
+                        <option>Aundh</option>
+                        <option>Baner</option>
+                        <option>Dattwadi</option>
+                        <option>Undri</option>
+                        <option>Pimpri-Chinchwad</option>
+                        <option>Kalyani Nagar</option>
+                        <option>Koregaon Park</option>
+                        <option>Sadashiv Peth</option>
+                </select><div class="nice-select" tabindex="0"><span class="current">Choose Your Location</span><ul class="list">
+                    <li data-value="Make A Selection" class="option selected focus">Make A Selection</li>
+                        <li data-value="Jangli Maharaj Nagar" class="option">Jangli Maharaj Nagar</li>
+                        <li data-value="Ravet" class="option">Ravet</li>
+                        <li data-value="Viman Nagar" class="option">Viman Nagar</li>
+                        <li data-value="Shastrinagar, Yerawada" class="option">Shastrinagar, Yerawada</li>
+                        <li data-value="NIBM Undri Road, Kondhwa" class="option">NIBM Undri Road, Kondhwa</li>
+                        <li data-value="Camp" class="option">Camp</li>
+                        <li data-value="Aundh" class="option">Aundh</li>
+                        <li data-value="Baner" class="option">Baner</li>
+                        <li data-value="Dattwadi" class="option">Dattwadi</li>
+                        <li data-value="Undri" class="option">Undri</li>
+                        <li data-value="Pimpri-Chinchwad" class="option">Pimpri-Chinchwad</li>
+                        <li data-value="Kalyani Nagar" class="option">Kalyani Nagar</li>
+                        <li data-value="Koregaon Park" class="option">Koregaon Park</li>
+                        <li data-value="Sadashiv Peth" class="option">Sadashiv Peth</li>
+                </ul></div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="input-item">
+                <select required name="time_slot" class="nice-select" style="display: none;">
+                    <option>Home Visit Time Slot</option>
+                        <option>Tomorrow - 07:00 AM</option>
+                        <option>Tomorrow - 07:30 AM</option>
+                        <option>Tomorrow - 08:00 AM</option>
+                        <option>Tomorrow - 08:30 AM</option>
+                        <option>Tomorrow - 09:00 AM</option>
+                        <option>Tomorrow - 09:30 AM</option>
+                        <option>Tomorrow - 10:00 AM</option>
+                        <option>Tomorrow - 10:30 AM</option>
+                        <option>Tomorrow - 11:00 AM</option>
+                        <option>Tomorrow - 11:30 AM</option>
+                        <option>Tomorrow - 12:00 PM</option>
+                        <option>Tomorrow - 12:30 PM</option>
+                        <option>Tomorrow - 13:00 PM</option>
+                        <option>Tomorrow - 13:30 PM</option>
+                        <option>Tomorrow - 14:00 PM</option>
+                        <option>Tomorrow - 14:30 PM</option>
+                        <option>Tomorrow - 15:00 PM</option>
+                        <option>Tomorrow - 15:30 PM</option>
+                        <option>Tomorrow - 16:00 PM</option>
+                        <option>Tomorrow - 16:30 PM</option>
+                </select><div class="nice-select" tabindex="0"><span class="current">Home Visit Time Slot</span><ul class="list"><li data-value="Make A Selection" class="option selected focus">Make A Selection</li>
+                        <li data-value="Tomorrow - 07:00 AM" class="option">Tomorrow - 07:00 AM</li>
+                        <li data-value="Tomorrow - 07:30 AM" class="option">Tomorrow - 07:30 AM</li>
+                        <li data-value="Tomorrow - 08:00 AM" class="option">Tomorrow - 08:00 AM</li>
+                        <li data-value="Tomorrow - 08:30 AM" class="option">Tomorrow - 08:30 AM</li>
+                        <li data-value="Tomorrow - 09:00 AM" class="option">Tomorrow - 09:00 AM</li>
+                        <li data-value="Tomorrow - 09:30 AM" class="option">Tomorrow - 09:30 AM</li>
+                        <li data-value="Tomorrow - 10:00 AM" class="option">Tomorrow - 10:00 AM</li>
+                        <li data-value="Tomorrow - 10:30 AM" class="option">Tomorrow - 10:30 AM</li>
+                        <li data-value="Tomorrow - 11:00 AM" class="option">Tomorrow - 11:00 AM</li>
+                        <li data-value="Tomorrow - 11:30 AM" class="option">Tomorrow - 11:30 AM</li>
+                        <li data-value="Tomorrow - 12:00 PM" class="option">Tomorrow - 12:00 PM</li>
+                        <li data-value="Tomorrow - 12:30 PM" class="option">Tomorrow - 12:30 PM</li>
+                        <li data-value="Tomorrow - 13:00 PM" class="option">Tomorrow - 13:00 PM</li>
+                        <li data-value="Tomorrow - 13:30 PM" class="option">Tomorrow - 13:30 PM</li>
+                        <li data-value="Tomorrow - 14:00 PM" class="option">Tomorrow - 14:00 PM</li>
+                        <li data-value="Tomorrow - 14:30 PM" class="option">Tomorrow - 14:30 PM</li>
+                        <li data-value="Tomorrow - 15:00 PM" class="option">Tomorrow - 15:00 PM</li>
+                        <li data-value="Tomorrow - 15:30 PM" class="option">Tomorrow - 15:30 PM</li>
+                        <li data-value="Tomorrow - 16:00 PM" class="option">Tomorrow - 16:00 PM</li>
+                        <li data-value="Tomorrow - 16:30 PM" class="option">Tomorrow - 16:30 PM</li>
+                </ul></div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="d-none" style="margin-bottom: 1rem; margin-top:-1rem; padding-left:2rem;" class="recaptcha"></div>
+        <div class="col-md-12">
+            <div class="btn-wrapper mt-0">
+                <button class="btn theme-btn-1 btn-effect-1 text-uppercase" type="submit" style="width:100%">Get Call Back</button>
+            </div>
+        </div>
+        <p class="form-messege mb-0 mt-20"></p>
+    </div>
+
+</form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--- CAROUSEL PRODUCT USE FOR POPULAR TESTS --->
+<div class="ltn__product-area ltn__product-gutter  no-product-ratting pb-70---">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="section-title-area ltn__section-title-2 text-center">
+                    <h2>Full Body Health Checkup Packages</h2>
+                    <p>Pathofast offers <b>full body health checkup packages</b> starting at just Rs.599/-. Check our packages and health care plans.</p>
+                </div>
+            </div>
+        </div>
+        <div class="row ltn__tab-product-slider-one-active" role="toolbar">
+                <div class="col-lg-3 col-md-4 col-sm-6 col-6">
+                    <div class="ltn__product-item ltn__product-item-3 text-center">
+                        <div class="product-img">
+                            <a href="/test-packages/yearly-check-up-package" tabindex="-1"><img src="/images/packages/cro/renamed/hero/yearly-check-up-package.png" alt=""></a>
+                            
+                        </div>
+                        <div class="product-info">
+                            <div class="product-ratting">
+                                <ul>
+                                    <li><a href="#" tabindex="-1"><i class="fas fa-star"></i></a></li>
+                                    <li><a href="#" tabindex="-1"><i class="fas fa-star"></i></a></li>
+                                    <li><a href="#" tabindex="-1"><i class="fas fa-star"></i></a></li>
+                                    <li><a href="#" tabindex="-1"><i class="fas fa-star-half-alt"></i></a></li>
+                                    <li><a href="#" tabindex="-1"><i class="far fa-star"></i></a></li>
+                                </ul>
+                            </div>
+                            <h2 class="product-title"><a href="/test-packages/yearly-check-up-package" tabindex="-1">Gold Health Checkup Package </a></h2>
+                            <div class="product-price">
+                                <span>Rs. 3999</span>
+                                <del>Rs. 5198.7</del>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-6 col-6">
+                    <div class="ltn__product-item ltn__product-item-3 text-center">
+                        <div class="product-img">
+                            <a href="/test-packages/full-body-health-checkup-package-silver" tabindex="-1"><img src="/images/packages/cro/renamed/hero/full-body-health-checkup-package-silver.png" alt=""></a>
+                            
+                        </div>
+                        <div class="product-info">
+                            <div class="product-ratting">
+                                <ul>
+                                    <li><a href="#" tabindex="-1"><i class="fas fa-star"></i></a></li>
+                                    <li><a href="#" tabindex="-1"><i class="fas fa-star"></i></a></li>
+                                    <li><a href="#" tabindex="-1"><i class="fas fa-star"></i></a></li>
+                                    <li><a href="#" tabindex="-1"><i class="fas fa-star-half-alt"></i></a></li>
+                                    <li><a href="#" tabindex="-1"><i class="far fa-star"></i></a></li>
+                                </ul>
+                            </div>
+                            <h2 class="product-title"><a href="/test-packages/full-body-health-checkup-package-silver" tabindex="-1">Silver Health Checkup Package</a></h2>
+                            <div class="product-price">
+                                <span>Rs. 1999</span>
+                                <del>Rs. 2598.7</del>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-6 col-6">
+                    <div class="ltn__product-item ltn__product-item-3 text-center">
+                        <div class="product-img">
+                            <a href="/test-packages/full-body-health-checkup-vitamins-and-screening-tests" tabindex="-1"><img src="/images/packages/cro/renamed/hero/full-body-health-checkup-vitamins-and-screening-tests.png" alt=""></a>
+                            
+                        </div>
+                        <div class="product-info">
+                            <div class="product-ratting">
+                                <ul>
+                                    <li><a href="#" tabindex="-1"><i class="fas fa-star"></i></a></li>
+                                    <li><a href="#" tabindex="-1"><i class="fas fa-star"></i></a></li>
+                                    <li><a href="#" tabindex="-1"><i class="fas fa-star"></i></a></li>
+                                    <li><a href="#" tabindex="-1"><i class="fas fa-star-half-alt"></i></a></li>
+                                    <li><a href="#" tabindex="-1"><i class="far fa-star"></i></a></li>
+                                </ul>
+                            </div>
+                            <h2 class="product-title"><a href="/test-packages/full-body-health-checkup-vitamins-and-screening-tests" tabindex="-1">Vitamins Plus Health Checkup Package</a></h2>
+                            <div class="product-price">
+                                <span>Rs. 1299</span>
+                                <del>Rs. 1688.7</del>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-6 col-6">
+                    <div class="ltn__product-item ltn__product-item-3 text-center">
+                        <div class="product-img">
+                            <a href="/test-packages/premarital-health-checkup-package" tabindex="-1"><img src="/images/packages/cro/renamed/hero/premarital-health-checkup-package.png" alt=""></a>
+                            
+                        </div>
+                        <div class="product-info">
+                            <div class="product-ratting">
+                                <ul>
+                                    <li><a href="#" tabindex="-1"><i class="fas fa-star"></i></a></li>
+                                    <li><a href="#" tabindex="-1"><i class="fas fa-star"></i></a></li>
+                                    <li><a href="#" tabindex="-1"><i class="fas fa-star"></i></a></li>
+                                    <li><a href="#" tabindex="-1"><i class="fas fa-star-half-alt"></i></a></li>
+                                    <li><a href="#" tabindex="-1"><i class="far fa-star"></i></a></li>
+                                </ul>
+                            </div>
+                            <h2 class="product-title"><a href="/test-packages/premarital-health-checkup-package" tabindex="-1">Premarital Health Checkup  </a></h2>
+                            <div class="product-price">
+                                <span>Rs. 1299</span>
+                                <del>Rs. 1688.7</del>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-6 col-6">
+                    <div class="ltn__product-item ltn__product-item-3 text-center">
+                        <div class="product-img">
+                            <a href="/test-packages/diabetes-package" tabindex="-1"><img src="/images/packages/cro/renamed/hero/diabetes-package.png" alt=""></a>
+                            
+                        </div>
+                        <div class="product-info">
+                            <div class="product-ratting">
+                                <ul>
+                                    <li><a href="#" tabindex="-1"><i class="fas fa-star"></i></a></li>
+                                    <li><a href="#" tabindex="-1"><i class="fas fa-star"></i></a></li>
+                                    <li><a href="#" tabindex="-1"><i class="fas fa-star"></i></a></li>
+                                    <li><a href="#" tabindex="-1"><i class="fas fa-star-half-alt"></i></a></li>
+                                    <li><a href="#" tabindex="-1"><i class="far fa-star"></i></a></li>
+                                </ul>
+                            </div>
+                            <h2 class="product-title"><a href="/test-packages/diabetes-package" tabindex="-1">Diabetes Test  </a></h2>
+                            <div class="product-price">
+                                <span>Rs. 999</span>
+                                <del>Rs. 1298.7</del>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-6 col-6">
+                    <div class="ltn__product-item ltn__product-item-3 text-center">
+                        <div class="product-img">
+                            <a href="/test-packages/women-s-health-package-lite" tabindex="-1"><img src="" alt=""></a>
+                            
+                        </div>
+                        <div class="product-info">
+                            <div class="product-ratting">
+                                <ul>
+                                    <li><a href="#" tabindex="-1"><i class="fas fa-star"></i></a></li>
+                                    <li><a href="#" tabindex="-1"><i class="fas fa-star"></i></a></li>
+                                    <li><a href="#" tabindex="-1"><i class="fas fa-star"></i></a></li>
+                                    <li><a href="#" tabindex="-1"><i class="fas fa-star-half-alt"></i></a></li>
+                                    <li><a href="#" tabindex="-1"><i class="far fa-star"></i></a></li>
+                                </ul>
+                            </div>
+                            <h2 class="product-title"><a href="/test-packages/women-s-health-package-lite" tabindex="-1">Women health checkup package  </a></h2>
+                            <div class="product-price">
+                                <span>Rs. 2999</span>
+                                <del>Rs. 3898.7</del>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </div>
+        <div class='row' style="text-align: center;">
+            <div class="btn-wrapper mt-0">
+                <button class="btn theme-btn-1 btn-effect-1 text-uppercase"><a href="/test-packages">All Packages</a></button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+<!-- BLOG -->
+<div class="ltn__blog-area pt-60 pb-70">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="section-title-area ltn__section-title-2--- text-center">
+                        <h6 class="section-subtitle section-subtitle-2 ltn__secondary-color d-none">News & Blogs</h6>
+                        <h2>Leatest Blogs</h2>
+                        <p>Get the latest news and health updates from our team of doctors.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row ltn__blog-slider-one-active ltn__blog-item-3-normal" role="toolbar">
+                    <div class="col-lg-12" style="width: 360px;" tabindex="-1" role="option">
+                        <div class="ltn__blog-item ltn__blog-item-3">
+                            <div class="ltn__blog-img">
+                                <a href="/blogs/signs-you-passed-your-glucose-test-is-your-sugar-level-normal" tabindex="-1"><img src="/images/blogs/default.png" alt="Signs you passed your glucose test - Is your sugar level normal?"></a>
+                            </div>
+                            <div class="ltn__blog-brief">
+                                <div class="ltn__blog-meta">
+                                    <ul>
+                                        <li class="ltn__blog-author">
+                                            <a href="#" tabindex="-1"><i class="far fa-user"></i>by: Dr.Bhargav Raut</a>
+                                        </li>
+                                        <li class="ltn__blog-tags">
+                                            <a href="#" tabindex="-1"><i class="fas fa-tags"></i></a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <h3 class="ltn__blog-title animated fadeIn"><a href="/blogs/signs-you-passed-your-glucose-test-is-your-sugar-level-normal" tabindex="-1">Signs you passed your glucose test - Is your sugar level normal?</a></h3>
+                                <div class="ltn__blog-meta-btn">
+                                    <div class="ltn__blog-meta">
+                                        <ul>
+                                            <li class="ltn__blog-date"><i class="far fa-calendar-alt"></i></li>
+                                        </ul>
+                                    </div>
+                                    <div class="ltn__blog-btn">
+                                        <a href="/blogs/signs-you-passed-your-glucose-test-is-your-sugar-level-normal" tabindex="-1">Read more</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12" style="width: 360px;" tabindex="-1" role="option">
+                        <div class="ltn__blog-item ltn__blog-item-3">
+                            <div class="ltn__blog-img">
+                                <a href="/blogs/double-marker-vs-triple-marker-which-is-the-better-test-in-pregnancy" tabindex="-1"><img src="https://res.cloudinary.com/djn9a2y4e/image/upload/s--oGv8CLQa--/v1724753287/KYC/1724753265072.png" alt="Double Marker vs Triple Marker : Which is the better test in pregnancy?"></a>
+                            </div>
+                            <div class="ltn__blog-brief">
+                                <div class="ltn__blog-meta">
+                                    <ul>
+                                        <li class="ltn__blog-author">
+                                            <a href="#" tabindex="-1"><i class="far fa-user"></i>by: Dr.Bhargav Raut</a>
+                                        </li>
+                                        <li class="ltn__blog-tags">
+                                            <a href="#" tabindex="-1"><i class="fas fa-tags"></i></a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <h3 class="ltn__blog-title animated fadeIn"><a href="/blogs/double-marker-vs-triple-marker-which-is-the-better-test-in-pregnancy" tabindex="-1">Double Marker vs Triple Marker : Which is the better test in pregnancy?</a></h3>
+                                <div class="ltn__blog-meta-btn">
+                                    <div class="ltn__blog-meta">
+                                        <ul>
+                                            <li class="ltn__blog-date"><i class="far fa-calendar-alt"></i></li>
+                                        </ul>
+                                    </div>
+                                    <div class="ltn__blog-btn">
+                                        <a href="/blogs/double-marker-vs-triple-marker-which-is-the-better-test-in-pregnancy" tabindex="-1">Read more</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12" style="width: 360px;" tabindex="-1" role="option">
+                        <div class="ltn__blog-item ltn__blog-item-3">
+                            <div class="ltn__blog-img">
+                                <a href="/blogs/hospital-infection-control-list-of-swabs-to-be-taken-for-nabh-in-india" tabindex="-1"><img src="https://res.cloudinary.com/djn9a2y4e/image/upload/s--Gfd26f2h--/v1724668107/KYC/1724668078426.png" alt="Hospital Infection Control - List of Swabs to be taken for NABH in India"></a>
+                            </div>
+                            <div class="ltn__blog-brief">
+                                <div class="ltn__blog-meta">
+                                    <ul>
+                                        <li class="ltn__blog-author">
+                                            <a href="#" tabindex="-1"><i class="far fa-user"></i>by: Dr.Bhargav Raut</a>
+                                        </li>
+                                        <li class="ltn__blog-tags">
+                                            <a href="#" tabindex="-1"><i class="fas fa-tags"></i></a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <h3 class="ltn__blog-title animated fadeIn"><a href="/blogs/hospital-infection-control-list-of-swabs-to-be-taken-for-nabh-in-india" tabindex="-1">Hospital Infection Control - List of Swabs to be taken for NABH in India</a></h3>
+                                <div class="ltn__blog-meta-btn">
+                                    <div class="ltn__blog-meta">
+                                        <ul>
+                                            <li class="ltn__blog-date"><i class="far fa-calendar-alt"></i></li>
+                                        </ul>
+                                    </div>
+                                    <div class="ltn__blog-btn">
+                                        <a href="/blogs/hospital-infection-control-list-of-swabs-to-be-taken-for-nabh-in-india" tabindex="-1">Read more</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12" style="width: 360px;" tabindex="-1" role="option">
+                        <div class="ltn__blog-item ltn__blog-item-3">
+                            <div class="ltn__blog-img">
+                                <a href="/blogs/creatinine-4-8-mg-dl-means-causes-treatment-gfr-calculation" tabindex="-1"><img src="/images/blogs/creatinine/new/bc1f10e0-a3e1-45ff-b214-da9ba59fab48.png" alt="Creatinine 4.8 : Is it Dangerous, Causes, Symptoms and More"></a>
+                            </div>
+                            <div class="ltn__blog-brief">
+                                <div class="ltn__blog-meta">
+                                    <ul>
+                                        <li class="ltn__blog-author">
+                                            <a href="#" tabindex="-1"><i class="far fa-user"></i>by: Dr.Bhargav Raut</a>
+                                        </li>
+                                        <li class="ltn__blog-tags">
+                                            <a href="#" tabindex="-1"><i class="fas fa-tags"></i></a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <h3 class="ltn__blog-title animated fadeIn"><a href="/blogs/creatinine-4-8-mg-dl-means-causes-treatment-gfr-calculation" tabindex="-1">Creatinine 4.8 : Is it Dangerous, Causes, Symptoms and More</a></h3>
+                                <div class="ltn__blog-meta-btn">
+                                    <div class="ltn__blog-meta">
+                                        <ul>
+                                            <li class="ltn__blog-date"><i class="far fa-calendar-alt"></i></li>
+                                        </ul>
+                                    </div>
+                                    <div class="ltn__blog-btn">
+                                        <a href="/blogs/creatinine-4-8-mg-dl-means-causes-treatment-gfr-calculation" tabindex="-1">Read more</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12" style="width: 360px;" tabindex="-1" role="option">
+                        <div class="ltn__blog-item ltn__blog-item-3">
+                            <div class="ltn__blog-img">
+                                <a href="/blogs/creatinine-3-7-mg-dl-means-causes-treatment-gfr-calculation" tabindex="-1"><img src="/images/blogs/creatinine/new/ce0a10ce-8030-4f8a-90cc-aad35fd51a3b.png" alt="Creatinine 3.7 : Is it Dangerous, Causes, Symptoms and More"></a>
+                            </div>
+                            <div class="ltn__blog-brief">
+                                <div class="ltn__blog-meta">
+                                    <ul>
+                                        <li class="ltn__blog-author">
+                                            <a href="#" tabindex="-1"><i class="far fa-user"></i>by: Dr.Bhargav Raut</a>
+                                        </li>
+                                        <li class="ltn__blog-tags">
+                                            <a href="#" tabindex="-1"><i class="fas fa-tags"></i></a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <h3 class="ltn__blog-title animated fadeIn"><a href="/blogs/creatinine-3-7-mg-dl-means-causes-treatment-gfr-calculation" tabindex="-1">Creatinine 3.7 : Is it Dangerous, Causes, Symptoms and More</a></h3>
+                                <div class="ltn__blog-meta-btn">
+                                    <div class="ltn__blog-meta">
+                                        <ul>
+                                            <li class="ltn__blog-date"><i class="far fa-calendar-alt"></i></li>
+                                        </ul>
+                                    </div>
+                                    <div class="ltn__blog-btn">
+                                        <a href="/blogs/creatinine-3-7-mg-dl-means-causes-treatment-gfr-calculation" tabindex="-1">Read more</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12" style="width: 360px;" tabindex="-1" role="option">
+                        <div class="ltn__blog-item ltn__blog-item-3">
+                            <div class="ltn__blog-img">
+                                <a href="/blogs/creatinine-1-7-mg-dl-means-causes-treatment-gfr-calculation" tabindex="-1"><img src="/images/blogs/creatinine/new/e2fbcc1b-7802-47c5-ace4-6e6e25e01db2.png" alt="Creatinine 1.7 : Is it Dangerous, Causes, Symptoms and More"></a>
+                            </div>
+                            <div class="ltn__blog-brief">
+                                <div class="ltn__blog-meta">
+                                    <ul>
+                                        <li class="ltn__blog-author">
+                                            <a href="#" tabindex="-1"><i class="far fa-user"></i>by: Dr.Bhargav Raut</a>
+                                        </li>
+                                        <li class="ltn__blog-tags">
+                                            <a href="#" tabindex="-1"><i class="fas fa-tags"></i></a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <h3 class="ltn__blog-title animated fadeIn"><a href="/blogs/creatinine-1-7-mg-dl-means-causes-treatment-gfr-calculation" tabindex="-1">Creatinine 1.7 : Is it Dangerous, Causes, Symptoms and More</a></h3>
+                                <div class="ltn__blog-meta-btn">
+                                    <div class="ltn__blog-meta">
+                                        <ul>
+                                            <li class="ltn__blog-date"><i class="far fa-calendar-alt"></i></li>
+                                        </ul>
+                                    </div>
+                                    <div class="ltn__blog-btn">
+                                        <a href="/blogs/creatinine-1-7-mg-dl-means-causes-treatment-gfr-calculation" tabindex="-1">Read more</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+            <div class='row' style="text-align: center;">
+                <div class="btn-wrapper mt-0">
+                    <button class="btn theme-btn-1 btn-effect-1 text-uppercase"><a href="/guides">All Blogs</a></button>
+                </div>
+            </div>
+        </div>
+</div>
+
+<!-- testimonials -->
+<div class="ltn__blog-area section-bg-1 pt-60 pb-70">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="section-title-area ltn__section-title-2--- text-center">
+                        
+                        <h2>Patient Reviews</h2>
+                        <p>Pathofast has over 400 5-star reviews on Google. Here is what patients say about our services</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row ltn__blog-slider-one-active ltn__blog-item-3-normal" role="toolbar">
+                    <div class="col-lg-12" style="width: 360px;" tabindex="-1" role="option">
+                        <div class="ltn__blog-item ltn__blog-item-3">
+                            
+                            <div class="ltn__blog-brief">
+                                <div class="ltn__blog-meta">
+                                    <ul>
+                                        <li class="ltn__blog-author">
+                                            <a href="#" tabindex="-1"><i class="far fa-user"></i>by: S.Hira</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <h3 class="ltn__blog-title animated fadeIn"><a href="blog-details.html" tabindex="-1">I was very impressed with my first time experience at Pathofast..The lab is equipped with the state of the art equipment..Special mention for the technician who attended to me..very gentle and polite...reports were also sent promptly...Definitely one of the best</a></h3>
+                                <div class="small-product-item-info">
+                                    <div class="product-ratting">
+                                        <ul>
+                                            <li><a href="#"><i class="fas fa-star"></i></a></li>
+                                            <li><a href="#"><i class="fas fa-star"></i></a></li>
+                                            <li><a href="#"><i class="fas fa-star"></i></a></li>
+                                            <li><a href="#"><i class="fas fa-star-half-alt"></i></a></li>
+                                            <li><a href="#"><i class="far fa-star"></i></a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12" style="width: 360px;" tabindex="-1" role="option">
+                        <div class="ltn__blog-item ltn__blog-item-3">
+                            
+                            <div class="ltn__blog-brief">
+                                <div class="ltn__blog-meta">
+                                    <ul>
+                                        <li class="ltn__blog-author">
+                                            <a href="#" tabindex="-1"><i class="far fa-user"></i>by: S.Shete</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <h3 class="ltn__blog-title animated fadeIn"><a href="blog-details.html" tabindex="-1">Honestly it was such a clean and neet place, no waste of time and direct on point and so soft-spoken attentives ,and it was so painless and smooth ,unlike others who just do it for the sake of job .i would highly highly recommend it</a></h3>
+                                <div class="small-product-item-info">
+                                    <div class="product-ratting">
+                                        <ul>
+                                            <li><a href="#"><i class="fas fa-star"></i></a></li>
+                                            <li><a href="#"><i class="fas fa-star"></i></a></li>
+                                            <li><a href="#"><i class="fas fa-star"></i></a></li>
+                                            <li><a href="#"><i class="fas fa-star-half-alt"></i></a></li>
+                                            <li><a href="#"><i class="far fa-star"></i></a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12" style="width: 360px;" tabindex="-1" role="option">
+                        <div class="ltn__blog-item ltn__blog-item-3">
+                            
+                            <div class="ltn__blog-brief">
+                                <div class="ltn__blog-meta">
+                                    <ul>
+                                        <li class="ltn__blog-author">
+                                            <a href="#" tabindex="-1"><i class="far fa-user"></i>by: J. Oberoi</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <h3 class="ltn__blog-title animated fadeIn"><a href="blog-details.html" tabindex="-1">The Lab service is fantastic. I really appreciate the home visit appointment communication from the lab, the punctuality of the Technician to collect the samples, Getting reports On Time. Wonderful services. Impressed by Ajay&#39;s complete communication and connectivity with the patient. Hygieness is Awesome. Soft spoken. All the best.</a></h3>
+                                <div class="small-product-item-info">
+                                    <div class="product-ratting">
+                                        <ul>
+                                            <li><a href="#"><i class="fas fa-star"></i></a></li>
+                                            <li><a href="#"><i class="fas fa-star"></i></a></li>
+                                            <li><a href="#"><i class="fas fa-star"></i></a></li>
+                                            <li><a href="#"><i class="fas fa-star-half-alt"></i></a></li>
+                                            <li><a href="#"><i class="far fa-star"></i></a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+            <div class='row' style="text-align: center;">
+                <div class="btn-wrapper mt-0">
+                    <button class="btn theme-btn-1 btn-effect-1 text-uppercase"><a href="/testimonials">All Reviews</a></button>
+                </div>
+            </div>
+        </div>
+</div>
+
+<!-- find us -->
+<!-- about us -->
+
+
+<!-- about us -->
+<div class="ltn__about-us-area pt-115 pb-120">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 align-self-center">
+                <div class="about-us-img-wrap about-img-left">
+                    <img src="/lab_three.jpeg" alt="About Us Image">
+                </div>
+            </div>
+            <div class="col-lg-6 align-self-center">
+                <div class="about-us-info-wrap">
+                    <div class="section-title-area ltn__section-title-2--- mb-30">
+                        
+                        <h2>About Pathofast Lab Pune</h2>
+                        <p>Founded in 2018, we are a dynamic group of doctors and lab technicians. We focus on patient care, quick reports and maximum patient satisfaction</p>
+                    </div>
+                    <ul class="ltn__list-item-1 ltn__list-item-1-before--- clearfix">
+                        <li><i class="fas fa-check-square"></i>2 full time pathologists and microbiologists</li>
+                        <li><i class="fas fa-check-square"></i><b>5 lab technicians</b> fully trained and qualified.</li>
+                        <li><i class="fas fa-check-square"></i>Latest state of the art technology and equipment for all blood tests</li>
+                        <li><i class="fas fa-check-square"></i>1500 square foot dedicated lab area, ergonomically and aesthetically designed</li>
+                    </ul>
+                    <div class="about-author-info-2 border-top mt-30 pt-20">
+                        <ul>
+                            <li>
+                                <div class="about-author-info-2-brief  d-flex">
+                                    <div class="author-img">
+                                    <img src="img/blog/author.jpg" alt="#">
+                                    </div>
+                                    <div class="author-name-designation">
+                                        <h4 class="mb-0">Dr.Bhargav Raut</h4>
+                                        <small>Founder</small>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="about-author-info-2-contact  d-flex">
+                                    <div class="about-contact-icon d-flex align-self-center mr-10">
+                                        <i class="icon-call"></i>
+                                    </div>
+                                    <div class="about-author-info-2-contact-info">
+                                        <small>Call Reception</small>
+                                        <h6 class="mb-0"><a href="tel:02049304930">02049304930</a></h6>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- contact us -->
+<div class="ltn__about-us-area pt-50 pb-120 section-bg-1">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 align-self-center">
+                <div class="about-us-info-wrap">
+                    <div class="section-title-area ltn__section-title-2--- mb-30">
+                        
+                        <h2>Contact & Location</h2>
+                        <p>Reach out to us by phone or email, or fill out the contact form below. We will get back to you within 1 working day.</p>
+                        <div class="row">
+                            <div class="col lg-4">
+                                <h3 class="mt-20">Address</h3>
+                                <p>2nd Floor, Manisha Terrace, 411001, Moledina Rd, Camp, Pune, Maharashtra 411001</p>
+                            </div>
+                            <div class="col lg-4">
+                                <h3 class="mt-20">Correspondence</h3>
+                                <p><b>Tel</b> : 02049304930</p>
+                                <p><b>Email</b> : support@pathofast.com</p>
+                            </div>
+                            <div class="col lg-4">
+                                <h3 class="mt-20">Timings</h3>
+                                <p><b>Monday - Saturday</b> : 8am to 6pm</p>
+                                <p><b>Sunday</b> : Closed</p>
+                            </div>
+                        </div>
+                    </div>
+                    <form id="contact-form" action="/contact_form" method="post">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="input-item input-item-name ltn__custom-icon">
+                                    <input type="text" name="name" placeholder="Enter your name">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="input-item input-item-email ltn__custom-icon">
+                                    <input type="email" name="email" placeholder="Enter email address">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="input-item input-item-subject ltn__custom-icon">
+                                    <input type="text" name="subject" placeholder="Enter the subject">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="input-item input-item-phone ltn__custom-icon">
+                                    <input type="text" name="phone" placeholder="Enter phone number">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="input-item input-item-textarea ltn__custom-icon">
+                            <textarea name="message" placeholder="Enter message"></textarea>
+                        </div>
+                        <p><label class="input-info-save mb-0"><input type="checkbox" name="agree"> Save my name, email, and website in this browser for the next time I comment.</label></p>
+                        <div class="btn-wrapper mt-0">
+                            <button class="btn theme-btn-1 btn-effect-1 text-uppercase" type="submit">Submit</button>
+                        </div>
+                        <p class="form-messege mb-0 mt-20"></p>
+                    </form>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 6 item grid, currently not being used -->
+<!-- GRID OF PRODUCTS, USE FOR 6 main packages. ckec--->
+<div class="ltn__product-area ltn__product-gutter pt-115 pb-70">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="section-title-area ltn__section-title-2 text-center">
+                    <h2>Our Services</h2>
+                    <p>We offer home blood test services in all areas of Pune City. If you are looking for the top path lab in Pune, for blood test then look no further than Pathofast</p>
+                    <p>We are a reliable choice for a pathology lab near you in Pune. Our services include <b>home sample collection</b>, <b>pregnancy test in Pune</b>, <b>Research Lab Services</b> are more.</p>
+                </div>
+            </div>
+        </div>
+        <div class="row ltn__tab-product-slider-one-active---">
+                
+                <!-- ltn__product-item -->
+                <div class="col-lg-3 col-md-4 col-sm-6 col-6">
+                    <div class="ltn__product-item ltn__product-item-3 text-left">
+                        <div class="product-img">
+                            <a href="/services/blood-testing"><img src="/images/services/blood_test_in_pune/intro.png" alt="#"></a>
+                        </div>
+                        <div class="product-info">
+                            <h2 class="product-title"><a href="/services/blood-testing">Blood Test in Pune</a></h2>
+                            <div class="product-price">
+                                <span>Book Blood Test in Pune with Pathofast Lab</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                
+                <!-- ltn__product-item -->
+                <div class="col-lg-3 col-md-4 col-sm-6 col-6">
+                    <div class="ltn__product-item ltn__product-item-3 text-left">
+                        <div class="product-img">
+                            <a href="/services/pregnancy-tests-in-pune-book-appointment-with-pathofast-lab"><img src="/images/services/pregnancy-tests-in-pune-book-appointment-with-pathofast-lab/introduction.png" alt="#"></a>
+                        </div>
+                        <div class="product-info">
+                            <h2 class="product-title"><a href="/services/pregnancy-tests-in-pune-book-appointment-with-pathofast-lab">Pregnancy Test in Pune : Book Appointment with Pathofast Lab</a></h2>
+                            <div class="product-price">
+                                <span> Pathofast Lab offers blood tests for pregnancy diagnosis and monitoring with home sample pickup in various locations across Pune</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                
+                <!-- ltn__product-item -->
+                <div class="col-lg-3 col-md-4 col-sm-6 col-6">
+                    <div class="ltn__product-item ltn__product-item-3 text-left">
+                        <div class="product-img">
+                            <a href="/services/diabetes-testing"><img src="/images/services/diabetes/intro.png" alt="#"></a>
+                        </div>
+                        <div class="product-info">
+                            <h2 class="product-title"><a href="/services/diabetes-testing">Diabetes Tests in Pune: Prices, Preparation, Packages</a></h2>
+                            <div class="product-price">
+                                <span>Pathofast Lab in Pune offers a comprehensive range of diabetes and sugar testing profiles, including both blood tests and urine tests, starting as low as Rs.999</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                
+                <!-- ltn__product-item -->
+                <div class="col-lg-3 col-md-4 col-sm-6 col-6">
+                    <div class="ltn__product-item ltn__product-item-3 text-left">
+                        <div class="product-img">
+                            <a href="/services/std-test-pune-prices-panels-book-online"><img src="/images/services/std_pillar/hero.png" alt="#"></a>
+                        </div>
+                        <div class="product-info">
+                            <h2 class="product-title"><a href="/services/std-test-pune-prices-panels-book-online">STD Test in Pune Near You - Profiles,  Prices, How to Book</a></h2>
+                            <div class="product-price">
+                                <span>Pathofast Lab offers STD Testing in Pune starting at just Rs.1999Our STD Test panels include blood tests and urine tests for  common STD(Sexually Transmitted Disease) Infections like HIV, Hepatitis B &amp;amp; C, Herpes, Chlamydia, Syphilis and GonorrheaSTD&#39;s also known as STI(Sexually Transmitted Infections) are often accompanied by discharge, and we have Test Panels for every type of infectionBook Online for safe, confidential and discreet STD Test at home or a center near you in Pune</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                
+                <!-- ltn__product-item -->
+                <div class="col-lg-3 col-md-4 col-sm-6 col-6">
+                    <div class="ltn__product-item ltn__product-item-3 text-left">
+                        <div class="product-img">
+                            <a href="/services/pcos"><img src="/images/services/pcos/hero.png" alt="#"></a>
+                        </div>
+                        <div class="product-info">
+                            <h2 class="product-title"><a href="/services/pcos">PCOS Test Packages in Pune - Prices, Preparation, How to Book</a></h2>
+                            <div class="product-price">
+                                <span>Pathofast Lab offers PCOS/PCOD blood test packages starting at just Rs.1499</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                
+                <!-- ltn__product-item -->
+                <div class="col-lg-3 col-md-4 col-sm-6 col-6">
+                    <div class="ltn__product-item ltn__product-item-3 text-left">
+                        <div class="product-img">
+                            <a href="/services/elisa-testing-facility-for-clinical-research-organizations-in-pune"><img src="" alt="#"></a>
+                        </div>
+                        <div class="product-info">
+                            <h2 class="product-title"><a href="/services/elisa-testing-facility-for-clinical-research-organizations-in-pune">ELISA testing facility for Clinical Research Organizations in Pune</a></h2>
+                            <div class="product-price">
+                                <span>Pathofast Lab Pune offer ELISA facilities for Clinical Research Organizations at very affordable rates</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+        </div>
+        <div class='row' style="text-align: center;">
+            <div class="btn-wrapper mt-0">
+                <button class="btn theme-btn-1 btn-effect-1 text-uppercase"><a href="/services">All Services</a></button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="ltn__faq-area pt-100 pb-100 section-bg-1">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="ltn__faq-inner ltn__faq-inner-2">
+                    <div id="accordion_2">
+                        <h2>Frequently Asked Questions</h2>
+                            <!-- card -->
+                            <div class="card">
+                                <h6 class="collapsed ltn__card-title" data-bs-toggle="collapse" data-bs-target="#faq-item-0" aria-expanded="false">
+                                    Which areas of Pune are served by your lab?
+                                </h6>
+                                <div id="faq-item-0" class="collapse" data-bs-parent="#accordion_0">
+                                    <div class="card-body">
+                                        <p>We serve all areas of Pune, including Jangli Maharaj Nagar, Ravet, Viman Nagar, Shastrinagar, Yerawada, NIBM Undri Road, Kondhwa, Camp, Aundh, Baner, Dattwadi, Undri, Pimpri-Chinchwad, Kalyani Nagar, Koregaon Park, Sadashiv Peth</p>
+                                    </div>
+                                </div>
+                            </div> 
+                            <!-- card -->
+                            <div class="card">
+                                <h6 class="collapsed ltn__card-title" data-bs-toggle="collapse" data-bs-target="#faq-item-1" aria-expanded="false">
+                                    Will the person come home to collect my blood sample?
+                                </h6>
+                                <div id="faq-item-1" class="collapse" data-bs-parent="#accordion_1">
+                                    <div class="card-body">
+                                        <p>Yes we offer free home visit for blood sample collection. A trained phlebotomist will visit your home to collect your sample.</p>
+                                    </div>
+                                </div>
+                            </div> 
+                            <!-- card -->
+                            <div class="card">
+                                <h6 class="collapsed ltn__card-title" data-bs-toggle="collapse" data-bs-target="#faq-item-2" aria-expanded="false">
+                                    Are there seperate charges for home blood sample collection?
+                                </h6>
+                                <div id="faq-item-2" class="collapse" data-bs-parent="#accordion_2">
+                                    <div class="card-body">
+                                        <p>Home blood test charges depend on how far you are from the lab center. For most cases, there are no charges within 8 km of the lab.</p>
+                                    </div>
+                                </div>
+                            </div> 
+                            <!-- card -->
+                            <div class="card">
+                                <h6 class="collapsed ltn__card-title" data-bs-toggle="collapse" data-bs-target="#faq-item-3" aria-expanded="false">
+                                    Who is the pathologist in your lab?
+                                </h6>
+                                <div id="faq-item-3" class="collapse" data-bs-parent="#accordion_3">
+                                    <div class="card-body">
+                                        <p>All lab reports are verified by Dr.Bhargav Raut a qualified medical doctor and post-graduate pathologist. His registration number is 2015052372</p>
+                                    </div>
+                                </div>
+                            </div> 
+                            <!-- card -->
+                            <div class="card">
+                                <h6 class="collapsed ltn__card-title" data-bs-toggle="collapse" data-bs-target="#faq-item-4" aria-expanded="false">
+                                    Is the lab open on Sunday?
+                                </h6>
+                                <div id="faq-item-4" class="collapse" data-bs-parent="#accordion_4">
+                                    <div class="card-body">
+                                        <p>No, the lab is closed on Sundays</p>
+                                    </div>
+                                </div>
+                            </div> 
+                            <!-- card -->
+                            <div class="card">
+                                <h6 class="collapsed ltn__card-title" data-bs-toggle="collapse" data-bs-target="#faq-item-5" aria-expanded="false">
+                                    What payment modes are accepted?
+                                </h6>
+                                <div id="faq-item-5" class="collapse" data-bs-parent="#accordion_5">
+                                    <div class="card-body">
+                                        <p>We accept all payment methods including cash, card, Gpay, PayTm and Cheque. Visa and MasterCard are both supported</p>
+                                    </div>
+                                </div>
+                            </div> 
+                            <!-- card -->
+                            <div class="card">
+                                <h6 class="collapsed ltn__card-title" data-bs-toggle="collapse" data-bs-target="#faq-item-6" aria-expanded="false">
+                                    Why Choose Pathofast Lab for a blood test in Pune?
+                                </h6>
+                                <div id="faq-item-6" class="collapse" data-bs-parent="#accordion_6">
+                                    <div class="card-body">
+                                        <p>While choosing a lab or diagnostic center, it is important to consider some points like accurate reports, hygiene, patient safety and reliability. Pathofast ticks all these checkboxes and offers you reliable and affordable lab tests in any part of Pune.</p>
+                                    </div>
+                                </div>
+                            </div> 
+                            <!-- card -->
+                            <div class="card">
+                                <h6 class="collapsed ltn__card-title" data-bs-toggle="collapse" data-bs-target="#faq-item-7" aria-expanded="false">
+                                    What is a pathology lab?
+                                </h6>
+                                <div id="faq-item-7" class="collapse" data-bs-parent="#accordion_7">
+                                    <div class="card-body">
+                                        <p>A pathology lab is a medical establishment that offers diagnostic tests.</p>
+                                    </div>
+                                </div>
+                            </div> 
+                            <!-- card -->
+                            <div class="card">
+                                <h6 class="collapsed ltn__card-title" data-bs-toggle="collapse" data-bs-target="#faq-item-8" aria-expanded="false">
+                                    Which is the best lab in Pune for blood test?
+                                </h6>
+                                <div id="faq-item-8" class="collapse" data-bs-parent="#accordion_8">
+                                    <div class="card-body">
+                                        <p> Pathofast lab has several well qualified lab technicians and post-graduate doctors to ensure reliable, safe and smooth diagnostic test services in Pune, making it the best lab in Pune</p>
+                                    </div>
+                                </div>
+                            </div> 
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+            
+        <footer class="footer fixed-bottom" style="background-color: #0A9A73">
+          <div class="container text-center">
+              <span class="text-white">
+                  <a href='tel:02049304930'><i class="fas fa-phone"></i><span style="margin-left:10px;">Call Now</span></a>
+              </span>
+          </div>
+        </footer>
+<!-- FOOTER AREA START -->
+<footer class="ltn__footer-area  ">
+    <div class="footer-top-area  section-bg-2 plr--5">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-xl-3 col-md-6 col-sm-6 col-12">
+                    <div class="footer-widget footer-about-widget">
+                        <div class="footer-logo">
+                            <div class="site-logo">
+                                <img style="max-width:150px"  src="/vicodin_logo.png" alt="Logo">
+                            </div>
+                        </div>
+                        <p>Pathofast</p>
+                        <div class="footer-address">
+                            <ul>
+                                <li>
+                                    <div class="footer-address-icon">
+                                        <i class="icon-placeholder"></i>
+                                    </div>
+                                    <div class="footer-address-info">
+                                        <p><a href="https://g.co/kgs/ezkNPtM">2nd Floor, Manisha Terrace,411001, Moledina Rd, Camp, Pune, Maharashtra 411001</a></p>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="footer-address-icon">
+                                        <i class="icon-call"></i>
+                                    </div>
+                                    <div class="footer-address-info">
+                                        <p><a href="tel:02049304930">02049304930</a></p>
+                                        <p><a href="tel:8956690418">8956690418</a></p>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="footer-address-icon">
+                                        <i class="icon-mail"></i>
+                                    </div>
+                                    <div class="footer-address-info">
+                                        <p><a href="mailto:support@pathofast.com">support@pathofast.com</a></p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="ltn__social-media mt-20">
+                            <ul>
+                                <li><a href="https://www.facebook.com/pathofast" title="Facebook"><i class="fab fa-facebook-f"></i></a></li>
+                                            <li><a href="https://www.twitter.com/pathofast" title="Twitter"><i class="fab fa-twitter"></i></a></li>
+                
+                                            <li><a href="https://www.youtube.com/@pathofast" title="Youtube"><i class="fab fa-youtube"></i></a></li>
+                                            <li><a href="https://www.instagram.com/pathofast" title="Instagram"><i class="fab fa-instagram"></i></a></li>
+                                            <li><a href="https://www.linkedin.com/pathofast" title="LinkedIn"><i class="fab fa-linkedin"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-2 col-md-6 col-sm-6 col-12">
+                    <div class="footer-widget footer-menu-widget clearfix">
+                        <h4 class="footer-title"><a href="/tests">Blood Test in Pune</a></h4>
+                        <div class="footer-menu">
+                            <ul>
+                                    <li><a href="/tests/urine-routine-test">Urine Test</a></li>
+                                    <li><a href="/tests/cbc-complete-blood-count">CBC Test</a></li>
+                                    <li><a href="/tests/liver-function-tests">Liver Test</a></li>
+                                    <li><a href="/tests/lipid-profile">Lipid Test</a></li>
+                                    <li><a href="/tests/kidney-profile">Kidney Profile Test</a></li>
+                                    <li><a href="/tests/vitamin-b12-test">Vitamin B12 Test</a></li>
+                                    <li><a href="/tests/vitamin-d-test">Vitamin D Test</a></li>
+                                    <li><a href="/tests/thyroid-profile-t4-t4-tsh">Thyroid Test</a></li>
+                                    <li><a href="/tests/electrolytes">Electrolytes Test</a></li>
+                                    <li><a href="/tests/hiv-test">HIV Test</a></li>
+                                    <li><a href="/tests/hepatitis-b-antigen-test">HBsAg Test</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-2 col-md-6 col-sm-6 col-12">
+                    <div class="footer-widget footer-menu-widget clearfix">
+                        <h4 class="footer-title"><a href="/test-packages">Packages &amp; Offers</a></h4>
+                        <div class="footer-menu">
+                            <ul>
+                                    <li><a href="/test-packages/yearly-check-up-package">Gold Health Package</a></li>
+                                    <li><a href="/test-packages/senior-citizen-package">Senior Citizen Package</a></li>
+                                    <li><a href="/test-packages/women-s-health-package-lite">Womens&#39;s Health Package</a></li>
+                                    <li><a href="/test-packages/diabetes-package">Diabetes Package</a></li>
+                                    <li><a href="/test-packages/dengue-package">Dengue Package</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-2 col-md-6 col-sm-6 col-12">
+                    <div class="footer-widget footer-menu-widget clearfix">
+                        <h4 class="footer-title">More</h4>
+                        <div class="footer-menu">
+                            <ul>
+                                <li><a href="/staffs">Careers &amp; Team</a></li>
+                              <li><a href="/media">Media Kit</a></li>
+                              <li><a href="/sitemap.xml">Sitemap</a></li>
+                                <li>
+                                  <a href="/business/agreements/privacy_policy">Privacy Policy</a>
+                                </li>
+                                <li>
+                                  <a href="/business/agreements/terms_and_conditions">Terms of Use</a>
+                                </li>
+                                <li>
+                                  <a href="/business/agreements/refund_policy">Refund Policy</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-md-6 col-sm-12 col-12">
+                    <div class="footer-widget footer-newsletter-widget">
+                        <h4 class="footer-title">Newsletter</h4>
+                        <p>Subscribe to our weekly Newsletter and receive updates via email.</p>
+                        <div class="footer-newsletter">
+                            <form action="/subscribe">
+                                <input type="email" name="email" placeholder="Email*">
+                                <div class="btn-wrapper">
+                                    <button class="theme-btn-1 btn" type="submit"><i class="fas fa-location-arrow"></i></button>
+                                </div>
+                            </form>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="ltn__copyright-area ltn__copyright-2 section-bg-7  plr--5">
+        <div class="container-fluid ltn__border-top-2">
+            <div class="row">
+                <div class="col-md-6 col-12">
+                    <div class="ltn__copyright-design clearfix">
+                        <p>All Rights Reserved @ Pathofast <span class="current-year"></span></p>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</footer>
+<!-- FOOTER AREA END -->
+            
+        </div>
+
+        
+
+        <script>
+            // Add to Home with 2 seconds delay.
+            //AddtoHome("2000", "once");
+        </script>
+
+        <script>
+            function getParam(p) {
+              var match = RegExp('[?&]' + p + '=([^&]*)').exec(window.location.search);
+              return match && decodeURIComponent(match[1].replace(/\+/g, ' '));
+            }
+            // now we just come upto here.
+            // once this is done, we will see about how to trigger the api for the conversions.
+            //EAADCVmZBRDw0BO4ThQvv8h0ZAnndR2ZBcdtbvIetwJP0wnYmLtj1mjnmwPQi6eY2
+            var book_on_watsapp = function(id,display_type,type,name,conversion_id){
+              //gtag_report_conversion(window.location);
+              var text = [];
+              var base_url = "https://api.whatsapp.com/send?phone=+918956690420&text=";
+              text.push("Hello, I want to book : *");
+              text.push(name + "*");
+              if(conversion_id != null){
+                text.push(" (Id: " + conversion_id + ")");
+              }
+              base_url += encodeURI(text.join(""));
+              window.location.assign(base_url);
+            }
+
+            document.addEventListener('input', function (event) {
+                var locality = event.target.value;
+                var classes = ["location_card","location_about"];
+                for(var cli = 0; cli < classes.length; cli++){
+                    var classz = classes[cli];
+                    var divsToHide = document.getElementsByClassName(classz); //divsToHide is an array
+                    for(var i = 0; i < divsToHide.length; i++){
+                        if(locality == "Select A Location"){
+                            divsToHide[i].style.display = "block";
+                        }
+                        else{
+                            if(divsToHide[i].getAttribute("data-locality") == locality){
+                                divsToHide[i].style.display = "block";
+                            }
+                            else{
+                                divsToHide[i].style.display = "none";
+                            }
+                        }
+                    }
+                }
+            }, false);
+
+            document.addEventListener('click', function(event) {
+                
+                if (event.target.matches('.book_on_watsapp_element')){
+                    event.preventDefault();
+                    console.log(this);
+                    var id = event.target.getAttribute("data-id");
+                    var display_type = event.target.getAttribute("data-display-type");
+                    var type = event.target.getAttribute("data-type");
+                    var name = event.target.getAttribute("data-name");
+
+                    if(getParam('gclid') == null){
+                        book_on_watsapp(id,display_type,type,name,null);
+                    }
+                    else{
+                        var xhr = new XMLHttpRequest();
+                        xhr.open("POST", "/conversions.js", true);
+                        xhr.setRequestHeader("Content-Type", "application/json");
+                        xhr.onreadystatechange = function () {
+                            if (xhr.readyState === 4) {
+                                if (xhr.status === 200) {
+                                    var response = xhr.responseText;
+                                    console.log("response");
+                                    console.log(response);
+                                    var resp = JSON.parse(response);
+                                    if (resp.conversion) {
+                                        //console.log("------------ GOT CONVERSION ----------");
+                                        //console.log(resp.conversion.id);
+                                        book_on_watsapp(id, display_type, type, name, resp.conversion.id);
+                                    } else {
+                                        console.log("conversion not in response");
+                                    }
+                                } else {
+                                    // Handle error
+                                    console.error("Error:", xhr.status);
+                                }
+                            }
+                        };
+                        xhr.send(JSON.stringify({
+                            'conversion': {
+                                'tracking_id': getParam('gclid')
+                            }
+                        }));
+                    }
+                }
+            });
+        </script>
+
+        <script>
+            const options = {
+              enableHighAccuracy: true,
+              timeout: 5000,
+              maximumAge: 0,
+            };
+
+            function success(pos) {
+              const crd = pos.coords;
+
+              console.log("Your current position is:");
+              console.log(`Latitude : ${crd.latitude}`);
+              console.log(`Longitude: ${crd.longitude}`);
+              console.log(`More or less ${crd.accuracy} meters.`);
+            }
+
+            function error(err) {
+              console.warn(`ERROR(${err.code}): ${err.message}`);
+            }
+
+            function geoLocation(){
+                navigator.geolocation.getCurrentPosition(success, error, options);
+            }
+            
+        </script>
+
+        <!-- preloader area start -->
+        <div class="preloader d-none" id="preloader">
+            <div class="preloader-inner">
+                <div class="spinner">
+                    <div class="dot1"></div>
+                    <div class="dot2"></div>
+                </div>
+            </div>
+        </div>
+        <!-- preloader area end -->
+
+        <script src="https://www.pathofast.com/assets/vicodin-2930f0bcfb93c9643e7d9d83455134de126207e02cb3feba86c4a9aa1285b2c2.js"></script>
+        
+
+    </body>
+
+</html>

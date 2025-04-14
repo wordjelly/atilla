@@ -41,6 +41,7 @@ module Atilla::Components::ImageExtractor
 	  end.compact
 
 	  sorted = image_data.sort_by { |img| -img[:size] }
+	  sorted.reject!{|c| c[:src].blank? || c[:src] == "#"}
 	  sorted.map { |img| img[:src] }
 	end
 
