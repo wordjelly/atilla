@@ -54,7 +54,7 @@ module Atilla::Components::UrlProcessor
 		
 		#prepend http if there is no scheme, as addressable does no
 		#not parse the host otherwise
-		unless raw_url =~ /^(http|tel|mail)\:\/\//
+		unless raw_url =~ /^(https?|tel|mail)\:\/\//
 			raw_url = "http://#{raw_url}"
 		end
 
