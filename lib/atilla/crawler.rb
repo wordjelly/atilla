@@ -663,7 +663,7 @@ class Atilla::Crawler
 		end
 
 		
-		#write_log(self.completed_urls,"debug")
+		write_log(self.completed_urls,"debug")
 
 		#end
 
