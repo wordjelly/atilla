@@ -3,7 +3,7 @@ module Atilla::Components::Log
 		["debug","info","error","fatal"]
 	end
 
-	def write_log(message,log_level="debug")
+	def write_log(message,log_level="debug",exception=nil)
 		allowed_index = log_hierarchy.index(self.opts["log_level"])
 		#puts "allowed index #{allowed_index}"
 		allowed = log_hierarchy[allowed_index..-1]
@@ -11,9 +11,9 @@ module Atilla::Components::Log
 		#puts "incoming level #{log_level}"
 		if allowed.include? log_level
 			if self.opts["log_proc"]
-				self.opts["log_proc"].call(message)
+				self.opts["log_proc"].call({:message => message},log_level,exception)
 			end
-			puts message
+			#puts message
 		else
 			#puts "log not allowed"
 		end
