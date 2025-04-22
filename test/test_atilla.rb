@@ -4,13 +4,14 @@ require "test_helper"
 
 class TestAtilla < Minitest::Test
 
+=begin
   def test_normalizes_urls
     crawler = Atilla::Crawler.new("https://www.pathofast.com/",[],{"save_output" => true, "requests_per_second" => 5, "headers" => {"Cache-Purge" => true},"params" => {}, "output_path" => (__FILE__.split(/\//)[0..-3].join("/") + "/output")})
     doc = Nokogiri::HTML(IO.read("#{__FILE__.split(/\//)[0..-2].join("/")}/resources/pathofast"))
      puts crawler.get_images(nil,nil,nil,doc,crawler.opts)
     #crawler.run
   end
-
+=end
 =begin
   def skips_non_html_urls
 
@@ -85,21 +86,62 @@ class TestAtilla < Minitest::Test
 =end
 
 =begin
-  MAIN TESTS THAT WE USE FOR PATHOFAST
-  def test_crawls_url
+  def test_validates_url_domain_ending
     crawl_opts = {"headers" => {"Cache-Purge" => true},"save_output" => true, "log_level" => "info", "params" => {}, "output_path" => (__FILE__.split(/\//)[0..-3].join("/") + "/output")}
+
+    crawl_opts["log_proc"] = Proc.new{|message_hash,log_level,exception|
+      puts JSON.pretty_generate(message_hash)
+      unless exception.blank?
+        #puts exception.message.to_s
+        #puts exception.backtrace.join("\n")
+      end
+    }
 
     crawl_opts["page_info_proc"] = Proc.new{|url,response|
       # so we will handle this there
       # and use open ai to instantly build these pages, and the csvs.
     }
 
-    crawler = Atilla::Crawler.new("https://www.pathofast.com/",[],crawl_opts)
+    crawler = Atilla::Crawler.new("http://pathofast-local",[],crawl_opts)
+
+
+    # this will be the flow of events.
+    # does it have a host ?
+    # yes -> 
+    # => is the host the same as the domain host 
+    #    yes : dont do anything
+    #    no  : check for valid tld, if not valid, change to domain host
+    # no ->
+    # => set to domain host.
+    urls = ["http://pathofast-local","http://shop.html","http://pathofast-local/text"]
+    urls.each do |url|
+      puts JSON.pretty_generate(crawler.process_url(url,crawler.opts))
+    end
+    #r = crawler.valid_top_level_domain?("http://shop.html")
+    #puts r.to_s
+  end
+=end
+  #MAIN TESTS THAT WE USE FOR PATHOFAST
+  def test_crawls_url
+    crawl_opts = {"headers" => {"Cache-Purge" => true},"save_output" => true, "url_patterns" => ["/test-packages"], "log_level" => "info", "params" => {}, "output_path" => (__FILE__.split(/\//)[0..-3].join("/") + "/output")}
+
+    crawl_opts["log_proc"] = Proc.new{|message_hash,log_level,exception|
+      puts JSON.pretty_generate(message_hash)
+    }
+
+    crawl_opts["page_info_proc"] = Proc.new{|url,response|
+      # so we will handle this there
+      # and use open ai to instantly build these pages, and the csvs.
+    }
+
+    crawler = Atilla::Crawler.new("https://www.pathofast.com",[],crawl_opts)
 
     crawler.run
 
   end
 
+
+=begin
   def test_outputs_title_description_keywords
     crawl_opts = {"headers" => {"Cache-Purge" => true},"save_output" => true, "log_level" => "info", "params" => {}, "output_path" => (__FILE__.split(/\//)[0..-3].join("/") + "/output")}
 

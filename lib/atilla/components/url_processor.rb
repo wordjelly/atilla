@@ -45,22 +45,56 @@ module Atilla::Components::UrlProcessor
 		end
 	end
 
+	def valid_top_level_domain?(url)
+		url =~ /\b(#{self.opts["valid_top_level_domains"].map{|opt| Regexp.escape(opt)}.join("|")})\b/
+	end
+
+	def host_blank?(uri)
+		resp = uri.host.blank?
+		write_log("host blank #{resp.to_s} #{uri.to_s}","debug")
+		resp
+	end
+
+	def different_host_and_invalid_tld?(uri)
+		different_host = (uri.host != self.opts[:host_name])
+		invalid_tld = (!valid_top_level_domain?(uri.to_s))
+		write_log("different host #{different_host.to_s} and invalid tld #{invalid_tld.to_s}, self host is #{self.opts[:host_name]}, uri host is #{uri.host}","debug")
+		different_host and invalid_tld
+	end
+
+	# when we want to prepend our host and scheme to a uri, we need to remove its detected scheme first.
+	# since this is only done in cases where url is detected as not being either a valid outside url or an internal url.
+	def raw_url_without_scheme(raw_url,uri)
+		existing_scheme = uri.scheme || ''
+		unless existing_scheme.blank?
+			existing_scheme += "://"
+		end
+		uri.to_s.gsub(/#{Regexp.escape(existing_scheme)}/,'')
+	end
+
 	# just adds theh host url, scheme and port to the given url, normalizes it and returns it.
 	def process_url(raw_url, opts={})
-
+		write_log("processing #{raw_url}","debug")
 		begin
 			is_host = (raw_url == self.host) || (self.host.blank?)
 
-			
+			write_log("#{raw_url} is_host #{is_host}","debug")
 			#prepend http if there is no scheme, as addressable does no
 			#not parse the host otherwise
+			#appended_url = nil
+			append_http = false
 			unless raw_url =~ /^(https?|tel|mail)\:\/\//
-				raw_url = "http://#{raw_url}"
+				append_http = true
 			end
 
+			#puts "appended url #{appended_url}"
+			uri = nil
+			if append_http
+				uri = Addressable::URI.parse("http://#{raw_url}")
+			else
+				uri = Addressable::URI.parse(raw_url)
+			end
 			
-			uri = Addressable::URI.parse(raw_url)	  	
-
 		  	if is_host
 		  		opts[:host_scheme] = uri.scheme
 		  		opts[:host_name] = uri.host
@@ -74,14 +108,17 @@ module Atilla::Components::UrlProcessor
 			  		:scheme => uri.scheme
 			  	}
 		  	else
-		  		# there may be errors adding the host to 
-		  		# some urls
-		  		# these are usually malformed urls.
-		  		# so in that case, we just return the raw_url as the
-		  		# url for now.
 		  		begin
-		  			if uri.host.blank?
-	    				uri.host = opts[:host_name].to_s
+		  			# set host only if the uri host is blank, or it is not our host, and has an invalid domain ending.
+		  			if (host_blank?(uri) or different_host_and_invalid_tld?(uri))
+		  			
+		  				existing_scheme = uri.scheme || ''
+		  				unless existing_scheme.blank?
+		  					existing_scheme += "://"
+		  				end
+
+		  				uri = Addressable::URI.parse(opts[:host_scheme] + "://" + opts[:host_name] + "/" + raw_url_without_scheme(raw_url,uri))
+		  				
 	    				if uri.port.blank?
 		    				uri.port = opts[:host_port] if opts[:host_port]
 		    			end
@@ -95,9 +132,10 @@ module Atilla::Components::UrlProcessor
 				  		:scheme => uri.scheme
 				  	}
 		  		rescue => e
-		  			puts e.to_s
+		  			write_log({:message => "Error in normalizing url #{appeneded_url} with message #{e.message}"},"error",e)
+		  			#puts e.to_s
 		  			output = {
-				  		:url => raw_url,
+				  		:url => appeneded_url,
 				  		:scheme => uri.scheme
 				  	}
 		  		end
@@ -105,9 +143,9 @@ module Atilla::Components::UrlProcessor
 
 		  	output
 	  	rescue => e
-	  		puts e.to_s
-	  		puts e.backtrace.join('\n')
-	  		write_log(e.backtrace.join('\n'),'error')
+	  		#puts e.to_s
+	  		#puts e.backtrace.join('\n')
+	  		write_log({:message => "Error processing url #{raw_url} with message #{e.message}"},"error",e)
 	  		{
 	  			:url => raw_url
 	  		}

@@ -103,7 +103,8 @@ class Atilla::Crawler
 			"normalize_urls" => true,
 			"log_level" => "debug",
 			"discovery" => false,
-			"ignore_extensions" => ["images","movies","files","others"]
+			"ignore_extensions" => ["images","movies","files","others"],
+			"valid_top_level_domains" => JSON.parse(IO.read((__FILE__.split(/\//)[0..-3].join("/") + "/atilla/dumps/valid_top_level_domains.json")))
 		}
 	end
 
@@ -262,11 +263,14 @@ class Atilla::Crawler
 				## PROCESS OUTLINKS.
 				doc.css('a').each do |link|
 					
-
-					next if link["rel"] =~ /nofollow/
-					next if link["href"] == "#"
 					next if link["href"].blank?
 					next if link["href"].strip.blank?
+					next if link["rel"] =~ /nofollow/
+					next if link["href"].strip == "#"
+					next if link["href"].strip =~ /^\#/
+					next if link["href"].strip =~ /^mailto\:/
+					next if link["href"].strip =~ /^tel\:/
+					
 					
 					begin
 						if add_url(link["href"])
@@ -348,8 +352,6 @@ class Atilla::Crawler
 				write_log("url #{url} not allowed by robots.txt","debug")
 				return false 
 			end
-
-
 
 			unless allow_url_patterns?(url)
 				write_log("url #{url} not allowed via specified patterns #{self.opts['url_patterns']}","debug")
